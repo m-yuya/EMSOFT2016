@@ -326,7 +326,7 @@ Connext and OpenSplice are well-known commercial license DDS implementations.
 Note that Connext also has a research license. 
 Several implementations of OpenSplice and FastRTPS have been released under the LGPL license. 
 By default, Connext uses UDPv4 and shared memory to exchange data. 
-Note that OpenSplice\footnote{Vortex OpenSplice \cite{ospl_vortex}, i.e., OpenSplice commercial edition, supports shared memory transport. In this paper, OpenSplice DDS Community Edition is used because it is open-source.} 
+Note that OpenSplice\footnote{Vortex OpenSplice \cite{ospl_vortex}, i.e., OpenSplice commercial edition, supports shared memory transport, but ROS2 does not supports this. In this paper, OpenSplice DDS Community Edition is used because it is open-source.} 
 and FastRTPS do not support shared memory data transport. 
 For precise evaluations and real-time requirements, \emph{nodes} follow \emph{SCHED\_FIFO} \cite{garg2009real} and the \emph{mlockall} system call. 
 A \emph{SCHED\_FIFO} process preempts any non-\emph{SCHED\_FIFO} processes, i.e., processes that use the default Linux scheduling.
@@ -634,6 +634,7 @@ This is caused by marshaling of various tools (e.g., logger and observer), even 
 Moreover, OpenSplice is superior to Connext in terms of latency, as shown in Figure \ref{fig:dds_boxplot}, because we use Connext DDS Professional, which has much richer features than the OpenSplice DDS Community Edition.
 OpenSplice provides fast processing at the cost of various features such as shared memory transport.
 We assume that the performance of Vortex OpenSplice is similar to that of Connext DDS Professional.
+However, Vortex OpenSplice needs a commercial license and is not supported by ROS2.
 
 In addition, the influence of the \emph{QoS Policy} on end-to-end latencies is evaluated in (2-b) OpenSplice with the \texttt{reliable policy} and \texttt{best-effort policy}.
 Figure \ref{fig:qos_boxplot} shows differences in latencies depending on the \emph{QoS Policy}.
