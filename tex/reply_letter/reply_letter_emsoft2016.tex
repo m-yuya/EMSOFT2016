@@ -1,0 +1,441 @@
+\documentclass{article}
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{fancybox}
+\usepackage{ascmac}
+\usepackage{xspace}
+\usepackage{pdfpages}
+\usepackage{pifont}
+\usepackage{array}
+
+\newcommand\st{\textsuperscript{st}\xspace}
+\newcommand\nd{\textsuperscript{nd}\xspace}
+\newcommand\rd{\textsuperscript{rd}\xspace}
+
+\begin{document}
+
+% cover letter
+\begin{flushleft}
+  2016-06-10\newline
+  EMSOFT 2016 Submission \#83\newline
+  Title: Exploring the Performance of ROS2\newline
+  Authors: Yuya Maruyama, Shinpei Kato, and Takuya Azumi\newline
+\end{flushleft}
+\textbf{Dear Editor and Reviewer,}\newline
+
+We highly appreciate the insightful suggestions and detailed valuable comments on our paper. The suggestions of the reviewers are very helpful for us and the suggestions are now incorporated in the revised paper as follows. We have attached the last paper review and revised paper in our reply letter. In the revised paper, newly added and modified sentences are written in the bold and red colored font so that the reviewers can easily find them. We hope the editor and the reviewers will be satisfied with our replies to the comments and the revised paper.\newline\newline
+
+\begin{flushleft}
+  Yours sincerely,\newline
+
+  Yuya Maruyama\newline
+  Osaka university\newline
+  Email address: maruyama@hopf.sys.es.osaka-u.ac.jp\newline
+\end{flushleft}
+
+\clearpage
+
+
+\section{Response to Meta-reviewer}
+\subsection{Recommendations and Relationale for Decision 1}
+
+\begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+\begin{itembox}[|]{hoge }
+\end{itembox}\\
+
+\begin{itembox}[|]{hoge}
+  $\bullet$\\
+  $\bullet$\\
+\end{itembox}
+
+\subsection{Recommendations, Retionale for Decision 2}
+
+\begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\newpage
+
+
+\section{Response to 1\st reviewer}
+
+\subsection{Premature ROS2 for evaluation}
+\begin{itemize}
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  ROS2 is currently still being actively developed (Section 3) and as such, an analysis of the performance at this stage seems a pre-mature. Certain capabilities in ROS2 are still not available and/or do not perform up to expectations. In Section 3.2 the author claims that "DDS is not designed to handle large data", however DDS has API's specifically designed for use with large data packets. While DDS has these API’s for assisting with large packet transfer, they are not yet compatible with ROS2 and therefore the performance drops after the size of packets increases beyond 64KB.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+\end{itemize}
+
+\subsection{Narrow scope of experiments}
+\begin{enumerate}
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  The designed experiment only covers latency rates between the two versions of ROS, but there are still other aspects to communications performance. Further research should be conducted to test the throughput, fault tolerance and distributed capabilities of the
+  two.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  Interacting with multiple devices or experimentation with a real-time application would provide insight into the fault-tolerance and distributed capabilities that DDS brings to ROS.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  Results from an application would provide insight into how the overhead of DDS scales with increased network load.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  Another possible avenue of research is a more detailed analysis of the effects on performance of varying QoS policy variables such as deadline scheduling and history.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  The experiment in section 3.1 should be kept as it is a good evaluation of overhead and is reproducible since it was performed on the loopback interface of the device, but experiments measuring latency and throughput in an application environment would strengthen the paper.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+\end{enumerate}
+
+\subsection{Unclear contributions}
+\begin{enumerate}
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  The contributions of the paper are essentially experimental results, but these results themselves are not sufficient. The authors do not provide any guidelines, lessons learned, or insight that they gained from their experiments.  Some examples of interesting questions to be answered from the data collected by the authors include:
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  Should ROS1 ever be used over ROS2, or do the benefits of ROS2 outweigh the costs?
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  What underlying implementation of DDS should people use, and why, or under what circumstances would one be better than the other? 
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  What can be done to improve the performance of the interface between ROS2 and DDS, or within the DDS implementations themselves?
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  How does the switch to DDS from pure TCP or UDP protocols affect other performance factors in ROS2 systems? 
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+\end{enumerate}
+
+
+\subsection{Minor points}
+\begin{itemize}
+
+\item \begin{flushleft}
+    \textbf{Comment:} Table 4 - ROS1 experiment says 2c, should be 1c
+  \end{flushleft}
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:} 3.3.1 ROS1 and ROS2 is much less than the difference between remote and local cases
+  \end{flushleft}
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:} 3.3.2 with large data , ROS2 has significant overhead depending on the size of data
+  \end{flushleft}
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:} Figure 12 and 13, invert legend
+  \end{flushleft}
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:} Table 5 legend missing
+  \end{flushleft}
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:} The authors use several implementations of DDS but it is unclear from their figures, which data is for OpenSplice, Connext or FastRTPS
+  \end{flushleft}
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:} Section 3.3.3 analyses performance for the two DDS frameworks with an explicit assumption regarding the performance of Opensplice vortex. The authors assume that the performance of Opensplice vortex professional edition is the same as
+    the performance of Connext professional edition, but conduct their experiments only with the community edition of Opensplice. For a fair analysis, either the professional or community version should be used for both frameworks.
+  \end{flushleft}
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+\end{itemize}
+
+\newpage
+
+
+\section{Response to 2\nd reviewer}
+\begin{enumerate}
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+The experiments provide good data, but unfortunately the data come only from a high-performance, multi-core system. It will be useful to discuss performance in an embedded device used in robotics with some resource constraints.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+Since the comparison provides evaluations of ROS middleware replacements, considering alternatives (primarily ZMQ + Protobuf) would have made for a compelling case (for or against) the selected DDS approach.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+Additionally, further evaluation of the QoS policies would have been beneficial, since 100 ms deadline is rather meaningless for the message sizes,
+processor speeds, and network capacities used in the experimental evaluation.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+Finally, evaluation of performance of the middleware options under more constrained network resources would have been beneficial as well.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+\end{enumerate}
+
+\newpage
+
+
+\section{Response to 3\rd reviewer}
+\begin{enumerate}
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+Despite this, the title and contributions are not clear, particularly, performance is a broad term and the authors mostly present results on message transmission. The contribution should be stated more explicitly.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+While it is true that other practical considerations are explained, they are not properly highlighted.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+One of the most promising improvements of ROS2 wrt ROS is the lack of a single point of failure (master). This should probably be highlighted!
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+How exactly are the end-to-end delays (one way transmission) measured by the same computer? Please explain the process.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+In table 4: Why is there 'none' in the ROS2 best effort policy? Since there is no backlog saved on the nodes, all late joining nodes will suffer from the same problem as ROS nodes.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+A major feature of ROS2, is to give Real Time guarantees on message deliveries, however, this is not compared. Specifically, when message loads are increased, a comparison would be welcomed.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+The authors say that Connext and OpenSplice maximum payload size is 64kB, but this is also the maximum payload of both TCP and UDP messages. Why is this an advantage/disadvantages of this?
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+There is no mention whatsoever on which type of network is used to comunicate between two different machines. Is it a full-duplex ethernet connection, an unreliable WiFi connection, or some other network?
+This is important, since authors claim "Some failures with the best-effort policy are due to frequent message losses caused by non-reliable communications", which is dependent on the actual protocol.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+What was the message set in each experiment? Only one message per experiment? Or was there any combination of messages in each experiment? If so, the scheduling algorithm should have been explained and the interference analysed.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+
+\item \begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+Missing results: Much of the information shared in robots is destined to multiple destinations. A possible improvement (maybe for future work) would be a comparison wrt multi-destination message distribution.
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+\end{enumerate}
+
+\newpage
+
+
+\section{Our modifications}
+
+\begin{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
+
+\begin{flushleft}
+  \textbf{Our reply:}
+\end{flushleft}
+
+\begin{itemize}
+\item 
+\item
+\end{itemize}
+
+
+\end{document}
+
