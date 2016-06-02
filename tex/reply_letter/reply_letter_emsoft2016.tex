@@ -1,4 +1,5 @@
 \documentclass{article}
+
 \usepackage{a4wide}
 \usepackage{graphicx}
 \usepackage{fancybox}
@@ -270,44 +271,44 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \begin{enumerate}
 
 \item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-The experiments provide good data, but unfortunately the data come only from a high-performance, multi-core system. It will be useful to discuss performance in an embedded device used in robotics with some resource constraints.
+    \textbf{Comment:}
+  \end{flushleft}
+  The experiments provide good data, but unfortunately the data come only from a high-performance, multi-core system. It will be useful to discuss performance in an embedded device used in robotics with some resource constraints.
 
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
-
-
-\item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-Since the comparison provides evaluations of ROS middleware replacements, considering alternatives (primarily ZMQ + Protobuf) would have made for a compelling case (for or against) the selected DDS approach.
-
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
 
 
 \item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-Additionally, further evaluation of the QoS policies would have been beneficial, since 100 ms deadline is rather meaningless for the message sizes,
-processor speeds, and network capacities used in the experimental evaluation.
+    \textbf{Comment:}
+  \end{flushleft}
+  Since the comparison provides evaluations of ROS middleware replacements, considering alternatives (primarily ZMQ + Protobuf) would have made for a compelling case (for or against) the selected DDS approach.
 
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
 
 
 \item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-Finally, evaluation of performance of the middleware options under more constrained network resources would have been beneficial as well.
+    \textbf{Comment:}
+  \end{flushleft}
+  Additionally, further evaluation of the QoS policies would have been beneficial, since 100 ms deadline is rather meaningless for the message sizes,
+  processor speeds, and network capacities used in the experimental evaluation.
 
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  Finally, evaluation of performance of the middleware options under more constrained network resources would have been beneficial as well.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
 
 \end{enumerate}
 
@@ -318,103 +319,103 @@ Finally, evaluation of performance of the middleware options under more constrai
 \begin{enumerate}
 
 \item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-Despite this, the title and contributions are not clear, particularly, performance is a broad term and the authors mostly present results on message transmission. The contribution should be stated more explicitly.
+    \textbf{Comment:}
+  \end{flushleft}
+  Despite this, the title and contributions are not clear, particularly, performance is a broad term and the authors mostly present results on message transmission. The contribution should be stated more explicitly.
 
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
-
-
-\item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-While it is true that other practical considerations are explained, they are not properly highlighted.
-
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
 
 
 \item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-One of the most promising improvements of ROS2 wrt ROS is the lack of a single point of failure (master). This should probably be highlighted!
+    \textbf{Comment:}
+  \end{flushleft}
+  While it is true that other practical considerations are explained, they are not properly highlighted.
 
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
-
-
-\item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-How exactly are the end-to-end delays (one way transmission) measured by the same computer? Please explain the process.
-
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
 
 
 \item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-In table 4: Why is there 'none' in the ROS2 best effort policy? Since there is no backlog saved on the nodes, all late joining nodes will suffer from the same problem as ROS nodes.
+    \textbf{Comment:}
+  \end{flushleft}
+  One of the most promising improvements of ROS2 wrt ROS is the lack of a single point of failure (master). This should probably be highlighted!
 
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
-
-
-\item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-A major feature of ROS2, is to give Real Time guarantees on message deliveries, however, this is not compared. Specifically, when message loads are increased, a comparison would be welcomed.
-
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
-
-\item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-The authors say that Connext and OpenSplice maximum payload size is 64kB, but this is also the maximum payload of both TCP and UDP messages. Why is this an advantage/disadvantages of this?
-
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
 
 
 \item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-There is no mention whatsoever on which type of network is used to comunicate between two different machines. Is it a full-duplex ethernet connection, an unreliable WiFi connection, or some other network?
-This is important, since authors claim "Some failures with the best-effort policy are due to frequent message losses caused by non-reliable communications", which is dependent on the actual protocol.
+    \textbf{Comment:}
+  \end{flushleft}
+  How exactly are the end-to-end delays (one way transmission) measured by the same computer? Please explain the process.
 
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
-
-
-\item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-What was the message set in each experiment? Only one message per experiment? Or was there any combination of messages in each experiment? If so, the scheduling algorithm should have been explained and the interference analysed.
-
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
 
 
 \item \begin{flushleft}
-  \textbf{Comment:}
-\end{flushleft}
-Missing results: Much of the information shared in robots is destined to multiple destinations. A possible improvement (maybe for future work) would be a comparison wrt multi-destination message distribution.
+    \textbf{Comment:}
+  \end{flushleft}
+  In table 4: Why is there 'none' in the ROS2 best effort policy? Since there is no backlog saved on the nodes, all late joining nodes will suffer from the same problem as ROS nodes.
 
-\begin{flushleft}
-  \textbf{Our reply:}
-\end{flushleft}
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  A major feature of ROS2, is to give Real Time guarantees on message deliveries, however, this is not compared. Specifically, when message loads are increased, a comparison would be welcomed.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  The authors say that Connext and OpenSplice maximum payload size is 64kB, but this is also the maximum payload of both TCP and UDP messages. Why is this an advantage/disadvantages of this?
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  There is no mention whatsoever on which type of network is used to comunicate between two different machines. Is it a full-duplex ethernet connection, an unreliable WiFi connection, or some other network?
+  This is important, since authors claim "Some failures with the best-effort policy are due to frequent message losses caused by non-reliable communications", which is dependent on the actual protocol.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  What was the message set in each experiment? Only one message per experiment? Or was there any combination of messages in each experiment? If so, the scheduling algorithm should have been explained and the interference analysed.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
+
+
+\item \begin{flushleft}
+    \textbf{Comment:}
+  \end{flushleft}
+  Missing results: Much of the information shared in robots is destined to multiple destinations. A possible improvement (maybe for future work) would be a comparison wrt multi-destination message distribution.
+
+  \begin{flushleft}
+    \textbf{Our reply:}
+  \end{flushleft}
 
 \end{enumerate}
 
