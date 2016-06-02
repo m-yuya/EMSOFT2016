@@ -1,6 +1,8 @@
 #!/bin/bash
 
-printf "old_file: "
+printf "\nListing old tex files...\n"
+ls diff_tex/
+printf "\nSelect *.tex: "
 read  old_file
 old_file=$old_file.tex
 echo $old_file
@@ -10,4 +12,4 @@ pbibtex diff
 platex diff.tex
 platex diff.tex
 dvipdfmx diff.dvi
-rm diff.aux diff.bbl diff.blg diff.log diff.tex
+rm diff.aux diff.bbl diff.blg diff.log
