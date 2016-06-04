@@ -258,7 +258,12 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
 
   \begin{flushleft}
-    \textbf{Our reply:} Thank you for pointing out our unfair evaluation. We tried building ROS2 with Vortex OpenSplice, but we could not succeed. Currently, ROS2 does not support OpenSplice Professional Edition. For clear discussion, we added sentence ``,but ROS2 does not supports this'' (``this'' means Vortex OpenSplice) in footnote. (page 2) In addition, after evaluation of threads, we have changed our view that the performance of Opensplice vortex professional edition is the same as the performance of Connext professional edition. Using OpenSplice, ROS2 has many threads (about 49 threads). Parallelized procession by a lot of theads causes low latency and we assume that Vortex OpenSplice is faster than Connext.
+    \textbf{Our reply:} Thank you for pointing out our unfair evaluation. 
+    We tried building ROS2 with Vortex OpenSplice, but we could not succeed. 
+    Currently, ROS2 does not support OpenSplice Professional Edition. For clear discussion, we added sentence ``,but ROS2 does not supports this'' (``this'' means Vortex OpenSplice) in footnote. (page 2) 
+    In addition, after evaluation of threads, we have changed our view that the performance of Opensplice vortex professional edition is the same as the performance of Connext professional edition. 
+    Using OpenSplice, ROS2 has many threads (about 49 threads). 
+    Parallelized procession by a lot of theads causes low latency and we assume that Vortex OpenSplice is faster than Connext.
   \end{flushleft}
 
 \end{itemize}
@@ -272,7 +277,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \item \begin{flushleft}
     \textbf{Comment:}
   \end{flushleft}
-  The experiments provide good data, but unfortunately the data come only from a high-performance, multi-core system. It will be useful to discuss performance in an embedded device used in robotics with some resource constraints.
+  The experiments provide good data, but unfortunately the data come only from a high-performance, multi-core system. 
+  It will be useful to discuss performance in an embedded device used in robotics with some resource constraints.
 
   \begin{flushleft}
     \textbf{Our reply:}
@@ -287,13 +293,15 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
-
+  Thank you very much for your good insight. 
+  Although these alternatives such as ZMQ + Protobuf should be evaluated, ROS2 firstly accepts DDS approach and only supports several DDS implementations. 
+  To highlight this fact, we have added ``Currently ROS2 only supports some DDS implementations.''. (page 1) 
+  Since ROS2 currently does not support ZMQ+Protobuf, this paper focuses evaluation of DDS approach to ROS and conducts its proof of concept.
 
 \item \begin{flushleft}
     \textbf{Comment:}
   \end{flushleft}
-  Additionally, further evaluation of the QoS policies would have been beneficial, since 100 ms deadline is rather meaningless for the message sizes,
-  processor speeds, and network capacities used in the experimental evaluation.
+  Additionally, further evaluation of the QoS policies would have been beneficial, since 100 ms deadline is rather meaningless for the message sizes, processor speeds, and network capacities used in the experimental evaluation.
 
   \begin{flushleft}
     \textbf{Our reply:}
