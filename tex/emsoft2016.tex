@@ -264,13 +264,15 @@ DDS QoS Policy.}
 \caption{\label{tab:orgtable1}
   All QoS Policies of ROS2}
 \centering
+\small
 \begin{tabular}{|p{0.3\linewidth}|p{0.6\linewidth}|}
 \hline
 DEADLINE &  A \emph{DataWriter} and a \emph{DataReader} must update data at least once every deadline period.\\
 \hline
 HISTORY &  This controls whether the data transport should deliver only the most recent value, attempt to deliver all intermediate values, or attempt to deliver something in between (configurable via the \texttt{depth} option).\\
 \hline
-RELIABILITY & In \texttt{BEST\_EFFORT}, data transport is executed as soon as possible. However, some data may be lost if the network is not robust. In \texttt{RELIABLE}, missed samples are retransmitted. Therefore, data delivery is guaranteed.\\
+RELIABILITY & In \texttt{BEST\_EFFORT}, data transport is executed as soon as possible. However, some data may be lost if the network is not robust. \\
+& In \texttt{RELIABLE}, missed samples are retransmitted. Therefore, data delivery is guaranteed.\\
 \hline
 DURABILITY & With this policy, the service attempts to keep several samples so that they can be delivered to any potential late-joining \emph{DataReader}. The number of saved samples depends on HISTORY. This option has several values, such as \texttt{VOLATILE} and \texttt{TRANSIENT\_LOCAL}.\\
 \hline
