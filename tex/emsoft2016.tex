@@ -649,6 +649,43 @@ In terms of end-to-end latency, we should preset the fragment size to 64 KB when
   \end{tabular}
 \end{figure*}
 
+\subsection{Throughput of ROS1 and ROS2}
+We also measure each throughput of ROS1 and ROS2 in \texttt{remote} case.
+In our one-way message transport experiment, maximum bandwidth ot the network is 12.5MB/sec because we use 100Mbps Ethernet (100BASE-TX) and Half-Duplex as shown in \ref{tb:environment}.
+Nodes repeatedly transport each data size messages with 10Hz.
+
+In small data from 256 B to 2 KB, we can observe constant gap among ROS1, ROS2 with OpenSplice, and ROS2 with Connext from Figure \ref{fig:throughput_small}.
+These additional data correspond with RTPS packets for QoS and heartbeat.
+Hence, these gap does not depend on data size.
+Moreover, Connext throughput is lower than OpenSplice one.
+This becomes big impact when users handle many kinds of small data with high Hz.
+
+In large data from 2 KB to 4MB, curves of Figure \ref{fig:throughput_large} demonstrate sustainable theoretical throughput.
+ROS2 and ROS2 is able to utilize all of available bandwidth and similarly behave in this situation.
+Throughput is limited by the network and not by DDS.
+
+\begin{figure*}[t]
+  \begin{tabular}{ccc}
+    \begin{minipage}[t]{0.31\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_small-data.eps}
+      \caption{}
+      \label{fig:throughput_small}
+    \end{minipage}
+    &
+      \begin{minipage}[t]{0.31\textwidth}
+        \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_large-data.eps}
+        \caption{}
+        \label{fig:throughput_large}
+      \end{minipage}
+    &
+      %% \begin{minipage}[t]{0.31\textwidth}
+      %%   \includegraphics[width=1.0\linewidth]{../figure/comparison_ospl_frag_BoxPlot.eps}
+      %%   \caption{}
+      %%   \label{fig:frag_boxplot}
+      %% \end{minipage}
+  \end{tabular}
+\end{figure*}
+
 
 \section{Related Work}
 \label{sec:orgheadline3}
