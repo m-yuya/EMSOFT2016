@@ -159,7 +159,23 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     ROS2 and ROS2 is able to utilize all of available bandwidth and similarly behave in this situation.
     Throughput is limited by the network and not by DDS.
   \end{itembox}\\
-  
+  \setcounter{figure}{16}
+  \begin{figure*}[h]
+    \begin{tabular}{cc}
+      \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/throughput_remote_small-data.eps}
+        \caption{}
+        \label{fig:throughput_small}
+      \end{minipage}
+      &
+      \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/throughput_remote_large-data.eps}
+        \caption{}
+        \label{fig:throughput_large}
+      \end{minipage}
+    \end{tabular}
+  \end{figure*}  
+
 \end{enumerate}
 
 \subsection{Unclear contributions}
@@ -429,6 +445,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   Two machines are physically connected by LAN cable with a switcher.
   Thus, message loss occurs by UDP and not by network.
   To clarify this fact, we add network protcol in Table 2: ``Evaluation Environment''.
+  \setcounter{table}{1}
   \begin{table*}[htb]
     \caption{Evaluation Environment} 
     \centering
