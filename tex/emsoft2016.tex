@@ -334,6 +334,7 @@ Using \emph{mlockall}, a process's virtual address space is fixed in physical RA
                               & Cores & 4 & 4 \\ 
                               & Threads & 4 & 4 \\ \hline
       \multicolumn{2}{c||}{Memory} & 16 GB & 8 GB \\ \hline 
+      \multicolumn{2}{c||}{Network} & \multicolumn{2}{c}{100 Mbps Ethernet / Half-Duplex} \\ \hline
       \multicolumn{2}{c||}{ROS1} & \multicolumn{2}{c}{Indigo} \\ 
       \multicolumn{2}{c||}{ROS2} & \multicolumn{2}{c}{Cement (alpha3)} \\ 
       \multicolumn{2}{c||}{DDS implementations} & \multicolumn{2}{c}{Connext\tnote{1} / OpenSplice\tnote{2} / FastRTPS } \\ \hline 
@@ -651,7 +652,7 @@ In terms of end-to-end latency, we should preset the fragment size to 64 KB when
 
 \subsection{Throughput of ROS1 and ROS2}
 We also measure each throughput of ROS1 and ROS2 in \texttt{remote} case.
-In our one-way message transport experiment, maximum bandwidth ot the network is 12.5MB/sec because we use 100Mbps Ethernet (100BASE-TX) and Half-Duplex as shown in \ref{tb:environment}.
+In our one-way message transport experiment, maximum bandwidth ot the network is 12.5MB/sec because we use 100 Mbps Ethernet (100BASE-TX) and Half-Duplex as shown in \ref{tb:environment}.
 Nodes repeatedly transport each data size messages with 10Hz.
 
 In small data from 256 B to 2 KB, we can observe constant gap among ROS1, ROS2 with OpenSplice, and ROS2 with Connext from Figure \ref{fig:throughput_small}.
