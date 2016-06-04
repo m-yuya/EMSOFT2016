@@ -95,7 +95,6 @@
 
 \section{Introduction}
 \label{sec:orgheadline5}
-\vspace{1mm}
 
 In recent years, real-time distributed embedded systems, such as autonomous driving vehicles, have become increasingly complicated and diverse.
 Autonomous driving has attracted attention since the November 3, 2007 DARPA Urban Challenge \cite{urmson2008autonomous}.
@@ -124,14 +123,12 @@ Developed by different DDS vendors, several implementations of this communicatio
 Several DDS implementations have been evaluated and validated by researchers \cite{xiong2010evaluating}, \cite{sierla2003evaluation} and DDS vendors.
 These evaluations indicate that DDS is both reliable and flexible.
 
-\vspace{1mm}
 \textbf{Contribution:} 
 In this paper, we clarify the performance characteristics of the currently available data transport for ROS1 and ROS2 in various situations. 
 Focusing on the present capabilities of ROS2, depending on DDS vendor and configuration, we explore and evaluate the potential and constraints of ROS2.
 The advantages and disadvantages of ROS2 in distributed systems are summarized. 
 To the best of our knowledge, this is the first study to explore ROS2 performance.
 
-\vspace{1mm}
 \textbf{Organization:} 
 The remainder of this paper is organized as follows. 
 Section \ref{sec:orgheadline1} provides background information and describes the ROS and DDS system models. 
@@ -142,7 +139,6 @@ Finally, Section \ref{sec:orgheadline4} concludes the paper and offers suggestio
 
 \section{Background}
 \label{sec:orgheadline1}
-\vspace{1mm}
 
 In this section, we provide background knowledge. 
 First, we describe the ROS2 system model compared to ROS1, focusing on its communication system. 
@@ -179,7 +175,7 @@ The publish/subscribe model is designed to be modular at a fine-grained scale an
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=1.0\linewidth]{../figure/ros_pubsub_fig.eps}
+\includegraphics[width=0.8\linewidth]{../figure/ros_pubsub_fig.eps}
 \caption{\label{fig:orgparagraph2}
 Example of ROS publish/subscribe model.}
 \end{figure}
@@ -218,43 +214,36 @@ Each data transport between processes is executed according to a \emph{Quality o
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=1.0\linewidth]{../figure/DDS_model.eps}
+\includegraphics[width=0.8\linewidth]{../figure/DDS_model.eps}
 \caption{\label{fig:orgparagraph3}
 Data-centric publish-subscribe (DCPS) model.}
 \end{figure}   
 
-\vspace{2mm}
 \noindent \textbf{\emph{DomainParticipant}:} 
 A \emph{DomainParticipant} is a container for following other entities and the entry-point for the service. 
 In DDS, all applications communicate with each other within a \emph{Domain}, which promotes isolation and communication optimization.
 
-\vspace{1mm}
 \noindent \textbf{\emph{Publisher}:} 
 A \emph{Publisher} is the object responsible for data issuance. 
 Managing one or several \emph{DataWriters}, the \emph{Publisher} sends data to one or more \emph{Topics}.
 
-\vspace{1mm}
 \noindent \textbf{\emph{Subscriber}:} 
 A \emph{Subscriber} is responsible for receiving published data and making the data available. 
 The \emph{Subscriber} acts on behalf of one or more \emph{DataReaders}. 
 According to a \emph{Subscriber}, a \emph{DomainParticipant} can receive and dispatch data of different specified types.
 
-\vspace{1mm}
 \noindent \textbf{\emph{DataWriter}:} 
 A \emph{DataWriter} is an object that must be used by a \emph{DomainParticipant} to publish data through a \emph{Publisher}. 
 The \emph{DataWriter} publishes data of a given type.
 
-\vspace{1mm}
 \noindent \textbf{\emph{DataReader}:} 
 A \emph{DataReader} is an object that is attached to a \emph{Subscriber}. 
 Using the \emph{DataReader}, a \emph{DomainParticipant} can receive and access data whose type must correspond to that of the \emph{DataWriter}.
 
-\vspace{1mm}
 \noindent \textbf{\emph{Topic}:} 
 A \emph{Topic} is used to identify each data-object between a \emph{DataWriter} and a  \emph{DataReader}. 
 Each \emph{Topic} is defined by a name and a data type. 
 
-\vspace{1mm}
 \noindent \textbf{\emph{QoS Policy}:} 
 All \emph{DCPS Entities} have a \emph{QoS Policy}, which represents their data transport behavior. 
 Each data transaction is configurable at various levels of granularity via many \emph{QoS Policy} options. 
@@ -265,16 +254,15 @@ In DDS, there are many other \emph{QoS Policies} \cite{dds1.4}, which ROS2 shoul
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=1.0\linewidth]{../figure/DDS_qos.eps}
+\includegraphics[width=0.8\linewidth]{../figure/DDS_qos.eps}
 \caption{\label{fig:orgparagraph4}
 DDS QoS Policy.}
 \end{figure}
 
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{1.0}
 \begin{table}[t]
 \caption{\label{tab:orgtable1}
   All QoS Policies of ROS2}
-\vspace{2mm}
 \centering
 \begin{tabular}{|p{0.3\linewidth}|p{0.6\linewidth}|}
 \hline
@@ -289,7 +277,6 @@ DURABILITY & With this policy, the service attempts to keep several samples so t
 \end{tabular}
 \end{table}
 
-\vspace{2mm}
 In the DCPS model, data of a given type is published from one or several \emph{DataWriters} to a \emph{topic} (its name is unique in the \emph{Domain}).
 One or more \emph{DataReaders} identify a data-object by \emph{topic} name in order to subscribe to the \emph{topic}. 
 After this transaction, a \emph{DataWriter} connects to a \emph{DataReader} using the Real-Time Publish/Subscribe (RTPS) protocol \cite{rtps2.2} in distributed systems. 
@@ -306,7 +293,6 @@ Thus, users can focus solely on their purpose and determine ways to satisfy real
 
 \section{Evaluations}
 \label{sec:orgheadline2}
-\vspace{1mm}
 
 This section clarifies the capabilities and latency characteristics of ROS1 and ROS2. 
 At present, ROS2 has been released as an alpha version whose major features are a C++ client library, a build-system and abstraction to a part of the DDS middleware from several vendors. 
@@ -334,9 +320,8 @@ Using \emph{mlockall}, a process's virtual address space is fixed in physical RA
 
 \begin{table}[t]
   \caption{Evaluation Environment} 
-  \vspace{2mm}
   \begin{threeparttable}
-    \renewcommand{\arraystretch}{1.4}
+    \renewcommand{\arraystretch}{1.0}
     \label{tb:environment}
     \centering
     \small
@@ -362,11 +347,10 @@ Using \emph{mlockall}, a process's virtual address space is fixed in physical RA
   \end{threeparttable}
 \end{table}
 
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{1.0}
 \begin{table}[t]
 \caption{\label{tab:orgtable2}
 QoS Policies for Evaluations}
-\vspace{2mm}
 \centering
 \tabcolsep = 1.5mm              % side-margin in column
 \begin{tabular}{c|cc}
@@ -388,9 +372,8 @@ DURABILITY & \texttt{TRANSIENT\_LOCAL} & \texttt{VOLATILE}\\
 \newcommand*{\z}[1]{$\triangle^{#1}$} % set macro 
 
 \begin{table*}[t]
-  \renewcommand{\arraystretch}{1.5}
+  \renewcommand{\arraystretch}{1.1}
   \caption{Capabilities of ROS1 and/or ROS2 for each Data Transport} 
-  \vspace{2mm}
   \label{tb:capabilities}
   \centering
   \tabcolsep = 1.5mm              % side-margin in column
@@ -428,7 +411,7 @@ DURABILITY & \texttt{TRANSIENT\_LOCAL} & \texttt{VOLATILE}\\
   }
   \\ 
   \begin{flushleft}
-  $^{*}$: same behavior as 1 and 64 KB;   \\
+  $^{*}$: same behavior as 1 and 64 KB;
   \x : data transport possible;   
   \z1: possible but missing the deadline;   
   \z2: data loss possible; \\
@@ -459,7 +442,6 @@ Evaluation using \texttt{ros\_bridge} in (3-a) and (3-b).}
 \begin{figure*}[t]
 \centering
 \includegraphics[width=1.0\linewidth]{../figure/overview_BoxPlot.eps}
-\vspace{0.5mm}
 \caption{\label{fig:overview_boxplot}
 Overview of end-to-end latencies of ROS1 and/or ROS2.}
 \end{figure*}
@@ -527,7 +509,6 @@ Currently, the above results indicate that ROS2 is not suitable for handling lar
     \begin{minipage}[t]{0.3\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/comparison_remote_local_small-data_Plot.eps}
       \caption{Medians of end-to-end latencies with small data in \texttt{remote} and \texttt{local} cases.}
-      \vspace{5mm}
       \label{fig:remote_local_small_plot}
     \end{minipage}   
     &
@@ -535,7 +516,6 @@ Currently, the above results indicate that ROS2 is not suitable for handling lar
       \begin{minipage}[t]{0.3\textwidth}
         \includegraphics[width=1.0\linewidth]{../figure/comparison_intra_nodelet_local_small-data_Plot.eps}
         \caption{Medians of end-to-end latencies with small data in \texttt{local}, \emph{nodelet}, and \emph{intra-process} cases.}
-        \vspace{5mm}
         \label{fig:local_small_plot}
       \end{minipage}
     &
@@ -543,7 +523,6 @@ Currently, the above results indicate that ROS2 is not suitable for handling lar
       \begin{minipage}[t]{0.31\textwidth}
         \includegraphics[width=1.0\linewidth]{../figure/breakdown_ros2_local_BarPlot.eps}
         \caption{(2-b) \texttt{reliable policy} breakdown of ROS2 latencies with the OpenSplice.}
-        \vspace{5mm}
         \label{fig:ros2_local_barplot}
       \end{minipage}
     \\  
@@ -673,12 +652,10 @@ In terms of end-to-end latency, we should preset the fragment size to 64 KB when
 
 \section{Related Work}
 \label{sec:orgheadline3}
-\vspace{1mm}
 
 In addition to the ROS, the Robot Technology Middleware (RTM) \cite{ando2005rt} is well known and widely used for robotics development. 
 In this section, we discuss research related to the ROS and RTM.
 
-\vspace{2mm}
 \textbf{RTM:} 
 RTM applications consist of Robotic Technology Component (RTC), whose specifications are managed by the OMG \cite{omg}. 
 RTM cannot handle hard real-time and embedded systems because it generally uses not real-time CORBA \cite{schmidt1998design} but CORBA \cite{vinoski1997corba} \cite{corba3.3}.
@@ -727,7 +704,6 @@ Using the ROS in an RTOS, applications can benefit from some features of the RTO
 To use RT-ROS, it is necessary to modify legacy ROS libraries and nodes. 
 In addition, RT-ROS is not open-source software; therefore, it is developed more slowly than open-source software.
 
-\vspace{2mm}
 Table \ref{tb:comparison} briefly summarizes the characteristics of several related methods and compares them to ROS2. 
 ROS1 has more libraries and tools for robotics development than RTM.
 At present, ROS2 has only a few libraries and packages because it is currently in development. 
@@ -735,11 +711,10 @@ However, by using multiple DDS implementations, ROS2 can run on small embedded s
 In addition, by utilizing the capabilities of DDS and RTOSs, ROS2 is designed to overcome real-time constraints and has been developed to be cross-platform.
 ROS2 inherits and improves the capabilities of ROS1.
 
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{1.0}
 \begin{table*}[t]
 \caption{\label{tb:comparison}
 Comparison of ROS2 to Related Work}
-\vspace{2mm}
 \centering
 \scriptsize	                    % text size 
 \tabcolsep = 1.5mm              % side-margin in column
@@ -766,7 +741,6 @@ ROS2 \cite{ros2_iccps2016} & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 
 
 \section{Conclusion}
 \label{sec:orgheadline4}
-\vspace{1mm}
 
 This paper has clarified the capabilities of the currently available ROS2 (alpha3) and evaluated the performance characteristics of ROS1 and ROS2 in various situations.
 Furthermore, we have measured the influence of different DDS implementations and the \emph{QoS Policy} in ROS2.
@@ -787,7 +761,7 @@ ROS2 behavior in other experimental situations such as high CPU load are also in
 Since ROS2 is not currently suitable for handling large data, we must tune DDS configurations and evaluate their influence in order to improve the performance and capabilities of ROS2.
 
 % \renewcommand{\baselinestretch}{0.85}
-\setlength{\baselineskip}{11pt}      % 行間の直接指定
+%% \setlength{\baselineskip}{11pt}      % 行間の直接指定
 
 \bibliographystyle{abbrv}       % ACM
 \bibliography{reference}
