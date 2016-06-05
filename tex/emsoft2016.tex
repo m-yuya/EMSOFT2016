@@ -728,6 +728,13 @@ We also clarify a need of alternative API for large \emph{message} to manga divi
 It is critical to handle lager message.
 Abstraction of this shortens DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
 
+At present, we should collaborate ROS1 and ROS2 with \texttt{ros\_bridge}.
+ROS2 has above goodness but it is under development.
+In addition, a lot of existing packages of ROS1 is useful for developers.
+While we develop critical part of application on ROS2, we implement other part on ROS1 with its rich packages and tools.
+We must be careful to reduce shared \emph{topics} and its data size because \emph{topics} conversion by \texttt{ros\_bridge} takes much time as shown in Figures \ref{fig;local_plot} and \ref{fig;local_small_plot}.
+When \emph{topic} communication between ROS1 and ROS2 is conducted in \texttt{remote} case, overhead latency is relatively small in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
+
 \section{Related Work}
 \label{sec:orgheadline3}
 
