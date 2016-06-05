@@ -502,8 +502,8 @@ Therefore, we consider that DDS is not designed to handle large data.
 This is important for the analysis of ROS2 performance.
 For example, FastRTPS does not support large data because it is designed as a lightweight implementation for embedded systems. 
 Even a string of 256 B exceeds the maximum length in FastRTPS.
-Many DDS vendors do not support publishing large data with reliable connections and common APIs to send and manage divided packets. 
-To publish large data, such DDS vendors provide an alternate API, which has not been abstracted from ROS2. 
+Many DDS vendors do not support publishing large data with reliable connections and common APIs.
+To send and manage divided packets, such DDS vendors provide an alternate API such as asynchronous publisher and flow controller, which has not been abstracted from ROS2. 
 In our experiments, Connext with \texttt{reliable policy} yields errors when data are greater than 64 KB.
 Some failures with the \texttt{best-effort policy} are due to frequent \emph{message} losses caused by non-reliable communication. 
 When a \emph{publisher-node} fails to transfer data to a \emph{subscriber-node} frequently, we cannot collect sufficient samples and conduct evaluations.
@@ -717,7 +717,10 @@ It influences especially when many kinds of topic are used with high Hz.
 We recommend Connext to consider minimum necessary throughput in \texttt{remote} case.
 
 Although ROS1 is low end-to-end latency and low throughput for pub/sub transport, ROS2 supports real-time embedded systems.
+To target these systems, it is inevitable that ROS1 users accept another approach.
+We consider ROS2 outweigh its cost for using DDS.
 Fault tolerance of ROS2 is superior because it is able to save past data with \emph{QoS Policy} and does not have a master \emph{node}.
+ROS2 will expand the scope of supported \emph{QoS Policies} for real-time systems.
 In addition, ROS2 is able to run on multiple platforms include RTOS and swich DDS implementation as needed.
 FastRTPS is currently the best DDS implementation for embedded systems in thread and memory as Table * indicates.
 
