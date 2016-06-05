@@ -496,11 +496,13 @@ This \emph{QoS Policy} accelerates fault-tolerance for applications.
 Another interesting observation from Table \ref{tb:capabilities} is that ROS2 has many problems when transporting large data.
 Many experiments fail in various situations with ROS2; however, we can observe differences in performance between Connext and OpenSplice.
 These constraints on large data originate from the fact that the maximum payload of Connext and OpenSplice is 64 KB.
+This is the maximum packet size of IP protocol.
+Is is hard to maintain divided packets with \emph{QoS Policy} by default API.
 Therefore, we consider that DDS is not designed to handle large data.
 This is important for the analysis of ROS2 performance.
 For example, FastRTPS does not support large data because it is designed as a lightweight implementation for embedded systems. 
 Even a string of 256 B exceeds the maximum length in FastRTPS.
-Many DDS vendors do not support publishing large data with reliable connections and common APIs. 
+Many DDS vendors do not support publishing large data with reliable connections and common APIs to send and maintain divided packets. 
 To publish large data, such DDS vendors provide an alternate API, which has not been abstracted from ROS2. 
 In our experiments, Connext with \texttt{reliable policy} yields errors when data are greater than 64 KB.
 Some failures with the \texttt{best-effort policy} are due to frequent \emph{message} losses caused by non-reliable communication. 
@@ -580,6 +582,7 @@ In addition, all latencies are predictable by measuring the data transmission ti
 \label{sec:local}
 The latency characteristics differ in the cases of small and large data.
 For discussion, we divide the graph into Figures \ref{fig:local_small_plot} and \ref{fig:local_plot}, which show the medians of the end-to-end latencies for local loopback and shared memory transport extracted from Figure \ref{fig:overview_boxplot}.
+This is beacause whether a \emph{message} is divided into several packets or not is import issue to consider end-to-end latency.
 
 For data size less than 64 KB, a constant overhead with ROS2 is observed, as shown in Figure \ref{fig:local_small_plot}, because DDS requires marshaling various configurations and decisions for the \emph{QoS Policy}.
 We observe a trade-off between latencies and the \emph{QoS Policy} regardless of data size.
