@@ -162,6 +162,7 @@ In contrast, as shown in the right side of Figure \ref{fig:orgparagraph1}, ROS2 
 Users do not need to be aware of the DDS APIs due to this abstraction layer.
 This layer allows ROS2 to have high-level configuration and optimizes the utilization of DDS. 
 In addition, due to use of DDS, ROS2 does not need a master process.
+This is a import point in terms of fault tolerance.
 
 ROS applications consist of independent computing processes called \emph{nodes}, which promote fault isolation, faster development, modularity, and code reusability. 
 Communication among \emph{nodes} is based on a publish/subscribe model. 
@@ -477,7 +478,7 @@ Note that a \texttt{best-effort policy} is the only one used when using a \textt
 % Figure \ref{fig:orgparagraph6} shows the \emph{node}-graph for evaluation of communication from ROS1 to ROS2 with socket communication and a \texttt{ros\_bridge} in \texttt{remote} cases.
 
 \subsection{Capabilities of ROS1 and ROS2}
-\label{sec:orgheadline9}
+\label{sec:capacity}
 
 Table \ref{tb:capabilities} shows whether end-to-end latencies can be measured for each data size with a comment about the causal factors of the experimental results.
 Table \ref{tb:capabilities} summarizes ROS2's capabilities, and several interesting observations can be made.
@@ -553,7 +554,7 @@ Currently, the above results indicate that ROS2 is not suitable for handling lar
 \end{figure*}
 
 \subsection{Latency Characteristics of ROS1 and ROS2}
-\label{sec:orgheadline10}
+\label{sec:latency}
 
 As shown in Figure \ref{fig:overview_boxplot}, a tendency of end-to-end latency characteristics is clarified in each situation shown in Figure \ref{fig:orgparagraph5}.
 In (2-a) and (2-b), ROS2 uses OpenSplice with the \texttt{reliable policy}  because ROS1 uses TCPROS, i.e., reliable communication.
@@ -563,17 +564,20 @@ We then evaluate ROS2 with different DDS implementations and configurations, suc
 
 % \noindent \textbf{Comparison between \texttt{remote} and \texttt{local} cases:} 
 \subsubsection{Comparison between \texttt{remote} and \texttt{local} cases}
+\label{sec:remote_local}
 ROS1 and ROS2 is much less than the difference between \texttt{remote} and \texttt{local} cases.
 Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot} show the medians of the latencies for the \texttt{remote} and \texttt{local} cases extracted from Figure \ref{fig:overview_boxplot}.
 Since the conversion influences from ROS1 to ROS2 and from ROS2 to ROS1 are similar, Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot} contain one-way data.
 In Figure \ref{fig:remote_local_small_plot}, the behavior of all latencies is constant up to 4 KB.
-In contrast, the latencies in the \texttt{remote} cases grow sharply from 4 KB, as shown in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
+In contrast, the latencies in the \texttt{remote} cases grow sharply from 16 KB, as shown in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
+This is because ROS1 and ROS2 divide a message into 15 KB packets to transmit data through Ethernet.
 This difference between the \texttt{remote} and \texttt{local} cases corresponds to the data transmission time between \texttt{Machine1} and \texttt{Machine2}, which was measured in a preliminary experiment. The preliminary experiment measured transmission time for each data size using ftp or http.
 This correspondence indicates that the RTPS protocol and data about the \emph{QoS Policy} have little influence on data transmission time in the network.
 In addition, all latencies are predictable by measuring the data transmission time.
 
 % \noindent \textbf{Comparison among \texttt{local}, \emph{nodelet}, and \emph{intra-process} cases:}
 \subsubsection{Comparison among \texttt{local}, nodelet, and intra-process cases}
+\label{sec:local}
 The latency characteristics differ in the cases of small and large data.
 For discussion, we divide the graph into Figures \ref{fig:local_small_plot} and \ref{fig:local_plot}, which show the medians of the end-to-end latencies for local loopback and shared memory transport extracted from Figure \ref{fig:overview_boxplot}.
 
@@ -606,6 +610,7 @@ As ROS2 is in development, that gaps will be closed.
 
 % \noindent \textbf{Comparison within ROS2:} 
 \subsubsection{Comparison within ROS2}
+\label{sec:ros2}
 End-to-end latencies with data less than 16 KB exhibit similar performance in (2-b).
 We discuss performance for data of 16 KB to 4 MB.
 
@@ -640,7 +645,7 @@ In terms of end-to-end latency, we should preset the fragment size to 64 KB when
     &
       \begin{minipage}[t]{0.31\textwidth}
         \includegraphics[width=1.0\linewidth]{../figure/comparison_qos_BoxPlot.eps}
-        \caption{(2-b) Two QoS policies in ROS2 with OpenSplice.}
+        \caption{(2-b) Two \emph{QoS policies} in ROS2 with OpenSplice.}
         \label{fig:qos_boxplot}
       \end{minipage}
     &
@@ -653,15 +658,16 @@ In terms of end-to-end latency, we should preset the fragment size to 64 KB when
 \end{figure*}
 
 \subsection{Throughput of ROS1 and ROS2}
+\label{sec:throughput}
 We also measure each throughput of ROS1 and ROS2 in \texttt{remote} case.
-In our one-way message transport experiment, maximum bandwidth ot the network is 12.5MB/sec because we use 100 Mbps Ethernet (100BASE-TX) and Full-Duplex as shown in Table \ref{tb:environment}.
-Nodes repeatedly transport each data size messages with 10Hz.
+In our one-way \emph{message} transport experiment, maximum bandwidth ot the network is 12.5MB/sec because we use 100 Mbps Ethernet (100BASE-TX) and Full-Duplex as shown in Table \ref{tb:environment}.
+Nodes repeatedly transport each \emph{message} with 10Hz.
 
 In small data from 256 B to 2 KB, we can observe constant gap among ROS1, ROS2 with OpenSplice, and ROS2 with Connext from Figure \ref{fig:throughput_small}.
-These additional data correspond with RTPS packets for QoS and heartbeat.
+These additional data correspond with RTPS packets for \emph{QoS Policy} and heartbeat.
 Hence, these gap does not depend on data size.
 Moreover, Connext throughput is lower than OpenSplice one.
-This becomes big impact when users handle many kinds of small data with high Hz.
+This becomes big impact when users handle many kinds of small data with high Hz and/or network bandwidth is limited.
 
 In large data from 2 KB to 4MB, curves of Figure \ref{fig:throughput_large} demonstrate sustainable theoretical throughput.
 ROS2 and ROS2 is able to utilize all of available bandwidth and similarly behave in this situation.
