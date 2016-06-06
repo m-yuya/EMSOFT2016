@@ -663,7 +663,7 @@ In terms of end-to-end latency, we should preset the fragment size to 64 KB when
 \subsection{Throughput of ROS1 and ROS2}
 \label{sec:throughput}
 We also measure each throughput of ROS1 and ROS2 in \texttt{remote} case.
-In our one-way \emph{message} transport experiment, maximum bandwidth ot the network is 12.5MB/sec because we use 100 Mbps Ethernet (100BASE-TX) and Full-Duplex as shown in Table \ref{tb:environment}.
+In our one-way \emph{message} transport experiment, maximum bandwidth ot the network is 12.5 MB/sec because we use 100 Mbps Ethernet (100BASE-TX) and Full-Duplex as shown in Table \ref{tb:environment}.
 Nodes repeatedly transport each \emph{message} with 10Hz.
 
 In small data from 256 B to 2 KB, we can observe constant gap among ROS1, ROS2 with OpenSplice, and ROS2 with Connext from Figure \ref{fig:throughput_small}.
@@ -680,13 +680,13 @@ Throughput is limited by the network and not by DDS.
   \begin{tabular}{ccc}
     \begin{minipage}[t]{0.31\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_small-data.eps}
-      \caption{}
+      \caption{(1-a) and (2-b) \texttt{remote} case throughput with small data}
       \label{fig:throughput_small}
     \end{minipage}
     &
       \begin{minipage}[t]{0.31\textwidth}
         \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_large-data.eps}
-        \caption{}
+        \caption{(1-a) and (2-b) \texttt{remote} case throughput with large data}
         \label{fig:throughput_large}
       \end{minipage}
     &
@@ -697,6 +697,36 @@ Throughput is limited by the network and not by DDS.
       %% \end{minipage}
   \end{tabular}
 \end{figure*}
+
+\subsection{Thread of ROS1 and ROS2}
+\label{sec:throughput}
+In this section, we measure the number of thread on each \emph{node}.
+Table \ref{tb:thread} shows the result of measurements.
+Note that its number depends on DDS configuration including \emph{QoS Policy}.
+The number does not be fixed by vendors.
+
+First of all, we can observe that ROS2 \emph{node} with OpenSplice has a lot of threads.
+This may cause parallelized processing and the fact that OpenSplice is much faster than Connext as shown in Figure \ref{fig:dds_boxplot}.
+
+Another interesting point is FastRTPS threads.
+ROS2 \emph{node} with FastRTPS realizes discovery and serialization, and pub/sub data transport with same number of ROS1 \emph{node} thread.
+This result proves improvement of faul tolerance without additional resources because FastRTPS deos not need \emph{master-node}.
+
+\renewcommand{\arraystretch}{1.1}
+\begin{table}[t]
+\caption{\label{tb:thread}The Number of Thread on ROS1 or ROS2}
+\centering
+\tabcolsep = 1.5mm              % side-margin in column
+\begin{tabular}{c|cccc}
+\hline
+ & ROS1 & Connext & OpenSplice & FastRTPS \\
+\hline
+\hline
+node & 5 & 8 & 49 & 5 \\
+master-node & 3 & - & - & - \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Lessons Learned}
 \label{sec:lessons}
@@ -729,9 +759,10 @@ First, current \emph{QoS Policies} supposed by ROS2 provide fault tolerance but 
 ROS2 has to expand the scope of supported \emph{QoS Policies}.
 Second, for small embedded system, ROS2 needs minimum DDS implementation and minimum abstraction layer.
 C library for ROS2 and small DDS implementation are needed and ROS2 support them easily.
-Finally, we also clarify a need of alternative API for large \emph{message} to manage divided packets.
+Third, we also clarify a need of alternative API for large \emph{message} to manage divided packets.
 This is critical to handle lager message.
 Abstraction of this will shorten DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
+Finally, we must tune DDS configurations for ROS2 beacause there are numerous vendor specific configuration options which might affect he performance.
 
 At present, we should collaborate ROS1 and ROS2 with \texttt{ros\_bridge}.
 Addition, a lot of existing packages of ROS1 is useful for developers.
