@@ -109,7 +109,6 @@ Thus, the ROS is not suitable for real-time embedded systems.
 This critical problem has been considered by many research communities, including ROS developers, and various solutions have been proposed and evaluated \cite{rosc@roscon2013}, \cite{uros@roscon2013}, \cite{wei2015rt}.
 However, these solutions are insufficient\footnote{Reasons why prior work is insufficient are discussed in Section \ref{sec:orgheadline3}.}  to address the ROS's limitations for real-time embedded systems. 
 
-
 To satisfy the needs of the now-broader ROS community, the ROS will undergo a significant upgrade to ROS2 \cite{ros2_iccps2016}. 
 ROS2 will consider the following new use cases: real-time systems, small embedded platforms (e.g., sensor nodes), non-ideal networks, and cross-platform (e.g., Linux, Windows, Mac, Real-Time OS (RTOS), and no OS).
 To satisfy the requirements of these new use cases, the existing version of ROS (hereinafter ROS1) will be reconstructed to improve user-interface APIs and incorporate new technologies, such as Data Distribution Service (DDS) \cite{pardo2003omg}, \cite{schlesselman2004omg}, Zeroconf, Protocol Buffers, ZeroMQ, Redis, and WebSockets.\footnote{Currently ROS2 only supports some DDS implementations.}
@@ -123,10 +122,11 @@ Developed by different DDS vendors, several implementations of this communicatio
 Several DDS implementations have been evaluated and validated by researchers \cite{xiong2010evaluating}, \cite{sierla2003evaluation} and DDS vendors.
 These evaluations indicate that DDS is both reliable and flexible.
 
-\textbf{Contribution:} 
-In this paper, we clarify the performance characteristics of the currently available data transport for ROS1 and ROS2 in various situations. 
-Focusing on the present capabilities of ROS2, depending on DDS vendor and configuration, we explore and evaluate the potential and constraints of ROS2.
-The advantages and disadvantages of ROS2 in distributed systems are summarized. 
+\textbf{Contribution:}
+In this paper, we provide proof of concept for DDS approach to ROS.
+We clarify the performance characteristics of the currently available data transport for ROS1 and ROS2 in various situations.
+Focusing on the present capabilities of ROS2, depending on DDS vendor and configuration, we explore and evaluate the potential and constraints from several aspects: latency, throughput, thread, and memory.
+From experimental results, we arrange guidelines for ROS users and what we can do to solve current constrains.
 To the best of our knowledge, this is the first study to explore ROS2 performance.
 
 \textbf{Organization:} 
