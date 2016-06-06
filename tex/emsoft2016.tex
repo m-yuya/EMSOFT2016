@@ -722,9 +722,9 @@ We believe ROS2 outweigh its cost for using DDS.
 Fault tolerance of ROS2 is superior because it is able to save past data with \emph{QoS Policy} and does not have a master \emph{node}.
 In addition, ROS2 is able to run on multiple platforms include RTOS and swich DDS implementation as needed.
 Under RTPS protocol, any ROS2 \emph{nodes} communicate with each other without relation to its platform.
-FastRTPS is currently the best DDS implementation for embedded systems in thread and memory as Table * indicates.
+FastRTPS is currently the best DDS implementation for embedded systems in thread and memory as Table \ref{tb:thread} indicates, but it is not suitable for small embedded system.
 
-However, ROS2 is under development and there is rooms to improve its performance and capability.
+However, ROS2 is under development and there is room to improve its performance and capability.
 First, current \emph{QoS Policies} supposed by ROS2 provide fault tolerance but they are insufficient for real-time processing.
 ROS2 has to expand the scope of supported \emph{QoS Policies}.
 Second, for small embedded system, ROS2 needs minimum DDS implementation and minimum abstraction layer.
@@ -831,24 +831,17 @@ ROS2 \cite{ros2_iccps2016} & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 
 
 \section{Conclusion}
 \label{sec:orgheadline4}
+This paper has conducted proof of concept for DDS approach to ROS and arranged guidelines and room for improvement.
+From experiments, we heve clarified the capabilities of the currently available ROS2 and evaluated the performance characteristics of ROS1 and ROS2 in various situations from several aspects: latency, throughput, thread, and memory.
+Furthermore, we have measured the influence of swithing DDS implementations and the \emph{QoS Policies} in ROS2.
+Understanding each DDS characteristic, we should use a different DDS implementation for different situations.
+DDS gives ROS2 fault tolerance and flexibility for various platforms.
+We expect that ROS2 will support more \emph{QoS Policies} and DDS APIs and will be used in many applications such as real-time embedded systems.
 
-This paper has clarified the capabilities of the currently available ROS2 (alpha3) and evaluated the performance characteristics of ROS1 and ROS2 in various situations.
-Furthermore, we have measured the influence of different DDS implementations and the \emph{QoS Policy} in ROS2.
-Currently, ROS2 faces problems when using large data (greater than 64 KB).
-The end-to-end latency of DDS with ROS2 is much greater than that of ROS1 due to serializing the \emph{QoS Policy}, and ROS2 must convert \emph{messages} between ROS2 and DDS twice.
-In addition, ROS2 does not abstract the DDS API for the transport of large data. 
-DDS implementations supported by ROS2 serialize \emph{messages} even when using shared memory transport.
-We have found room for improvement, as well as a trade-off between latencies and the \emph{QoS Policy}.
-As a result, with large data, ROS2 has greater end-to-end latency, although this is much less than the transmission time between machines.
-Without large data, the performance of ROS2 is similar to that of ROS1.
-Differing from ROS1, ROS2 supports the \emph{QoS Policy}, which is suitable to satisfy real-time constraints.
-We expect that ROS2 will support more \emph{QoS Policies} and DDS APIs.
-In addition, we assume that ROS2 will be used in various applications such as real-time embedded systems.
-
-In future, we will evaluate real-time applications such as an autonomous driving vehicle \cite{kato2015open}, \cite{saito2014fusion}, as case studies using ROS2. 
+In future work, we will evaluate real-time applications such as an autonomous driving vehicle \cite{kato2015open}, \cite{saito2014fusion}, as case studies using ROS2. 
 Moreover, we have to breakdown DDS processing time and execute ROS2 on RTOS.
-ROS2 behavior in other experimental situations such as high CPU load are also interested.
-Since ROS2 is not currently suitable for handling large data, we must tune DDS configurations and evaluate their influence in order to improve the performance and capabilities of ROS2.
+We also are interested in ROS2 behavior on embedded devices.
+Since ROS2 is under development, we must maximize DDS potential by tuning and abstracting more \emph{QoS Policies} and DDS configurations.
 
 % \renewcommand{\baselinestretch}{0.85}
 %% \setlength{\baselineskip}{11pt}      % 行間の直接指定
