@@ -315,7 +315,7 @@ Connext and OpenSplice are well-known commercial license DDS implementations.
 Note that Connext also has a research license. 
 Several implementations of OpenSplice and FastRTPS have been released under the LGPL license. 
 By default, Connext uses UDPv4 and shared memory to exchange data. 
-Note that OpenSplice\footnote{Vortex OpenSplice \cite{ospl_vortex}, i.e., OpenSplice commercial edition, supports shared memory transport, but ROS2 does not supports this. In this paper, OpenSplice DDS Community Edition is used because it is open-source.} 
+Note that OpenSplice\footnote{Vortex OpenSplice \cite{ospl_vortex}, i.e., OpenSplice commercial edition, supports shared memory transport, but ROS2 does not support this. In this paper, OpenSplice DDS Community Edition is used because it is open-source.} 
 and FastRTPS do not support shared memory data transport. 
 For precise evaluations and real-time requirements, \emph{nodes} follow \emph{SCHED\_FIFO} \cite{garg2009real} and the \emph{mlockall} system call. 
 A \emph{SCHED\_FIFO} process preempts any non-\emph{SCHED\_FIFO} processes, i.e., processes that use the default Linux scheduling.
@@ -662,15 +662,15 @@ In terms of end-to-end latency, we should preset the fragment size to 64 KB when
 
 \subsection{Throughput of ROS1 and ROS2}
 \label{sec:throughput}
-We also measure each throughput of ROS1 and ROS2 in \texttt{remote} case.
-In our one-way \emph{message} transport experiment, maximum bandwidth ot the network is 12.5 MB/sec because we use 100 Mbps Ethernet (100BASE-TX) and Full-Duplex as shown in Table \ref{tb:environment}.
+We also measure each throughput of ROS1 and ROS2 in the \texttt{remote} case.
+In our one-way \emph{message} transport experiment, maximum bandwidth of the network is 12.5 MB/sec because we use 100 Mbps Ethernet (100BASE-TX) and Full-Duplex as shown in Table \ref{tb:environment}.
 Nodes repeatedly transport each \emph{message} with 10Hz.
 
 In small data from 256 B to 2 KB, we can observe constant gap among ROS1, ROS2 with OpenSplice, and ROS2 with Connext from Figure \ref{fig:throughput_small}.
 These additional data correspond with RTPS packets for \emph{QoS Policy} and heartbeat.
 Hence, these gap does not depend on data size.
 Moreover, Connext throughput is lower than OpenSplice one.
-This becomes big impact when users handle many kinds of small data with high Hz and/or network bandwidth is limited.
+This becomes significant impact when users handle many kinds of small data with high Hz and/or network bandwidth is limited.
 
 In large data from 2 KB to 4MB, curves of Figure \ref{fig:throughput_large} demonstrate sustainable theoretical throughput.
 ROS2 and ROS2 is able to utilize all of available bandwidth and similarly behave in this situation.
@@ -680,13 +680,13 @@ Throughput is limited by the network and not by DDS.
   \begin{tabular}{ccc}
     \begin{minipage}[t]{0.31\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_small-data.eps}
-      \caption{(1-a) and (2-b) \texttt{remote} case throughput with small data}
+      \caption{(1-a) and (2-b) \texttt{remote} cases throughput with small data}
       \label{fig:throughput_small}
     \end{minipage}
     &
       \begin{minipage}[t]{0.31\textwidth}
         \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_large-data.eps}
-        \caption{(1-a) and (2-b) \texttt{remote} case throughput with large data}
+        \caption{(1-a) and (2-b) \texttt{remote} cases throughput with large data}
         \label{fig:throughput_large}
       \end{minipage}
     &
@@ -710,7 +710,7 @@ This may cause parallelized processing and the fact that OpenSplice is much fast
 
 Another interesting point is FastRTPS threads.
 ROS2 \emph{node} with FastRTPS realizes discovery and serialization, and pub/sub data transport with same number of ROS1 \emph{node} thread.
-This result proves improvement of faul tolerance without additional resources because FastRTPS deos not need \emph{master-node}.
+This result proves improvement of fault tolerance without additional resources because FastRTPS does not need \emph{master-node}.
 
 \renewcommand{\arraystretch}{1.1}
 \begin{table}[t]
@@ -733,24 +733,24 @@ master-node & 3 & - & - & - \\
 While compared with ROS1, we so far have clarified characteristic of ROS2 and DDS implementations from several standpoints: current capability, latency, throughput, and thread.
 We can get insight and guidelines for using ROS2 from these results.
 ROS2 supports \emph{QoS Policy} but there is trade-off of end-to-end latency and throughput.
-In \texttt{local} case, overhead latency of ROS2 is not trivial.
-From Section \ref{sec:latency}, the latency is caused by two data conversion for DDS and slower DDS transaction than ROS1.
-DDS end-to-end latency is constant until \emph{message} data size is lower than maximum packet size (64 KB) as shonw in \ref{fig:local_small_plot}.
-On the other hand, as one large \emph{message} is divided into several packets, the latency sharply increases as shonw in \ref{fig:local_plot}.
+In the \texttt{local} case, a overhead latency of ROS2 is not trivial.
+From Section \ref{sec:latency}, the latency is caused by two data conversions for DDS and slower DDS transaction than ROS1.
+DDS end-to-end latency is constant until \emph{message} data size is lower than maximum packet size (64 KB) as shown in \ref{fig:local_small_plot}.
+On the other hand, as one large \emph{message} is divided into several packets, the latency sharply increases as show in \ref{fig:local_plot}.
 Whether \emph{message} data size is over 64 KB or not is important issue especially in ROS2.
 While ROS2 has overhead latency, OpenSplice utilizes a lot of threads and processes faster than Connext as shown in Figures \ref{fig:dds_boxplot}.
-This is a reason why we currently should use OpenSplice in underlying implementation of DDS in \texttt{local} case.
-In \texttt{remote} case, although overhead latency is trivial, we must consider throughput for bandwidth.
+This is a reason why we currently should use OpenSplice in the underlying implementation of DDS in the \texttt{local} case.
+In the \texttt{remote} case, although overhead latency is trivial, we must consider throughput for bandwidth.
 As shown in \ref{fig:throughput_small}, Connext is superior to OpenSplice in terms of throughput.
 This constant overhead throughput is predictable and exists no matter how small \emph{message} data size is.
 It influences especially when many kinds of topic are used with high Hz.
-We recommend Connext to consider minimum necessary throughput in \texttt{remote} case.
+We recommend Connext to consider minimum necessary throughput in the \texttt{remote} case.
 
 Although ROS1 is low end-to-end latency and low throughput for pub/sub transport, ROS2 supports real-time embedded systems.
 To target these systems, it is inevitable that ROS1 users accept another approach.
 We believe ROS2 outweigh its cost for using DDS.
 Fault tolerance of ROS2 is superior because it is able to save past data with \emph{QoS Policy} and does not have a master \emph{node}.
-In addition, ROS2 is able to run on multiple platforms include RTOS and swich DDS implementation as needed.
+In addition, ROS2 is able to run on multiple platforms include RTOS and switch DDS implementation as needed.
 Under RTPS protocol, any ROS2 \emph{nodes} communicate with each other without relation to its platform.
 FastRTPS is currently the best DDS implementation for embedded systems in thread and memory as Table \ref{tb:thread} indicates, but it is not suitable for small embedded system.
 
@@ -760,15 +760,15 @@ ROS2 has to expand the scope of supported \emph{QoS Policies}.
 Second, for small embedded system, ROS2 needs minimum DDS implementation and minimum abstraction layer.
 C library for ROS2 and small DDS implementation are needed and ROS2 support them easily.
 Third, we also clarify a need of alternative API for large \emph{message} to manage divided packets.
-This is critical to handle lager message.
+This is critical to handle large message.
 Abstraction of this will shorten DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
-Finally, we must tune DDS configurations for ROS2 beacause there are numerous vendor specific configuration options which might affect he performance.
+Finally, we must tune DDS configurations for ROS2 because there are numerous vendor specific configuration options which might affect its performance.
 
 At present, we should collaborate ROS1 and ROS2 with \texttt{ros\_bridge}.
 Addition, a lot of existing packages of ROS1 is useful for developers.
-While we develop a critical part (especially fault tolerance needed) of application on ROS2, we implement other parts on ROS1 with its rich packages and tools.
+While we develop a critical part (especially fault tolerance needed) of an application on ROS2, we implement other parts on ROS1 with its rich packages and tools.
 We must be careful to reduce shared \emph{topics} and its data size because \emph{topic} conversion by \texttt{ros\_bridge} takes much time as shown in Figures \ref{fig:local_plot} and \ref{fig:local_small_plot}.
-When \emph{topic} communication between ROS1 and ROS2 is conducted in \texttt{remote} case, overhead latency is relatively small in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
+When \emph{topic} communication between ROS1 and ROS2 is conducted in the \texttt{remote} case, overhead latency is relatively small in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
 For instance, the case when ROS1 runs on an embedded device and ROS1 runs on host device corresponds to above situation.
 
 \section{Related Work}
@@ -863,8 +863,8 @@ ROS2 \cite{ros2_iccps2016} & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & 
 \section{Conclusion}
 \label{sec:orgheadline4}
 This paper has conducted proof of concept for DDS approach to ROS and arranged guidelines and room for improvement.
-From experiments, we heve clarified the capabilities of the currently available ROS2 and evaluated the performance characteristics of ROS1 and ROS2 in various situations from several aspects: latency, throughput, thread, and memory.
-Furthermore, we have measured the influence of swithing DDS implementations and the \emph{QoS Policies} in ROS2.
+From experiments, we have clarified the capabilities of the currently available ROS2 and evaluated the performance characteristics of ROS1 and ROS2 in various situations from several aspects: latency, throughput, thread, and memory.
+Furthermore, we have measured the influence of switching DDS implementations and the \emph{QoS Policies} in ROS2.
 Understanding each DDS characteristic, we should use a different DDS implementation for different situations.
 DDS gives ROS2 fault tolerance and flexibility for various platforms.
 We expect that ROS2 will support more \emph{QoS Policies} and DDS APIs and will be used in many applications such as real-time embedded systems.
