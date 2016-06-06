@@ -718,22 +718,27 @@ We recommend Connext to consider minimum necessary throughput in \texttt{remote}
 
 Although ROS1 is low end-to-end latency and low throughput for pub/sub transport, ROS2 supports real-time embedded systems.
 To target these systems, it is inevitable that ROS1 users accept another approach.
-We consider ROS2 outweigh its cost for using DDS.
+We believe ROS2 outweigh its cost for using DDS.
 Fault tolerance of ROS2 is superior because it is able to save past data with \emph{QoS Policy} and does not have a master \emph{node}.
-ROS2 will expand the scope of supported \emph{QoS Policies} for real-time systems.
 In addition, ROS2 is able to run on multiple platforms include RTOS and swich DDS implementation as needed.
+Under RTPS protocol, any ROS2 \emph{nodes} communicate with each other without relation to its platform.
 FastRTPS is currently the best DDS implementation for embedded systems in thread and memory as Table * indicates.
 
-We also clarify a need of alternative API for large \emph{message} to manga divided packets.
-It is critical to handle lager message.
-Abstraction of this shortens DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
+However, ROS2 is under development and there is rooms to improve its performance and capability.
+First, current \emph{QoS Policies} supposed by ROS2 provide fault tolerance but they are insufficient for real-time processing.
+ROS2 has to expand the scope of supported \emph{QoS Policies}.
+Second, for small embedded system, ROS2 needs minimum DDS implementation and minimum abstraction layer.
+C library for ROS2 and small DDS implementation are needed and ROS2 support them easily.
+Finally, we also clarify a need of alternative API for large \emph{message} to manage divided packets.
+This is critical to handle lager message.
+Abstraction of this will shorten DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
 
 At present, we should collaborate ROS1 and ROS2 with \texttt{ros\_bridge}.
-ROS2 has above goodness but it is under development.
-In addition, a lot of existing packages of ROS1 is useful for developers.
-While we develop critical part of application on ROS2, we implement other part on ROS1 with its rich packages and tools.
-We must be careful to reduce shared \emph{topics} and its data size because \emph{topics} conversion by \texttt{ros\_bridge} takes much time as shown in Figures \ref{fig;local_plot} and \ref{fig;local_small_plot}.
+Addition, a lot of existing packages of ROS1 is useful for developers.
+While we develop a critical part (especially fault tolerance needed) of application on ROS2, we implement other parts on ROS1 with its rich packages and tools.
+We must be careful to reduce shared \emph{topics} and its data size because \emph{topic} conversion by \texttt{ros\_bridge} takes much time as shown in Figures \ref{fig:local_plot} and \ref{fig:local_small_plot}.
 When \emph{topic} communication between ROS1 and ROS2 is conducted in \texttt{remote} case, overhead latency is relatively small in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
+For instance, the case when ROS1 runs on an embedded device and ROS1 runs on host device corresponds to above situation.
 
 \section{Related Work}
 \label{sec:orgheadline3}
