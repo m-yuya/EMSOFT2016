@@ -482,15 +482,17 @@ Note that a \texttt{best-effort policy} is the only one used when using a \textt
 
 Table \ref{tb:capabilities} shows whether end-to-end latencies can be measured for each data size with a comment about the causal factors of the experimental results.
 Table \ref{tb:capabilities} summarizes ROS2's capabilities, and several interesting observations can be made.
-In the ``Initial loss'' column, ROS1 fails to obtain initial \emph{messages} when a \emph{node} sends \emph{messages} for the first time even though ROS1 uses TCPROS with small data such as 256 B. 
+In the ``Initial loss'' column, ROS1 fails to obtain initial \emph{messages} when a \emph{node} sends \emph{messages} for the first time even though ROS1 uses TCPROS with small data such as 256 B and \emph{subscriber-node} is launched before a \emph{publisher-node} begins to send \emph{messages}.
 Although TCPROS is reliable for delivering intermediate \emph{messages}, it does not support reliable transport of initial \emph{messages}.
 This influences ROS2 when using a \texttt{ros\_bridge}.
-In contrast, ROS2 does not lose initial \emph{messages} under the \texttt{reliable policy}, even when using large data such as 4 MB.
-This proves the reliability of DDS. 
-Furthermore, with ROS1, a \emph{subscriber-node} must be launched before a \emph{publisher-node} begins to send \emph{messages} because published \emph{messages} are lost and never recovered. 
-On the other hand, with ROS2, a \emph{subscriber-node} does not have to be launched before a \emph{publisher-node} starts sending \emph{messages}. 
+In contrast, ROS2 does not lose initial \emph{messages}, even when using large data such as 4 MB.
+This proves the reliability of DDS.
+In \texttt{best-effort policy}, a \texttt{subscriber-node} must be launched before a \emph{publisher-node} begins to send \emph{messages} for ``Initial loss'' none.
+On the other hand, with ROS2 \texttt{reliable policy}, a \emph{subscriber-node} does not have to be launched before a \emph{publisher-node} starts sending \emph{messages}.
 This is attributed to \texttt{TRANSIENT\_LOCAL} in DURABILITY of the \emph{QoS Policy}.
 The \texttt{reliable policy} is tuned to provide resilience against late-joining \emph{subscriber-nodes}.
+In ROS1, published \emph{messages} are lost and never recovered.
+
 This \emph{QoS Policy} accelerates fault-tolerance for applications.
 
 Another interesting observation from Table \ref{tb:capabilities} is that ROS2 has many problems when transporting large data.
