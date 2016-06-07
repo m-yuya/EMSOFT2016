@@ -86,6 +86,30 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
+  Thank you very much for your vital comment.
+  It is true that ROS2 in under heavy development and a very rough draft in this statge.
+  However, this paper aims to conduct proof of concept for DDS approach to ROS and clarifies the needs of abstracting DDS API for large packets.
+  Regardless of development stage of ROS2, we consider that understanding each DDS characteristics is meaningful for ROS2 users, which we provide in this paper.
+  After reading your comment, we have highlighted that this paper aims to proof of concept and arranged premature points of current ROS2.
+  \begin{itembox}[|]{Modified sentences about proof of concept in ``1. INTRODUCTION'' section}
+    \textbf{Contribution:}
+    In this paper, we provide proof of concept for DDS approach to ROS.
+    We clarify the performance characteristics of the currently available data transport for ROS1 and ROS2 in various situations.
+    Focusing on the present capabilities of ROS2, depending on DDS vendor and configuration, we explore and evaluate the potential and constraints from several aspects: latency, throughput, thread, and memory.
+    From experimental results, we arrange guidelines for ROS users and what we can do to solve current constrains.
+    To the best of our knowledge, this is the first study to explore ROS2 performance.
+  \end{itembox}\\
+  \begin{itembox}[|]{Added sentences about improvements for current ROS2 in ``Lessons Learned'' section}
+    However, ROS2 is under development and there is room to improve its performance and capability.
+    First, current \emph{QoS Policies} supposed by ROS2 provide fault tolerance but they are insufficient for real-time processing.
+    ROS2 has to expand the scope of supported \emph{QoS Policies}.
+    Second, for small embedded system, ROS2 needs minimum DDS implementation and minimum abstraction layer.
+    C library for ROS2 and small DDS implementation are needed and ROS2 support them easily.
+    Third, we also clarify a need of alternative API for large \emph{message} to manage divided packets.
+    This is critical to handle large message.
+    Abstraction of this will shorten DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
+    Finally, we must tune DDS configurations for ROS2 beacause there are numerous vendor specific configuration options which might affect its performance.
+  \end{itembox}\\
 
 \end{itemize}
 
@@ -370,11 +394,9 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     Vortex OpenSplice \cite{ospl_vortex}, i.e., OpenSplice commercial edition, supports shared memory transport \textcolor{red}{, but ROS2 does not supports this}. In this paper, OpenSplice DDS Community Edition is used because it is open-source.
   \end{itembox}\\
 
-
 \end{itemize}
 
 \newpage
-
 
 \section{Response to 2\nd reviewer}
 \begin{enumerate}
@@ -388,7 +410,6 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
-
 
 \item \begin{flushleft}
     \textbf{Comment:}
@@ -412,7 +433,6 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
 
-
 \item \begin{flushleft}
     \textbf{Comment:}
   \end{flushleft}
@@ -426,14 +446,15 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 
 \newpage
 
-
 \section{Response to 3\rd reviewer}
 \begin{enumerate}
 
 \item \begin{flushleft}
     \textbf{Comment:}
   \end{flushleft}
-  Despite this, the title and contributions are not clear, particularly, performance is a broad term and the authors mostly present results on message transmission. The contribution should be stated more explicitly.
+  Despite this, the title and contributions are not clear, particularly, performance is a broad term and the authors mostly present results on message transmission. 
+  The contribution should be stated more explicitly.
+  While it is true that other practical considerations are explained, they are not properly highlighted.
 
   \begin{flushleft}
     \textbf{Our reply:}
@@ -444,21 +465,12 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   Another is measurements of threads in ``'' section.
   The other is shared object memory in ``'' section.
   We consider that these broad evaluations and analysis represent the performance of ROS2 after revision.
-  In addition, we have created new section ``Lessons Learned'' to clarify our contributions.
+  In addition, we have created new section ``Lessons Learned'' to clarify our contributions and practical considerations.
   In this section, we explicitly show guidelines for ROS users and highlight our contributions from experiments in this paper.
   This lessons will variable and should be shared among ROS users.
+  
   For precise description of each section, please check our revised paper.
   
-\item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
-  While it is true that other practical considerations are explained, they are not properly highlighted.
-
-  \begin{flushleft}
-    \textbf{Our reply:}
-  \end{flushleft}
-
-
 \item \begin{flushleft}
     \textbf{Comment:}
   \end{flushleft}
@@ -496,6 +508,15 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
+  Thank you for pointing out our lack of explanation.
+  In best-effort policy, ``none'' means there is no inital loss when a subscriber-node is launched before a publisher-node begins to send messages.
+  As you explained, a node with best-effort policy does not have backlog and there will be a lot of messag loss for lata-joining nodes.
+  In Table 3, ``Inital loss'' means whether there is message loss or not for pre-joining nodes.
+  ``Inital loss'' in not for late-joining nodes.
+  After receiving your comment, we have modified sentences in the beginning of ``Capabilities of ROS1 and ROS2'' section to make it easy to understand.
+  \begin{itembox}[|]{Added a sentence in ``Capabilities of ROS1 and ROS2'' section}
+    In \texttt{best-effort policy}, a \texttt{subscriber-node} must be launched before a \emph{publisher-node} begins to send \emph{messages} for ``Initial loss'' none.
+  \end{itembox}\\
 
 \item \begin{flushleft}
     \textbf{Comment:}
