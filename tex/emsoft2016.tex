@@ -681,22 +681,22 @@ Throughput is limited by the network and not by DDS.
 \begin{figure*}[t]
   \begin{tabular}{ccc}
     \begin{minipage}[t]{0.31\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_QoS_depth.eps}
+      \caption{}
+      \label{fig:depth_boxplot}
+    \end{minipage}
+    &
+    \begin{minipage}[t]{0.31\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_small-data.eps}
       \caption{(1-a) and (2-b) \texttt{remote} cases throughput with small data}
       \label{fig:throughput_small}
     \end{minipage}
     &
-      \begin{minipage}[t]{0.31\textwidth}
-        \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_large-data.eps}
-        \caption{(1-a) and (2-b) \texttt{remote} cases throughput with large data}
-        \label{fig:throughput_large}
-      \end{minipage}
-    &
-      %% \begin{minipage}[t]{0.31\textwidth}
-      %%   \includegraphics[width=1.0\linewidth]{../figure/comparison_ospl_frag_BoxPlot.eps}
-      %%   \caption{}
-      %%   \label{fig:frag_boxplot}
-      %% \end{minipage}
+    \begin{minipage}[t]{0.31\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_large-data.eps}
+      \caption{(1-a) and (2-b) \texttt{remote} cases throughput with large data}
+      \label{fig:throughput_large}
+    \end{minipage}
   \end{tabular}
 \end{figure*}
 
@@ -726,6 +726,25 @@ This result proves improvement of fault tolerance without additional resources b
 \hline
 node & 5 & 8 & 49 & 5 \\
 master-node & 3 & - & - & - \\
+\hline
+\end{tabular}
+\end{table}
+
+\renewcommand{\arraystretch}{1.0}
+\begin{table}[t]
+\caption{\label{tb:depth_qos}Depth Configurable QoS Policies}
+\centering
+\tabcolsep = 1.5mm              % side-margin in column
+\begin{tabular}{c|c}
+\hline
+ & \textbf{\texttt{*-depth policy} }\\
+\hline
+\hline
+DEADLINE & \texttt{100 ms}\\
+HISTORY & \texttt{LAST}\\
+depth & 1, 10, or 100\\
+RELIABILITY & \texttt{RELIABLE}\\
+DURABILITY & \texttt{TRANSIENT\_LOCAL}\\
 \hline
 \end{tabular}
 \end{table}
