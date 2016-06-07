@@ -184,21 +184,21 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     Throughput is limited by the network and not by DDS.
   \end{itembox}\\
   \setcounter{figure}{16}
-  \begin{figure*}[h]
-    \begin{tabular}{cc}
-      \begin{minipage}[t]{0.5\textwidth}
-        \includegraphics[width=1.0\linewidth]{../../figure/throughput_remote_small-data.eps}
-        \caption{}
-        \label{fig:throughput_small}
-      \end{minipage}
-      &
+\begin{figure*}[t]
+  \begin{tabular}{cc}
+    \begin{minipage}[t]{0.5\textwidth}
+      \includegraphics[width=1.0\linewidth]{../../figure/throughput_remote_small-data.eps}
+      \caption{(1-a) and (2-b) \texttt{remote} cases throughput with small data}
+      \label{fig:throughput_small}
+    \end{minipage}
+    &
       \begin{minipage}[t]{0.5\textwidth}
         \includegraphics[width=1.0\linewidth]{../../figure/throughput_remote_large-data.eps}
-        \caption{}
+        \caption{(1-a) and (2-b) \texttt{remote} cases throughput with large data}
         \label{fig:throughput_large}
       \end{minipage}
-    \end{tabular}
-  \end{figure*}  
+  \end{tabular}
+\end{figure*}
 
 \end{enumerate}
 
@@ -307,6 +307,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     Abstraction of this shortens DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
   \end{itembox}\\
   \begin{itembox}[|]{Added sentences about improvement of ROS2 in ``5. CONCLUSION'' section}
+    Since ROS2 is under development, we must maximize DDS potential by tuning and abstracting more \emph{QoS Policies} and DDS configurations.
   \end{itembox}\\
 
 \item \begin{flushleft}
