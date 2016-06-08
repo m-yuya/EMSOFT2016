@@ -660,11 +660,36 @@ In terms of end-to-end latency, we should preset the fragment size to 64 KB when
     &
     \begin{minipage}[t]{0.31\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_QoS_depth.eps}
-      \caption{(2-b) Configured \emph{*-depth policy} in ROS2 with OpenSplice}
+      \caption{(2-b) Configured \texttt{*-depth policy} in ROS2 with OpenSplice}
       \label{fig:depth_boxplot}
     \end{minipage}
   \end{tabular}
 \end{figure*}
+
+\subsection{Multiple Destination Publisher of ROS1 and ROS2}
+\label{sec:multiple}
+\begin{figure*}[t]
+  \begin{tabular}{ccc}
+    \begin{minipage}[t]{0.31\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ros1_1M_multi-pub5.eps}
+      \caption{(1-b) ROS1 multiple destination publisher}
+      \label{fig:ros1_multi}
+    \end{minipage}
+    &
+    \begin{minipage}[t]{0.31\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_1M_multi-pub5.eps}
+      \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}}
+      \label{fig:ospl_multi}
+    \end{minipage}
+    &
+    \begin{minipage}[t]{0.31\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_128K_multi-pub5.eps}
+      \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}}
+      \label{fig:ospl_multi_128K}
+    \end{minipage}
+  \end{tabular}
+\end{figure*}
+
 
 \subsection{Throughput of ROS1 and ROS2}
 \label{sec:throughput}
