@@ -628,12 +628,16 @@ OpenSplice provides fast processing at the cost of various features such as shar
 We assume that the performance of Vortex OpenSplice is similar to that of Connext DDS Professional.
 However, Vortex OpenSplice needs a commercial license and is not supported by ROS2.
 
-In addition, the influence of the \emph{QoS Policy} on end-to-end latencies is evaluated in (2-b) OpenSplice with the \texttt{reliable policy} and \texttt{best-effort policy}.
-Figure \ref{fig:qos_boxplot} shows differences in latencies depending on the \emph{QoS Policy}.
+In addition, the influence of the \emph{QoS Policy} on end-to-end latencies is evaluated in (2-b) OpenSplice with the \texttt{reliable policy}, \texttt{best-effort policy}, and \texttt{*-depth policy}.
+\texttt{*-depth policy} is prepared for this evaluation and configured by depth as shown in Table \ref{tb:depth_qos}.
+Figure \ref{fig:qos_boxplot} shows differences in latencies depending on the \texttt{reliable policy} and \texttt{best-effort policy}.
 The impact of the \emph{QoS Policy} is shown in Figures \ref{fig:ros2_local_barplot} and \ref{fig:ros2_local_best-effort_barplot}.
 In this evaluation, the network is ideal, i.e., \emph{publisher-nodes} resend \emph{messages} very infrequently.
 If the network is not ideal, latencies with the \texttt{reliable policy} increase.
 The differences in RELIABILITY and DURABILITY in the \emph{QoS Policy} lead to overhead at the cost of reliable communication and resilience against late-joining \emph{Subscribers}.
+Figure \ref{fig:depth_boxplot} shows no differences depending on the depth of \texttt{*-depth policy}.
+These \emph{QoS policies} are different in the number \emph{nodes} save \texttt{messages}.
+Although this number influences resources, this does not affect latency because archiving \emph{messages} is conducted in every publication.
 
 Finally, fragment overhead is measured using OpenSplice in (2-b) by changing the fragment size to the maximum UDP datagram size of 64 KB. 
 A maximum payload for Connext and OpenSplice originates from this UDP datagram size, because dividing large data into several datagrams has significant impact on many implementations of the \emph{QoS Policy}.
@@ -648,17 +652,17 @@ In terms of end-to-end latency, we should preset the fragment size to 64 KB when
       \label{fig:dds_boxplot}
     \end{minipage}
     &
-      \begin{minipage}[t]{0.31\textwidth}
-        \includegraphics[width=1.0\linewidth]{../figure/comparison_qos_BoxPlot.eps}
-        \caption{(2-b) Two \emph{QoS policies} in ROS2 with OpenSplice.}
-        \label{fig:qos_boxplot}
-      \end{minipage}
+    \begin{minipage}[t]{0.31\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/comparison_qos_BoxPlot.eps}
+      \caption{(2-b) Two \emph{QoS policies} in ROS2 with OpenSplice.}
+      \label{fig:qos_boxplot}
+    \end{minipage}
     &
-      \begin{minipage}[t]{0.31\textwidth}
-        \includegraphics[width=1.0\linewidth]{../figure/comparison_ospl_frag_BoxPlot.eps}
-        \caption{(2-b) Different fragment sizes in ROS2 with OpenSplice \texttt{best-effort policy}.}
-        \label{fig:frag_boxplot}
-      \end{minipage}
+    \begin{minipage}[t]{0.31\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_QoS_depth.eps}
+      \caption{(2-b) Configured \emph{*-depth policy} in ROS2 with OpenSplice}
+      \label{fig:depth_boxplot}
+    \end{minipage}
   \end{tabular}
 \end{figure*}
 
@@ -681,9 +685,9 @@ Throughput is limited by the network and not by DDS.
 \begin{figure*}[t]
   \begin{tabular}{ccc}
     \begin{minipage}[t]{0.31\textwidth}
-      \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_QoS_depth.eps}
-      \caption{}
-      \label{fig:depth_boxplot}
+      \includegraphics[width=1.0\linewidth]{../figure/comparison_ospl_frag_BoxPlot.eps}
+      \caption{(2-b) Different fragment sizes in ROS2 with OpenSplice \texttt{best-effort policy}.}
+      \label{fig:frag_boxplot}
     \end{minipage}
     &
     \begin{minipage}[t]{0.31\textwidth}
@@ -714,22 +718,6 @@ Another interesting point is FastRTPS threads.
 ROS2 \emph{node} with FastRTPS realizes discovery and serialization, and pub/sub data transport with same number of ROS1 \emph{node} thread.
 This result proves improvement of fault tolerance without additional resources because FastRTPS does not need \emph{master-node}.
 
-\renewcommand{\arraystretch}{1.1}
-\begin{table}[t]
-\caption{\label{tb:thread}The Number of Thread on ROS1 or ROS2}
-\centering
-\tabcolsep = 1.5mm              % side-margin in column
-\begin{tabular}{c|cccc}
-\hline
- & ROS1 & Connext & OpenSplice & FastRTPS \\
-\hline
-\hline
-node & 5 & 8 & 49 & 5 \\
-master-node & 3 & - & - & - \\
-\hline
-\end{tabular}
-\end{table}
-
 \renewcommand{\arraystretch}{1.0}
 \begin{table}[t]
 \caption{\label{tb:depth_qos}Depth Configurable QoS Policies}
@@ -745,6 +733,22 @@ HISTORY & \texttt{LAST}\\
 depth & 1, 10, or 100\\
 RELIABILITY & \texttt{RELIABLE}\\
 DURABILITY & \texttt{TRANSIENT\_LOCAL}\\
+\hline
+\end{tabular}
+\end{table}
+
+\renewcommand{\arraystretch}{1.1}
+\begin{table}[t]
+\caption{\label{tb:thread}The Number of Thread on ROS1 or ROS2}
+\centering
+\tabcolsep = 1.5mm              % side-margin in column
+\begin{tabular}{c|cccc}
+\hline
+ & ROS1 & Connext & OpenSplice & FastRTPS \\
+\hline
+\hline
+node & 5 & 8 & 49 & 5 \\
+master-node & 3 & - & - & - \\
 \hline
 \end{tabular}
 \end{table}
