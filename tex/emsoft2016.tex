@@ -11,28 +11,28 @@
 
 % \author{\IEEEauthorblockN{Yuya Maruyama}\IEEEauthorblockA{School of Engineering Science\\Osaka University}\and\IEEEauthorblockN{Shinpei Kato}\IEEEauthorblockA{Graduate School of Information Science\\Nagoya University}\and\IEEEauthorblockN{Takuya Azumi}\IEEEauthorblockA{Graduate School of Engineering Science\\Osaka University }}
 
-\numberofauthors{3}
-\author{
-% 1st. author
-\alignauthor Yuya Maruyama\\
-\affaddr{Graduate School of Engineering Science}\\
-\affaddr{Osaka University}\\
-       % \affaddr{Institute for Clarity in Documentation}\\
-       % \affaddr{1932 Wallamaloo Lane}\\
-       % \affaddr{Wallamaloo, New Zealand}\\
-       % \email{trovato@corporation.com}
-% 2nd. author
-\alignauthor Shinpei Kato\\
-\affaddr{Graduate School of Information Science and Technology}\\
-\affaddr{The University of Tokyo}\\
-       % \affaddr{P.O. Box 1212}\\
-       % \affaddr{Dublin, Ohio 43017-6221}\\
-       % \email{webmaster@marysville-ohio.com}
-% 3rd. author
-\alignauthor Takuya Azumi\\
-\affaddr{Graduate School of Engineering Science}\\
-\affaddr{Osaka University}\\
-}
+%% \numberofauthors{3}
+%% \author{
+%% % 1st. author
+%% \alignauthor Yuya Maruyama\\
+%% \affaddr{Graduate School of Engineering Science}\\
+%% \affaddr{Osaka University}\\
+%%        % \affaddr{Institute for Clarity in Documentation}\\
+%%        % \affaddr{1932 Wallamaloo Lane}\\
+%%        % \affaddr{Wallamaloo, New Zealand}\\
+%%        % \email{trovato@corporation.com}
+%% % 2nd. author
+%% \alignauthor Shinpei Kato\\
+%% \affaddr{Graduate School of Information Science and Technology}\\
+%% \affaddr{The University of Tokyo}\\
+%%        % \affaddr{P.O. Box 1212}\\
+%%        % \affaddr{Dublin, Ohio 43017-6221}\\
+%%        % \email{webmaster@marysville-ohio.com}
+%% % 3rd. author
+%% \alignauthor Takuya Azumi\\
+%% \affaddr{Graduate School of Engineering Science}\\
+%% \affaddr{Osaka University}\\
+%% }
 
 
 % Copyright
@@ -151,8 +151,10 @@ Finally, we describe DDS, which is used as the communication system for real-tim
 \begin{figure}[t]
 \centering
 \includegraphics[width=1.0\linewidth]{../figure/ros_architecture.eps}
+\vspace{-8mm}
 \caption{\label{fig:orgparagraph1}
 ROS1/ROS2 architecture.}
+\vspace{-5mm}
 \end{figure}   
 
 Figure \ref{fig:orgparagraph1} briefly illustrates the system models of ROS1 and ROS2. 
@@ -443,12 +445,12 @@ Experimental situations.}
 Evaluation using \texttt{ros\_bridge} in (3-a) and (3-b).}
 \end{figure}
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=1.0\linewidth]{../figure/overview_BoxPlot.eps}
-\caption{\label{fig:overview_boxplot}
-Overview of end-to-end latencies of ROS1 and/or ROS2.}
-\end{figure*}
+%% \begin{figure*}[t]
+%% \centering
+%% \includegraphics[width=1.0\linewidth]{../figure/overview_BoxPlot.eps}
+%% \caption{\label{fig:overview_boxplot}
+%% Overview of end-to-end latencies of ROS1 and/or ROS2.}
+%% \end{figure*}
 
 
 As shown in Figure \ref{fig:orgparagraph5}, various communication situations between \emph{nodes} in ROS1 and/or ROS2 are evaluated in the following experiments.
@@ -660,32 +662,46 @@ In terms of end-to-end latency, we should preset the fragment size to 64 KB when
     &
     \begin{minipage}[t]{0.31\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_QoS_depth.eps}
-      \caption{(2-b) Configured \texttt{*-depth policy} in ROS2 with OpenSplice}
+      \caption{(2-b) Configured \texttt{*-depth policy} in ROS2 with OpenSplice.}
       \label{fig:depth_boxplot}
     \end{minipage}
   \end{tabular}
 \end{figure*}
 
-\subsection{Multiple Destination Publisher of ROS1 and ROS2}
+\subsubsection{Multiple Destination Publisher in \texttt{local} cases}
 \label{sec:multiple}
+In this section, we prepare five \emph{subscriber-nodes} and measure latency of each \emph{node}.
+Much of information shared in real applications is destinated to multiple destination.
+Hence, this evaluation is practical for user.
+Figure \ref{fig:ros1_multi} shows latencies of ROS1.
+We can observe significant differences between \emph{subscriber-nodes}.
+This means ROS1 schedules \emph{message} publication in order and is not suitable for real-time systems.
+For example, in 1 MB, subscriber 5 is about twice as mach as subscriber 1.
+In contrast, ROS2 has samll differences as shown in Figure \ref{fig:ospl_multi}.
+All subscribers' behavior is fair in ROS2.
+However, ROS2 latencies significantly depends on the number of packets.
+This is same characteristic we learned from Figure \ref{fig:remote_local_plot}.
+Figure \ref{fig:ospl_multi_128K} indicates fair latencies and dependency of packets.
+Although we can not say that latency variance of ROS1 is larger than one of ROS2 due to the difference of the scale, Figures \ref{fig:ros1_multi}, \ref{fig:ospl_multi}, and \ref{fig:ospl_multi_128K} prove ROS2 \emph{message} publication is more fair to multiple subscribes than ROS1 one.
+
 \begin{figure*}[t]
   \begin{tabular}{ccc}
     \begin{minipage}[t]{0.31\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/comparison_ospl_frag_BoxPlot.eps}
+      \caption{(2-b) Different fragment sizes in ROS2 with OpenSplice \texttt{best-effort policy}.}
+      \label{fig:frag_boxplot}
+    \end{minipage}
+    &
+    \begin{minipage}[t]{0.31\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ros1_1M_multi-pub5.eps}
-      \caption{(1-b) ROS1 multiple destination publisher}
+      \caption{(1-b) ROS1 multiple destination publisher.}
       \label{fig:ros1_multi}
     \end{minipage}
     &
     \begin{minipage}[t]{0.31\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_1M_multi-pub5.eps}
-      \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}}
+      \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
       \label{fig:ospl_multi}
-    \end{minipage}
-    &
-    \begin{minipage}[t]{0.31\textwidth}
-      \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_128K_multi-pub5.eps}
-      \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}}
-      \label{fig:ospl_multi_128K}
     \end{minipage}
   \end{tabular}
 \end{figure*}
@@ -710,20 +726,20 @@ Throughput is limited by the network and not by DDS.
 \begin{figure*}[t]
   \begin{tabular}{ccc}
     \begin{minipage}[t]{0.31\textwidth}
-      \includegraphics[width=1.0\linewidth]{../figure/comparison_ospl_frag_BoxPlot.eps}
-      \caption{(2-b) Different fragment sizes in ROS2 with OpenSplice \texttt{best-effort policy}.}
-      \label{fig:frag_boxplot}
+      \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_128K_multi-pub5.eps}
+      \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+      \label{fig:ospl_multi_128K}
     \end{minipage}
     &
     \begin{minipage}[t]{0.31\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_small-data.eps}
-      \caption{(1-a) and (2-b) \texttt{remote} cases throughput with small data}
+      \caption{(1-a) and (2-b) \texttt{remote} cases throughput with small data.}
       \label{fig:throughput_small}
     \end{minipage}
     &
     \begin{minipage}[t]{0.31\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_large-data.eps}
-      \caption{(1-a) and (2-b) \texttt{remote} cases throughput with large data}
+      \caption{(1-a) and (2-b) \texttt{remote} cases throughput with large data.}
       \label{fig:throughput_large}
     \end{minipage}
   \end{tabular}
@@ -814,12 +830,12 @@ This is critical to handle large message.
 Abstraction of this will shorten DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
 Finally, we must tune DDS configurations for ROS2 beacause there are numerous vendor specific configuration options which might affect its performance.
 
-At present, we should collaborate ROS1 and ROS2 with \texttt{ros\_bridge}.
-Addition, a lot of existing packages of ROS1 is useful for developers.
-While we develop a critical part (especially fault tolerance needed) of application on ROS2, we implement other parts on ROS1 with its rich packages and tools.
-We must be careful to reduce shared \emph{topics} and its data size because \emph{topic} conversion by \texttt{ros\_bridge} takes much time as shown in Figures \ref{fig:local_plot} and \ref{fig:local_small_plot}.
-When \emph{topic} communication between ROS1 and ROS2 is conducted in the \texttt{remote} case, overhead latency is relatively small in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
-For instance, the case when ROS1 runs on an embedded device and ROS1 runs on host device corresponds to above situation.
+%% At present, we should collaborate ROS1 and ROS2 with \texttt{ros\_bridge}.
+%% Addition, a lot of existing packages of ROS1 is useful for developers.
+%% While we develop a critical part (especially fault tolerance needed) of application on ROS2, we implement other parts on ROS1 with its rich packages and tools.
+%% We must be careful to reduce shared \emph{topics} and its data size because \emph{topic} conversion by \texttt{ros\_bridge} takes much time as shown in Figures \ref{fig:local_plot} and \ref{fig:local_small_plot}.
+%% When \emph{topic} communication between ROS1 and ROS2 is conducted in the \texttt{remote} case, overhead latency is relatively small in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
+%% For instance, the case when ROS1 runs on an embedded device and ROS1 runs on host device corresponds to above situation.
 
 \section{Related Work}
 \label{sec:orgheadline3}
