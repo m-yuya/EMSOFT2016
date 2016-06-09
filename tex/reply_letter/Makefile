@@ -46,6 +46,7 @@ $(BIBOBJS): $(REF)
 
 $(OBJS): $(TARGET).tex 
 	$(PLATEX) $(TARGET).tex
+	$(PLATEX) $(TARGET).tex	
 
 $(PDFOBJ): $(TARGET).dvi
 	$(DVIPDFMX) $(TARGET).dvi
