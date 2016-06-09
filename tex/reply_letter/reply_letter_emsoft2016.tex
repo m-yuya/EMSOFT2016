@@ -121,12 +121,22 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Comment:}
   \end{flushleft}
   The designed experiment only covers latency rates between the two versions of ROS, but there are still other aspects to communications performance. Further research should be conducted to test the throughput, fault tolerance and distributed capabilities of the two.
-
+  
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
-  
-
+  Thank you very much for your vital comments.
+  In the revised paper, we have conducted additional evaluations from various aspects.
+  One is throughput evaluations in ``3.4 Throughput of ROS1 and ROS2'' section.
+  We have clarified throughput characteristics depending on DDS vendors.
+  Another additional evaluations is measurements of latency for multiple destination publisher
+  This is described in ``Multiple Destination Publisher in local cases'' section and will be utilized for fault tolerance and distributed capabilities.
+  From this experiment, we can learn fair latency which DDS brings to ROS.
+  The other additional evaluations also expand our performance evaluation.
+  We have conducted thread measurements in ``Thread of ROS1 and ROS2'' and memory consumption in ``Memory consumption of ROS1 and ROS2'' section.
+  These provide us insights for embedded systems and distributed capabilities.
+  For precise added sentences, please go on reading following our replies and revised paper.
+ 
 \item \begin{flushleft}
     \textbf{Comment:}
   \end{flushleft}
@@ -139,8 +149,43 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   To consider multiple devices, we have conducted evaluations for a multiple destinations publisher.
   Much of the information is often shared in real applications such as robots.
   In our evaluation, we prepare five subscribes and measure end-to-end latencies.
-  \begin{itembox}[|]{Added sentences about multiple destination in ``'' section}
+  \begin{itembox}[|]{Added sentences in ``Multiple Destination Publisher in \texttt{local} cases'' section}
+    In this section, we prepare five \emph{subscriber-nodes} and measure latency of each \emph{node}.
+    Much of information shared in real applications is destinated to multiple destination.
+    Hence, this evaluation is practical for user.
+    Figure \ref{fig:ros1_multi} shows latencies of ROS1.
+    We can observe significant differences between \emph{subscriber-nodes}.
+    This means ROS1 schedules \emph{message} publication in order and is not suitable for real-time systems.
+    For example, in 1 MB, subscriber 5 is about twice as mach as subscriber 1.
+    In contrast, ROS2 has samll differences as shown in Figure \ref{fig:ospl_multi}.
+    All subscribers' behavior is fair in ROS2.
+    However, ROS2 latencies significantly depends on the number of packets.
+    This is same characteristic we learned from Figure \ref{fig:remote_local_plot}.
+    Figure \ref{fig:ospl_multi_128K} indicates fair latencies and dependency of packets.
+    Although we can not say that latency variance of ROS1 is larger than one of ROS2 due to the difference of the scale, Figures \ref{fig:ros1_multi}, \ref{fig:ospl_multi}, and \ref{fig:ospl_multi_128K} prove ROS2 \emph{message} publication is more fair to multiple subscribes than ROS1 one.
   \end{itembox}\\
+  \setcounter{figure}{15}
+  \begin{figure*}[h]
+    \begin{tabular}{ccc}
+      \begin{minipage}[t]{0.31\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ros1_1M_multi-pub5.eps}
+        \caption{(1-b) ROS1 multiple destination publisher.}
+        \label{fig:ros1_multi}
+      \end{minipage}
+      &
+        \begin{minipage}[t]{0.31\textwidth}
+          \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_1M_multi-pub5.eps}
+          \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+          \label{fig:ospl_multi}
+        \end{minipage}
+      &
+        \begin{minipage}[t]{0.31\textwidth}
+          \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_128K_multi-pub5.eps}
+          \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+          \label{fig:ospl_multi_128K}
+        \end{minipage}
+    \end{tabular}
+  \end{figure*}
 
 \item \begin{flushleft}
     \textbf{Comment:}
@@ -150,7 +195,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
-
+  
 
 \item \begin{flushleft}
     \textbf{Comment:}
