@@ -11,6 +11,7 @@
 \usepackage{multirow}
 \usepackage{threeparttable} 
 \usepackage{color}
+\usepackage{float}
 
 \newcommand\st{\textsuperscript{st}\xspace}
 \newcommand\nd{\textsuperscript{nd}\xspace}
@@ -134,7 +135,12 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
-
+  Thank you for your advice.
+  To consider multiple devices, we have conducted evaluations for a multiple destinations publisher.
+  Much of the information is often shared in real applications such as robots.
+  In our evaluation, we prepare five subscribes and measure end-to-end latencies.
+  \begin{itembox}[|]{Added sentences about multiple destination in ``'' section}
+  \end{itembox}\\
 
 \item \begin{flushleft}
     \textbf{Comment:}
@@ -154,10 +160,45 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
-
+  Thank you for your advice.
+  At present, QoS Policy supported by ROS2 is few.
+  For example, DEADLINE is only calculated by node's period and is not utilized for scheduling.
+  In this condition, we prepare *-depth policy and have varied history setting by configuring depth option.
+  This HISTORY QoS Policy provides applications fault tolerance.
+  We have added evaluation and its analysis in ``Comparison within ROS2'' section.
+  \begin{itembox}[|]{Added sentences in history evaluation in ``Comparison within ROS2'' section}
+    Figure \ref{fig:depth_boxplot} shows no differences depending on the depth of \texttt{*-depth policy}.
+    These \emph{QoS policies} are different in the number \emph{nodes} save \texttt{messages}.
+    Although this number influences resources, this does not affect latency because archiving \emph{messages} is conducted in every publication.
+  \end{itembox}\\
+  \renewcommand{\arraystretch}{1.0}
+  \begin{table}[H]
+    \caption{\label{tb:depth_qos}Depth Configurable QoS Policies}
+    \centering
+    \tabcolsep = 1.5mm              % side-margin in column
+    \begin{tabular}{c|c}
+      \hline
+      & \textbf{\texttt{*-depth policy} }\\
+      \hline
+      \hline
+      DEADLINE & \texttt{100 ms}\\
+      HISTORY & \texttt{LAST}\\
+      depth & 1, 10, or 100\\
+      RELIABILITY & \texttt{RELIABLE}\\
+      DURABILITY & \texttt{TRANSIENT\_LOCAL}\\
+      \hline
+    \end{tabular}
+  \end{table}
+  \setcounter{figure}{15}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../../figure/BoxPlot_ospl_QoS_depth.eps}
+    \caption{(2-b) Configured \emph{*-depth policy} in ROS2 with OpenSplice}
+    \label{fig:depth_boxplot}
+  \end{figure}
 
 \item \begin{flushleft}
-    \textbf{Comment:}
+  \textbf{Comment:}
   \end{flushleft}
   The experiment in section 3.1 should be kept as it is a good evaluation of overhead and is reproducible since it was performed on the loopback interface of the device, but experiments measuring latency and throughput in an application environment would strengthen the paper.
 
@@ -184,21 +225,21 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     Throughput is limited by the network and not by DDS.
   \end{itembox}\\
   \setcounter{figure}{16}
-\begin{figure*}[t]
-  \begin{tabular}{cc}
-    \begin{minipage}[t]{0.5\textwidth}
-      \includegraphics[width=1.0\linewidth]{../../figure/throughput_remote_small-data.eps}
-      \caption{(1-a) and (2-b) \texttt{remote} cases throughput with small data}
-      \label{fig:throughput_small}
-    \end{minipage}
-    &
+  \begin{figure*}[H]
+    \begin{tabular}{cc}
+      \begin{minipage}[t]{0.5\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/throughput_remote_small-data.eps}
+        \caption{(1-a) and (2-b) \texttt{remote} cases throughput with small data}
+        \label{fig:throughput_small}
+      \end{minipage}
+      &
       \begin{minipage}[t]{0.5\textwidth}
         \includegraphics[width=1.0\linewidth]{../../figure/throughput_remote_large-data.eps}
         \caption{(1-a) and (2-b) \texttt{remote} cases throughput with large data}
         \label{fig:throughput_large}
       \end{minipage}
-  \end{tabular}
-\end{figure*}
+    \end{tabular}
+  \end{figure*}
 
 \end{enumerate}
 
@@ -560,7 +601,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   Thus, message loss occurs by UDP and not by network.
   To clarify this fact, we add network protocol in Table 2: ``Evaluation Environment''.
   \setcounter{table}{1}
-  \begin{table*}[htb]
+  \begin{table*}[H]
     \caption{Evaluation Environment} 
     \centering
     \begin{threeparttable}
