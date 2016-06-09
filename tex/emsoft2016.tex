@@ -91,8 +91,10 @@
   By highlighting the present capabilities of ROS2, we explore and evaluate the potential and constraints of ROS2.
 \end{abstract}
 
+\vspace{-2mm}
 \keywords{robot operating system; data distribution service; quality of service; real-time; embedded; publish/subscribe}
 
+\vspace{-3mm}
 \section{Introduction}
 \label{sec:orgheadline5}
 
@@ -136,7 +138,7 @@ Section \ref{sec:orgheadline2} validates experimental situations and evaluates t
 Section \ref{sec:orgheadline3} discusses related work. 
 Finally, Section \ref{sec:orgheadline4} concludes the paper and offers suggestions for future work.
 
-
+\vspace{-3mm}
 \section{Background}
 \label{sec:orgheadline1}
 
@@ -145,16 +147,17 @@ First, we describe the ROS2 system model compared to ROS1, focusing on its commu
 We then review aspects of the ROS, such as the publish/subscribe model. 
 Finally, we describe DDS, which is used as the communication system for real-time systems in ROS2. 
 
+\vspace{-1mm}
 \subsection{Robot Operating System (ROS)}
 \label{sec:orgheadline6}
 
 \begin{figure}[t]
-\centering
-\includegraphics[width=1.0\linewidth]{../figure/ros_architecture.eps}
-\vspace{-8mm}
-\caption{\label{fig:orgparagraph1}
-ROS1/ROS2 architecture.}
-\vspace{-5mm}
+  \centering
+  \includegraphics[width=0.9\linewidth]{../figure/ros_architecture.eps}
+  \vspace{-5mm}
+  \caption{\label{fig:orgparagraph1}
+    ROS1/ROS2 architecture.}
+  \vspace{-6mm}
 \end{figure}   
 
 Figure \ref{fig:orgparagraph1} briefly illustrates the system models of ROS1 and ROS2. 
@@ -177,10 +180,12 @@ The \emph{messages} in the \emph{topic} are received by the ``Car Detection'' \e
 The publish/subscribe model is designed to be modular at a fine-grained scale and is suitable for distributed systems.
 
 \begin{figure}[t]
-\centering
-\includegraphics[width=0.8\linewidth]{../figure/ros_pubsub_fig.eps}
-\caption{\label{fig:orgparagraph2}
-Example of ROS publish/subscribe model.}
+  \centering
+  \includegraphics[width=0.8\linewidth]{../figure/ros_pubsub_fig.eps}
+  \vspace{-5mm}
+  \caption{\label{fig:orgparagraph2}
+    Example of ROS publish/subscribe model.}
+  \vspace{-6mm}
 \end{figure}
 
 In ROS1, the above communication system is implemented as middleware based on TCPROS and UDPROS using TCP/IP and UDP/IP sockets. 
@@ -198,6 +203,7 @@ ROS2 adopts DDS as its communication system. However, as an exception, \emph{int
 DDS is provided by many vendors and has several implementation types.
 Developers can select appropriate DDS implementations from a variety of DDS vendors.
 
+\vspace{-1mm}
 \subsection{Data Distribution Service (DDS)}
 \label{sec:orgheadline7}
 
@@ -216,10 +222,12 @@ As shown in Figure \ref{fig:orgparagraph3}, the DCPS model is constructed of \em
 Each data transport between processes is executed according to a \emph{Quality of Service (QoS) Policy}.
 
 \begin{figure}[t]
-\centering
-\includegraphics[width=0.8\linewidth]{../figure/DDS_model.eps}
-\caption{\label{fig:orgparagraph3}
-Data-centric publish-subscribe (DCPS) model.}
+  \centering
+  \includegraphics[width=0.7\linewidth]{../figure/DDS_model.eps}
+  \vspace{-3mm}
+  \caption{\label{fig:orgparagraph3}
+    Data-centric publish-subscribe (DCPS) model.}
+  \vspace{-5mm}
 \end{figure}   
 
 \noindent \textbf{\emph{DomainParticipant}:} 
@@ -256,30 +264,34 @@ Table \ref{tab:orgtable1} shows the details of the \emph{QoS Policy} supported b
 In DDS, there are many other \emph{QoS Policies} \cite{dds1.4}, which ROS2 should support to extend its capabilities.
 
 \begin{figure}[t]
-\centering
-\includegraphics[width=0.8\linewidth]{../figure/DDS_qos.eps}
-\caption{\label{fig:orgparagraph4}
-DDS QoS Policy.}
+  \centering
+  \includegraphics[width=0.8\linewidth]{../figure/DDS_qos.eps}
+  \vspace{-3mm}
+  \caption{\label{fig:orgparagraph4}
+    DDS QoS Policy.}
+  \vspace{-5mm}
 \end{figure}
 
 \renewcommand{\arraystretch}{1.0}
 \begin{table}[t]
-\caption{\label{tab:orgtable1}
-  All QoS Policies of ROS2}
-\centering
-\small
-\begin{tabular}{|p{0.3\linewidth}|p{0.6\linewidth}|}
-\hline
-DEADLINE &  A \emph{DataWriter} and a \emph{DataReader} must update data at least once every deadline period.\\
-\hline
-HISTORY &  This controls whether the data transport should deliver only the most recent value, attempt to deliver all intermediate values, or attempt to deliver something in between (configurable via the \texttt{depth} option).\\
-\hline
-RELIABILITY & In \texttt{BEST\_EFFORT}, data transport is executed as soon as possible. However, some data may be lost if the network is not robust. \\
-& In \texttt{RELIABLE}, missed samples are retransmitted. Therefore, data delivery is guaranteed.\\
-\hline
-DURABILITY & With this policy, the service attempts to keep several samples so that they can be delivered to any potential late-joining \emph{DataReader}. The number of saved samples depends on HISTORY. This option has several values, such as \texttt{VOLATILE} and \texttt{TRANSIENT\_LOCAL}.\\
-\hline
-\end{tabular}
+  \caption{\label{tab:orgtable1}
+    All QoS Policies of ROS2}
+  \centering
+  \small
+  \tabcolsep = 0.5mm              % side-margin in column
+  \begin{tabular}{|p{0.23\linewidth}|p{0.74\linewidth}|}
+    \hline
+    DEADLINE &  A \emph{DataWriter} and a \emph{DataReader} must update data at least once every deadline period.\\
+    \hline
+    HISTORY &  This controls whether the data transport should deliver only the most recent value, attempt to deliver all intermediate values, or attempt to deliver something in between (configurable via the \texttt{depth} option).\\
+    \hline
+    RELIABILITY & In \texttt{BEST\_EFFORT}, data transport is executed as soon as possible. However, some data may be lost if the network is not robust. \\
+    & In \texttt{RELIABLE}, missed samples are retransmitted. Therefore, data delivery is guaranteed.\\
+    \hline
+    DURABILITY & With this policy, the service attempts to keep several samples so that they can be delivered to any potential late-joining \emph{DataReader}. The number of saved samples depends on HISTORY. This option has several values, such as \texttt{VOLATILE} and \texttt{TRANSIENT\_LOCAL}.\\
+    \hline
+  \end{tabular}
+  \vspace{-7mm}
 \end{table}
 
 In the DCPS model, data of a given type is published from one or several \emph{DataWriters} to a \emph{topic} (its name is unique in the \emph{Domain}).
@@ -296,6 +308,7 @@ The DCPS middleware is responsible for data transport in distributed systems bas
 Without considering detailed transport implementations, DDS users generate code as a \emph{DomainParticipant}, including \emph{QoS Policies} using the DDS APIs. 
 Thus, users can focus solely on their purpose and determine ways to satisfy real-time constraints easily. 
 
+\vspace{-3mm}
 \section{Evaluations}
 \label{sec:orgheadline2}
 
@@ -325,6 +338,7 @@ Using \emph{mlockall}, a process's virtual address space is fixed in physical RA
 
 \begin{table}[t]
   \caption{Evaluation Environment} 
+  \vspace{-3mm}
   \centering
   \begin{threeparttable}
     \renewcommand{\arraystretch}{1.0}
@@ -335,42 +349,44 @@ Using \emph{mlockall}, a process's virtual address space is fixed in physical RA
       \hline
       \multicolumn{2}{c||}{ } & \textbf{\texttt{Machine1}} & \textbf{\texttt{Machine2}} \\ \hline \hline
       \multirow{4}{*}{CPU}   & Model number & Intel Core i5 3470 & Intel Core i5 2320 \\ 
-                              & Frequency & 3.2 GHz & 3.00 GHz \\ 
-                              & Cores & 4 & 4 \\ 
-                              & Threads & 4 & 4 \\ \hline
+      & Frequency & 3.2 GHz & 3.00 GHz \\ 
+      & Cores & 4 & 4 \\ 
+      & Threads & 4 & 4 \\ \hline
       \multicolumn{2}{c||}{Memory} & 16 GB & 8 GB \\ \hline 
       \multicolumn{2}{c||}{Network} & \multicolumn{2}{c}{100 Mbps Ethernet / Full-Duplex} \\ \hline
       \multicolumn{2}{c||}{ROS1} & \multicolumn{2}{c}{Indigo} \\ 
       \multicolumn{2}{c||}{ROS2} & \multicolumn{2}{c}{Cement (alpha3)} \\ 
       \multicolumn{2}{c||}{DDS implementations} & \multicolumn{2}{c}{Connext\tnote{1} / OpenSplice\tnote{2} / FastRTPS } \\ \hline 
       \multirow{2}{*}{OS} & Distribution & \multicolumn{2}{c}{Ubuntu 14.04} \\ 
-                              & Kernel & \multicolumn{2}{c}{Linux 3.13.0} \\ \hline
+      & Kernel & \multicolumn{2}{c}{Linux 3.13.0} \\ \hline
     \end{tabular}
     \begin{tablenotes}
     \item[1] RTI Connext DDS Professional \cite{rti_connext}
     \item[2] OpenSplice DDS Community Edition \cite{ospl_dds_community}
     \end{tablenotes}
   \end{threeparttable}
+  \vspace{-5mm}
 \end{table}
 
 \renewcommand{\arraystretch}{1.0}
 \begin{table}[t]
-\caption{\label{tab:orgtable2}
-QoS Policies for Evaluations}
-\centering
-\tabcolsep = 1.5mm              % side-margin in column
-\begin{tabular}{c|cc}
-\hline
- & \textbf{\texttt{reliable policy}} & \textbf{\texttt{best-effort policy}}\\
-\hline
-\hline
-DEADLINE & \texttt{100 ms} & \texttt{100 ms}\\
-HISTORY & \texttt{ALL} & \texttt{LAST}\\
-depth & \texttt{-} & \texttt{1}\\
-RELIABILITY & \texttt{RELIABLE} & \texttt{BEST\_EFFORT}\\
-DURABILITY & \texttt{TRANSIENT\_LOCAL} & \texttt{VOLATILE}\\
-\hline
-\end{tabular}
+  \caption{\label{tab:orgtable2}
+    QoS Policies for Evaluations}
+  \centering
+  \tabcolsep = 1.5mm              % side-margin in column
+  \begin{tabular}{c|cc}
+    \hline
+    & \textbf{\texttt{reliable policy}} & \textbf{\texttt{best-effort policy}}\\
+    \hline
+    \hline
+    DEADLINE & \texttt{100 ms} & \texttt{100 ms}\\
+    HISTORY & \texttt{ALL} & \texttt{LAST}\\
+    depth & \texttt{-} & \texttt{1}\\
+    RELIABILITY & \texttt{RELIABLE} & \texttt{BEST\_EFFORT}\\
+    DURABILITY & \texttt{TRANSIENT\_LOCAL} & \texttt{VOLATILE}\\
+    \hline
+  \end{tabular}
+  \vspace{-5mm}
 \end{table}
 
 \newcommand*{\x}[0]{\checkmark} % set macro
@@ -389,60 +405,67 @@ DURABILITY & \texttt{TRANSIENT\_LOCAL} & \texttt{VOLATILE}\\
     \begin{tabular}{c|c|c|c||c|c*{11}{c}}
       \hline
       \multicolumn{4}{c||}{ } & \textbf{Initial loss} & \textbf{256 [byte]} & \textbf{512} & \textbf{1K} & $\cdots$
-                                                                                                           $^{*}$
+      $^{*}$
       & \textbf{64K} & \textbf{128K}  & \textbf{256K} & \textbf{512K} & \textbf{1M} & \textbf{2M} & \textbf{4M}\\ \hline \hline
       \multirow{3}{*}{ROS1}   & \multicolumn{3}{c||}{(1-a) remote}  &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z1&\z1&\\ \cline{2-4}
-                              & \multicolumn{3}{c||}{(1-b) local}  &any&\x&\x&\x&$\cdots$&&\x&\x&\x&\x&\x&\x&\\ \cline{2-4}
-                              & \multicolumn{3}{c||}{(1-c) nodelet}  &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\x&\x&\\ \hline
+      & \multicolumn{3}{c||}{(1-b) local}  &any&\x&\x&\x&$\cdots$&&\x&\x&\x&\x&\x&\x&\\ \cline{2-4}
+      & \multicolumn{3}{c||}{(1-c) nodelet}  &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\x&\x&\\ \hline
       \multirow{11}{*}{ROS2}  & \multirow{5}{*}{(2-a) remote}  & \multirow{2}{*}{Connext}  & reliable &none&\x&\x&\x&$\cdots$&\x&\y2&\y2&\y2&\y2&\y2&\y2&\\ \cline{4-4}
-                              & & & best-effort &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z1&\z1&\\ \cline{3-4}
-                              & & \multirow{2}{*}{OpenSplice}  & reliable &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\x&\x&\\ \cline{4-4}
-                              & & & best-effort &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z1&\z1&\\ \cline{3-4}
-                              & & \multicolumn{2}{c||}{FastRTPS} &none&\y3&\y3&\y3&$\cdots$&\y3&\y3&\y3&\y3&\y3&\y3&\y3&\\ \cline{2-4} 
-                              & \multirow{5}{*}{(2-b) local}  & \multirow{2}{*}{Connext}  & reliable &none&\x&\x&\x&$\cdots$&\x&\y2&\y2&\y2&\y2&\y2&\y2&\\ \cline{4-4}
-                              & & & best-effort &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z2&\y1&\\ \cline{3-4}
-                              & & \multirow{2}{*}{OpenSplice}  & reliable &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\x&\x&\\ \cline{4-4}
-                              & & & best-effort &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z2&\z2&\\ \cline{3-4}
-                              & & \multicolumn{2}{c||}{FastRTPS} &none&\y3&\y3&\y3&$\cdots$&\y3&\y3&\y3&\y3&\y3&\y3&\y3&\\ \cline{2-4} 
-                              & \multicolumn{3}{c||}{(2-c) intra-process} &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\x&\x&\\ \hline
+      & & & best-effort &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z1&\z1&\\ \cline{3-4}
+      & & \multirow{2}{*}{OpenSplice}  & reliable &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\x&\x&\\ \cline{4-4}
+      & & & best-effort &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z1&\z1&\\ \cline{3-4}
+      & & \multicolumn{2}{c||}{FastRTPS} &none&\y3&\y3&\y3&$\cdots$&\y3&\y3&\y3&\y3&\y3&\y3&\y3&\\ \cline{2-4} 
+      & \multirow{5}{*}{(2-b) local}  & \multirow{2}{*}{Connext}  & reliable &none&\x&\x&\x&$\cdots$&\x&\y2&\y2&\y2&\y2&\y2&\y2&\\ \cline{4-4}
+      & & & best-effort &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z2&\y1&\\ \cline{3-4}
+      & & \multirow{2}{*}{OpenSplice}  & reliable &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\x&\x&\\ \cline{4-4}
+      & & & best-effort &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z2&\z2&\\ \cline{3-4}
+      & & \multicolumn{2}{c||}{FastRTPS} &none&\y3&\y3&\y3&$\cdots$&\y3&\y3&\y3&\y3&\y3&\y3&\y3&\\ \cline{2-4} 
+      & \multicolumn{3}{c||}{(2-c) intra-process} &none&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\x&\x&\\ \hline
       \multirow{4}{*}{ROS1 to 2} & \multirow{2}{*}{(3-a) remote} & \multicolumn{2}{c||}{Connext} &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\y1&\y1&\\ \cline{3-4}
-                              & & \multicolumn{2}{c||}{OpenSplice} &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z1&\z1&\\ \cline{2-4}
-                              & \multirow{2}{*}{(3-b) local} & \multicolumn{2}{c||}{Connext} &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\y1&\y1&\\ \cline{3-4}
-                              & & \multicolumn{2}{c||}{OpenSplice} &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\x&\x&\\ \hline
+      & & \multicolumn{2}{c||}{OpenSplice} &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\z1&\z1&\\ \cline{2-4}
+      & \multirow{2}{*}{(3-b) local} & \multicolumn{2}{c||}{Connext} &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\y1&\y1&\\ \cline{3-4}
+      & & \multicolumn{2}{c||}{OpenSplice} &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\x&\x&\\ \hline
       \multirow{4}{*}{ROS2 to 1} & \multirow{2}{*}{(3-a) remote} & \multicolumn{2}{c||}{Connext} &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\y1&\y1&\\ \cline{3-4}
-                              & & \multicolumn{2}{c||}{OpenSplice} &any&\x&\x&\x&$\cdots$&\x&\x&\y1&\y1&\y1&\y1&\y1&\\ \cline{2-4}
-                              & \multirow{2}{*}{(3-b) local} & \multicolumn{2}{c||}{Connext} &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\y1&\y1&\\ \cline{3-4}
-                              & & \multicolumn{2}{c||}{OpenSplice} &any &\x&\x&\x&$\cdots$&\x&\x&\z1&\y1&\y1&\y1&\y1&\\ \hline
+      & & \multicolumn{2}{c||}{OpenSplice} &any&\x&\x&\x&$\cdots$&\x&\x&\y1&\y1&\y1&\y1&\y1&\\ \cline{2-4}
+      & \multirow{2}{*}{(3-b) local} & \multicolumn{2}{c||}{Connext} &any&\x&\x&\x&$\cdots$&\x&\x&\x&\x&\x&\y1&\y1&\\ \cline{3-4}
+      & & \multicolumn{2}{c||}{OpenSplice} &any &\x&\x&\x&$\cdots$&\x&\x&\z1&\y1&\y1&\y1&\y1&\\ \hline
     \end{tabular}
   }
   \\ 
+  \vspace{-3mm}
   \begin{flushleft}
-  $^{*}$: same behavior as 1 and 64 KB;
-  \x : data transport possible;   
-  \z1: possible but missing the deadline;   
-  \z2: data loss possible; \\
-  \y1: impossible due to a halt of process or too much data loss; \\
-  \y2: impossible with an error message (deficiency of additional configurations for large data); \\
-  \y3: impossible with an error message (unsupported large data for the DDS implementation) \\
+    $^{*}$: same behavior as 1 and 64 KB;
+    \x : data transport possible;   
+    \z1: possible but missing the deadline;   
+    \z2: data loss possible; \\
+    \y1: impossible due to a halt of process or too much data loss; \\
+    \y2: impossible with an error message (deficiency of additional configurations for large data); \\
+    \y3: impossible with an error message (unsupported large data for the DDS implementation) \\
   \end{flushleft}
+  \vspace{-8mm}
 \end{table*}
 
 
+\vspace{-1mm}
 \subsection{Experimental Situations and Methods}
 \label{sec:orgheadline8}
 
 \begin{figure}[t]
-\centering
-\includegraphics[width=1.0\linewidth]{../figure/eval_situation.eps}
-\caption{\label{fig:orgparagraph5}
-Experimental situations.}
+  \centering
+  \includegraphics[width=0.8\linewidth]{../figure/eval_situation.eps}
+  \vspace{-4mm}
+  \caption{\label{fig:orgparagraph5}
+    Experimental situations.}
+  \vspace{-3mm}
 \end{figure}
 
 \begin{figure}[t]
-\centering
-\includegraphics[width=1.0\linewidth]{../figure/eval_method.eps}
-\caption{\label{fig:orgparagraph6}
-Evaluation using \texttt{ros\_bridge} in (3-a) and (3-b).}
+  \centering
+  \includegraphics[width=0.9\linewidth]{../figure/eval_method.eps}
+  \vspace{-8mm}
+  \caption{\label{fig:orgparagraph6}
+    \texttt{ros\_bridge} evaluation in (3-a) and (3-b).}
+  \vspace{-6mm}
 \end{figure}
 
 %% \begin{figure*}[t]
@@ -479,7 +502,7 @@ Note that a \texttt{best-effort policy} is the only one used when using a \textt
 % However, dividing round-trip latency in half cannot evaluate them and does not be used for this evaluation.
 % Figure \ref{fig:orgparagraph6} shows the \emph{node}-graph for evaluation of communication from ROS1 to ROS2 with socket communication and a \texttt{ros\_bridge} in \texttt{remote} cases.
 
-
+\vspace{-1mm}
 \subsection{Capabilities of ROS1 and ROS2}
 \label{sec:capacity}
 
@@ -495,7 +518,6 @@ On the other hand, with ROS2 \texttt{reliable policy}, a \emph{subscriber-node} 
 This is attributed to \texttt{TRANSIENT\_LOCAL} in DURABILITY of the \emph{QoS Policy}.
 The \texttt{reliable policy} is tuned to provide resilience against late-joining \emph{subscriber-nodes}.
 In ROS1, published \emph{messages} are lost and never recovered.
-
 This \emph{QoS Policy} accelerates fault-tolerance for applications.
 
 Another interesting observation from Table \ref{tb:capabilities} is that ROS2 has many problems when transporting large data.
@@ -516,51 +538,60 @@ Several evaluations fail in (3-b) and \texttt{remote} cases, as shown in Table \
 Currently, the above results indicate that ROS2 is not suitable for handling large \emph{messages}.
 
 \begin{figure*}[t]
+  \tabcolsep = 0.5mm              % side-margin in column
   \begin{tabular}{ccc}
-    \begin{minipage}[t]{0.3\textwidth}
+    \begin{minipage}[t]{0.32\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/comparison_remote_local_small-data_Plot.eps}
+      \vspace{-7mm}
       \caption{Medians of end-to-end latencies with small data in \texttt{remote} and \texttt{local} cases.}
       \label{fig:remote_local_small_plot}
     \end{minipage}   
     &
-      \setcounter{figure}{9}
-      \begin{minipage}[t]{0.3\textwidth}
-        \includegraphics[width=1.0\linewidth]{../figure/comparison_intra_nodelet_local_small-data_Plot.eps}
-        \caption{Medians of end-to-end latencies with small data in \texttt{local}, \emph{nodelet}, and \emph{intra-process} cases.}
-        \label{fig:local_small_plot}
-      \end{minipage}
-    &
-      \setcounter{figure}{11}
-      \begin{minipage}[t]{0.31\textwidth}
-        \includegraphics[width=1.0\linewidth]{../figure/breakdown_ros2_local_BarPlot.eps}
-        \caption{(2-b) \texttt{reliable policy} breakdown of ROS2 latencies with the OpenSplice.}
-        \label{fig:ros2_local_barplot}
-      \end{minipage}
-    \\  
     \setcounter{figure}{8}
-    \begin{minipage}[t]{0.3\textwidth}
+    \begin{minipage}[t]{0.32\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/comparison_intra_nodelet_local_small-data_Plot.eps}
+      \vspace{-7mm}
+      \caption{Medians of end-to-end latencies with small data in \texttt{local}, \emph{nodelet}, and \emph{intra-process} cases.}
+      \label{fig:local_small_plot}
+    \end{minipage}
+    &
+    \setcounter{figure}{10}
+    \begin{minipage}[t]{0.32\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/breakdown_ros2_local_BarPlot.eps}
+      \vspace{-7mm}
+      \caption{(2-b) \texttt{reliable policy} breakdown of ROS2 latencies with the OpenSplice.}
+      \label{fig:ros2_local_barplot}
+    \end{minipage}
+    \\  
+    \setcounter{figure}{7}
+    \begin{minipage}[t]{0.32\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/comparison_remote_local_Plot.eps}
+      \vspace{-7mm}
       \caption{Medians of end-to-end latencies with large data in \texttt{remote} and \texttt{local} cases.}
       \label{fig:remote_local_plot}
     \end{minipage}
     &
-    \setcounter{figure}{10}
-      \begin{minipage}[t]{0.3\textwidth}
-        \includegraphics[width=1.0\linewidth]{../figure/comparison_intra_nodelet_local_Plot.eps}
-        \caption{Medians of end-to-end latencies with large data in \texttt{local}, \emph{nodelet}, and \emph{intra-process} cases.}
-        \label{fig:local_plot}
-      \end{minipage}
+    \setcounter{figure}{9}
+    \begin{minipage}[t]{0.32\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/comparison_intra_nodelet_local_Plot.eps}
+      \vspace{-7mm}
+      \caption{Medians of end-to-end latencies with large data in \texttt{local}, \emph{nodelet}, and \emph{intra-process} cases.}
+      \label{fig:local_plot}
+    \end{minipage}
     &
-    \setcounter{figure}{12}
-      \begin{minipage}[t]{0.31\textwidth}
-        \includegraphics[width=1.0\linewidth]{../figure/breakdown_ros2_local_best-effort_BarPlot.eps}
-        \caption{(2-b) \texttt{best-effort policy} breakdown of ROS2 latencies with the OpenSplice.}
-        \label{fig:ros2_local_best-effort_barplot}
-      \end{minipage}
+    \setcounter{figure}{11}
+    \begin{minipage}[t]{0.32\textwidth}
+      \includegraphics[width=1.0\linewidth]{../figure/breakdown_ros2_local_best-effort_BarPlot.eps}
+      \vspace{-7mm}
+      \caption{(2-b) \texttt{best-effort policy} breakdown of ROS2 latencies with the OpenSplice.}
+      \label{fig:ros2_local_best-effort_barplot}
+    \end{minipage}
+    \vspace{-3mm}
   \end{tabular}
+  \vspace{-2mm}
 \end{figure*}
 
-
+\vspace{-2mm}
 \subsection{Latency Characteristics of ROS1 and ROS2}
 \label{sec:latency}
 
@@ -571,6 +602,7 @@ First, we analyze ROS2 performance compared to ROS1, using samples extracted fro
 We then evaluate ROS2 with different DDS implementations and configurations, such as the \emph{QoS Policy}.
 
 % \noindent \textbf{Comparison between \texttt{remote} and \texttt{local} cases:} 
+\vspace{-2mm}
 \subsubsection{Comparison between \texttt{remote} and \texttt{local} cases}
 \label{sec:remote_local}
 ROS1 and ROS2 is much less than the difference between \texttt{remote} and \texttt{local} cases.
@@ -585,6 +617,7 @@ In addition, all latencies are predictable by measuring the data transmission ti
 
 
 % \noindent \textbf{Comparison among \texttt{local}, \emph{nodelet}, and \emph{intra-process} cases:}
+\vspace{-2mm}
 \subsubsection{Comparison among \texttt{local}, nodelet, and intra-process cases}
 \label{sec:local}
 The latency characteristics differ in the cases of small and large data.
@@ -619,47 +652,57 @@ As ROS2 is in development, that gaps will be closed.
 \emph{Intra-process communication} needs to be improved.
 
 % \noindent \textbf{Comparison within ROS2:} 
+\vspace{-2mm}
 \subsubsection{Comparison within ROS2}
 \label{sec:ros2}
 
 \begin{figure*}[t]
+  \tabcolsep = 1mm              % side-margin in column@
   \begin{tabular}{ccc}
-    \begin{minipage}[t]{0.31\textwidth}
+    \begin{minipage}[t]{0.322\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/comparison_DDS_BoxPlot.eps}
+      \vspace{-7mm}
       \caption{(2-b) Different DDS in ROS2 with \texttt{best-effort policy}.}
       \label{fig:dds_boxplot}
     \end{minipage}
     &
-    \begin{minipage}[t]{0.31\textwidth}
+    \begin{minipage}[t]{0.322\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/comparison_qos_BoxPlot.eps}
+      \vspace{-7mm}
       \caption{(2-b) Two \emph{QoS policies} in ROS2 with OpenSplice.}
       \label{fig:qos_boxplot}
     \end{minipage}
     &
-    \begin{minipage}[t]{0.31\textwidth}
+    \begin{minipage}[t]{0.322\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_QoS_depth.eps}
+      \vspace{-7mm}
       \caption{(2-b) Configured \texttt{*-depth policy} in ROS2 with OpenSplice.}
       \label{fig:depth_boxplot}
     \end{minipage}
     \\
-    \begin{minipage}[t]{0.31\textwidth}
+    \begin{minipage}[t]{0.322\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/comparison_ospl_frag_BoxPlot.eps}
+      \vspace{-7mm}
       \caption{(2-b) Different fragment sizes in ROS2 with OpenSplice \texttt{best-effort policy}.}
       \label{fig:frag_boxplot}
     \end{minipage}
     &
-    \begin{minipage}[t]{0.31\textwidth}
+    \begin{minipage}[t]{0.322\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ros1_1M_multi-pub5.eps}
+      \vspace{-7mm}
       \caption{(1-b) ROS1 multiple destination publisher.}
       \label{fig:ros1_multi}
     \end{minipage}
     &
-    \begin{minipage}[t]{0.31\textwidth}
+    \begin{minipage}[t]{0.322\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_1M_multi-pub5.eps}
+      \vspace{-7mm}
       \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
       \label{fig:ospl_multi}
     \end{minipage}
+    \vspace{-3mm}
   \end{tabular}
+  \vspace{-3mm}
 \end{figure*}
 
 End-to-end latencies with data less than 16 KB exhibit similar performance in (2-b).
@@ -691,7 +734,7 @@ As shown in Figure \ref{fig:frag_boxplot}, the end-to-end latencies are reduced,
 With a large fragment size, DDS does not need to split large data into many datagrams, which means fewer system calls and less overhead.
 In terms of end-to-end latency, we should preset the fragment size to 64 KB when using large data.
 
-
+\vspace{-2mm}
 \subsubsection{Multiple Destination Publisher in \texttt{local} cases}
 \label{sec:multiple}
 In this section, we prepare five \emph{subscriber-nodes} and measure latency of each \emph{node}.
@@ -709,6 +752,7 @@ Figure \ref{fig:ospl_multi_128K} indicates fair latencies and dependency of pack
 Although we can not say that latency variance of ROS1 is larger than one of ROS2 due to the difference of the scale, Figures \ref{fig:ros1_multi}, \ref{fig:ospl_multi}, and \ref{fig:ospl_multi_128K} prove ROS2 \emph{message} publication is more fair to multiple subscribes than ROS1 one.
 
 
+\vspace{-2mm}
 \subsection{Throughput of ROS1 and ROS2}
 \label{sec:throughput}
 We also measure each throughput of ROS1 and ROS2 in the \texttt{remote} case.
@@ -727,46 +771,52 @@ Throughput is limited by the network and not by DDS.
 
 \renewcommand{\arraystretch}{1.0}
 \begin{table}[t]
-\caption{\label{tb:depth_qos}Depth Configurable QoS Policies}
-\centering
-\tabcolsep = 1.5mm              % side-margin in column
-\begin{tabular}{c|c}
-\hline
- & \textbf{\texttt{*-depth policy} }\\
-\hline
-\hline
-DEADLINE & \texttt{100 ms}\\
-HISTORY & \texttt{LAST}\\
-depth & 1, 10, or 100\\
-RELIABILITY & \texttt{RELIABLE}\\
-DURABILITY & \texttt{TRANSIENT\_LOCAL}\\
-\hline
-\end{tabular}
+  \caption{\label{tb:depth_qos}Depth Configurable QoS Policies}
+  \centering
+  \tabcolsep = 1.5mm              % side-margin in column
+  \begin{tabular}{c|c}
+    \hline
+    & \textbf{\texttt{*-depth policy} }\\
+    \hline
+    \hline
+    DEADLINE & \texttt{100 ms}\\
+    HISTORY & \texttt{LAST}\\
+    depth & 1, 10, or 100\\
+    RELIABILITY & \texttt{RELIABLE}\\
+    DURABILITY & \texttt{TRANSIENT\_LOCAL}\\
+    \hline
+  \end{tabular}
+  \vspace{-5mm}
 \end{table}
 
 \begin{figure*}[t]
   \begin{tabular}{ccc}
-    \begin{minipage}[t]{0.31\textwidth}
+    \begin{minipage}[t]{0.32\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_128K_multi-pub5.eps}
+      \vspace{-7mm}
       \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
       \label{fig:ospl_multi_128K}
     \end{minipage}
     &
-    \begin{minipage}[t]{0.31\textwidth}
+    \begin{minipage}[t]{0.32\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_small-data.eps}
+      \vspace{-7mm}
       \caption{(1-a) and (2-b) \texttt{remote} cases throughput with small data.}
       \label{fig:throughput_small}
     \end{minipage}
     &
-    \begin{minipage}[t]{0.31\textwidth}
+    \begin{minipage}[t]{0.32\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/throughput_remote_large-data.eps}
+      \vspace{-7mm}
       \caption{(1-a) and (2-b) \texttt{remote} cases throughput with large data.}
       \label{fig:throughput_large}
     \end{minipage}
   \end{tabular}
+  \vspace{-8mm}
 \end{figure*}
 
 
+\vspace{-1mm}
 \subsection{Thread of ROS1 and ROS2}
 \label{sec:throughput}
 In this section, we measure the number of thread on each \emph{node}.
@@ -782,21 +832,23 @@ ROS2 \emph{node} with FastRTPS realizes discovery and serialization, and pub/sub
 This result proves improvement of fault tolerance without additional resources because FastRTPS does not need \emph{master-node}.
 %% \renewcommand{\arraystretch}{1.1}
 \begin{table}[t]
-\caption{\label{tb:thread}The Number of Thread on ROS1 or ROS2}
-\centering
-\tabcolsep = 1.5mm              % side-margin in column
-\begin{tabular}{c|cccc}
-\hline
- & ROS1 & Connext & OpenSplice & FastRTPS \\
-\hline
-\hline
-node & 5 & 8 & 49 & 5 \\
-master-node & 3 & - & - & - \\
-\hline
-\end{tabular}
+  \caption{\label{tb:thread}The Number of Thread on ROS1 or ROS2}
+  \centering
+  \tabcolsep = 1.5mm              % side-margin in column
+  \begin{tabular}{c|cccc}
+    \hline
+    & ROS1 & Connext & OpenSplice & FastRTPS \\
+    \hline
+    \hline
+    node & 5 & 8 & 49 & 5 \\
+    master-node & 3 & - & - & - \\
+    \hline
+  \end{tabular}
+  \vspace{-5mm}
 \end{table}
 
 
+\vspace{-1mm}
 \subsection{Memory size of ROS1 and ROS2}
 \label{sec:throughput}
 We also measure memory size of shared library object (\texttt{.so}) in ROS1 and ROS2.
@@ -813,20 +865,22 @@ For small embedded systems, we need a minimal DDS implementation and ligh abstra
 \begin{table}[t]
   \caption{Memory of .so Files for ROS1 and ROS} 
   \centering
-    \renewcommand{\arraystretch}{1.15}
-    \label{tb:memory}
-    \small
-    \tabcolsep = 1.0mm              % side-margin in column
-    \begin{tabular}{c|c||r|r||r}
-      \hline
-      \multicolumn{2}{c||}{} & DDS [KB] & Abstraction [KB] & Total [MB] \\ \hline \hline
-      \multicolumn{2}{c||}{ROS1}  & \multicolumn{2}{c||}{ 2,206 } & 2.26 \\ \hline
-      \multirow{3}{*}{ROS2} & Connext & 11,535 & 9,645 & 21.18 \\ 
-      & OpenSplice & 3,837 & 14,117 & 17.95 \\ 
-      & FastRTPS & 1,324 & 3,953 & 5.28\\ \hline
-    \end{tabular}
+  \renewcommand{\arraystretch}{1.15}
+  \label{tb:memory}
+  \small
+  \tabcolsep = 1.0mm              % side-margin in column
+  \begin{tabular}{c|c||r|r||r}
+    \hline
+    \multicolumn{2}{c||}{} & DDS [KB] & Abstraction [KB] & Total [MB] \\ \hline \hline
+    \multicolumn{2}{c||}{ROS1}  & \multicolumn{2}{c||}{ 2,206 } & 2.26 \\ \hline
+    \multirow{3}{*}{ROS2} & Connext & 11,535 & 9,645 & 21.18 \\ 
+    & OpenSplice & 3,837 & 14,117 & 17.95 \\ 
+    & FastRTPS & 1,324 & 3,953 & 5.28\\ \hline
+  \end{tabular}
+  \vspace{-5mm}
 \end{table}
 
+\vspace{-1mm}
 \subsection{Lessons Learned}
 \label{sec:lessons}
 While compared with ROS1, we so far have clarified characteristic of ROS2 and DDS implementations from several standpoints: current capability, latency, throughput, and thread.
@@ -870,6 +924,7 @@ Finally, we must tune DDS configurations for ROS2 beacause there are numerous ve
 %% When \emph{topic} communication between ROS1 and ROS2 is conducted in the \texttt{remote} case, overhead latency is relatively small in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
 %% For instance, the case when ROS1 runs on an embedded device and ROS1 runs on host device corresponds to above situation.
 
+\vspace{-3mm}
 \section{Related Work}
 \label{sec:orgheadline3}
 
@@ -933,32 +988,34 @@ ROS2 inherits and improves the capabilities of ROS1.
 
 \renewcommand{\arraystretch}{1.0}
 \begin{table*}[t]
-\caption{\label{tb:comparison}
-Comparison of ROS2 to Related Work}
-\centering
-\scriptsize	                    % text size 
-\tabcolsep = 1.5mm              % side-margin in column
-\begin{tabular}{c|ccccccccc}
-\hline
-& \textbf{Small} & \textbf{Real-Time} & \textbf{Publish/} & \textbf{Frequent} & \textbf{Open} & \textbf{Library} & \textbf{RTOS} & \textbf{Mac/} & \textbf{QoS}\\
-& \textbf{Embedded} &  & \textbf{Subscribe} & \textbf{Update} & \textbf{Source} & \textbf{and Tools} &  & \textbf{Windows} & \\
-\hline
-\hline
-RTM \cite{ando2005rt} & & &  &  & \(\checkmark\) & \(\bigtriangleup\) & & \(\checkmark\) & \\
-Extended RTC \cite{chishiro2009extended} &  & \(\checkmark\) &  &  & \(\checkmark\) &  &  &  & \\
-RT-Middleware for VxWorks \cite{ikezoeopenrt} & \(\checkmark\) & \(\bigtriangleup\) &  &  & \(\checkmark\) & \(\bigtriangleup\) & \(\checkmark\) & \(\checkmark\) & \\
-RTM-TECS \cite{rtmtecs2016} & \(\checkmark\) & \(\checkmark\) &  &  &  & \(\bigtriangleup\) & \(\checkmark\) & \(\checkmark\) & \\
-rosc \cite{rosc@roscon2013} & \(\checkmark\) & \(\bigtriangleup\) & \(\checkmark\) &  & \(\checkmark\) &  & \(\checkmark\) &  & \\
-\(\mu\)ROS \cite{uros@roscon2013} & \(\bigtriangleup\) & \(\bigtriangleup\) & \(\checkmark\) &  & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) &  & \\
-ROS Industrial \cite{rosindustrial} & \(\bigtriangleup\) &  & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) &  &  & \\
-RT-ROS \cite{wei2015rt} &  & \(\checkmark\) & \(\checkmark\) &  &  &  & \(\checkmark\) &  & \\
-\hline
-ROS1 \cite{quigley2009ros} &  &  & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) &  &  & \\
-ROS2 \cite{ros2_iccps2016} & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\bigtriangleup\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\)\\
-\hline
-\end{tabular}
+  \caption{\label{tb:comparison}
+    Comparison of ROS2 to Related Work}
+  \centering
+  \scriptsize	                    % text size 
+  \tabcolsep = 1.5mm              % side-margin in column
+  \begin{tabular}{c|ccccccccc}
+    \hline
+    & \textbf{Small} & \textbf{Real-Time} & \textbf{Publish/} & \textbf{Frequent} & \textbf{Open} & \textbf{Library} & \textbf{RTOS} & \textbf{Mac/} & \textbf{QoS}\\
+    & \textbf{Embedded} &  & \textbf{Subscribe} & \textbf{Update} & \textbf{Source} & \textbf{and Tools} &  & \textbf{Windows} & \\
+    \hline
+    \hline
+    RTM \cite{ando2005rt} & & &  &  & \(\checkmark\) & \(\bigtriangleup\) & & \(\checkmark\) & \\
+    Extended RTC \cite{chishiro2009extended} &  & \(\checkmark\) &  &  & \(\checkmark\) &  &  &  & \\
+    RT-Middleware for VxWorks \cite{ikezoeopenrt} & \(\checkmark\) & \(\bigtriangleup\) &  &  & \(\checkmark\) & \(\bigtriangleup\) & \(\checkmark\) & \(\checkmark\) & \\
+    RTM-TECS \cite{rtmtecs2016} & \(\checkmark\) & \(\checkmark\) &  &  &  & \(\bigtriangleup\) & \(\checkmark\) & \(\checkmark\) & \\
+    rosc \cite{rosc@roscon2013} & \(\checkmark\) & \(\bigtriangleup\) & \(\checkmark\) &  & \(\checkmark\) &  & \(\checkmark\) &  & \\
+    \(\mu\)ROS \cite{uros@roscon2013} & \(\bigtriangleup\) & \(\bigtriangleup\) & \(\checkmark\) &  & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) &  & \\
+    ROS Industrial \cite{rosindustrial} & \(\bigtriangleup\) &  & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) &  &  & \\
+    RT-ROS \cite{wei2015rt} &  & \(\checkmark\) & \(\checkmark\) &  &  &  & \(\checkmark\) &  & \\
+    \hline
+    ROS1 \cite{quigley2009ros} &  &  & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) &  &  & \\
+    ROS2 \cite{ros2_iccps2016} & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\) & \(\bigtriangleup\) & \(\checkmark\) & \(\checkmark\) & \(\checkmark\)\\
+    \hline
+  \end{tabular}
+  \vspace{-5mm}
 \end{table*}
 
+\vspace{-3mm}
 \section{Conclusion}
 \label{sec:orgheadline4}
 This paper has conducted proof of concept for DDS approach to ROS and arranged guidelines and room for improvement.
