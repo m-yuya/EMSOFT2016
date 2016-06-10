@@ -92,7 +92,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   It is true that ROS2 in under heavy development and a very rough draft in this stage.
   However, this paper aims to conduct proof of concept for DDS approach to ROS and clarifies the needs of abstracting DDS API for large packets.
   Regardless of development stage of ROS2, we consider that understanding each DDS characteristics are meaningful for ROS2 users, which we provide in this paper.
-  What this paper provides is not simple comparison between ROS1 and ROS2 but DDS characteristics throughout ROS2.
+  What this paper provides is not simple comparison between ROS1 and ROS2 but DDS characteristics through ROS2.
   ROS2 is the one of sysytems using DDS.
   We believe the contributions of this paper are meaningful even when ROS2 is under development.
   To clarify this contributions, we have highlighted that this paper aims to proof of concept and arranged premature points of current ROS2 for future development.
@@ -273,7 +273,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you for your thoughtful comment. 
-  Following your advice, we have additionally conducted a throughout evaluation in Section 3.4.
+  Following your advice, we have additionally conducted a throughput evaluation in Section 3.4.
   Figure \ref{fig:throughput_small} clarifies the overhead data for DDS transaction.
   Figure \ref{fig:throughput_large} shows that throughput is limited by the 100 Mbps Ethernet network and not by DDS.
   \begin{itembox}[|]{Added ``3.4 Throughput of ROS1 and ROS2'' section}
@@ -344,7 +344,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   We consider these benefits outweigh the cost and recommend the both with ros\_bridge.
   We have added sentences about this in ``3.7 Lessons Learned'' section to answer your comment.
   However, we must note that this paper does not simply compare ROS1 and ROS2.
-  This paper conducts proof of content for DDS approach to ROS and clarify DDS potentials.
+  This paper conducts proof of content for DDS approach to ROS and clarify DDS potential.
   \begin{itembox}[|]{Added sentences about benefit of ROS2 in ``3.7 Lessons Learned'' section}
     Although ROS1 is low end-to-end latency and low throughput for pub/sub transport, ROS2 supports real-time embedded systems.
     To target these systems, it is inevitable that ROS1 users accept another approach.
