@@ -92,7 +92,10 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   It is true that ROS2 in under heavy development and a very rough draft in this stage.
   However, this paper aims to conduct proof of concept for DDS approach to ROS and clarifies the needs of abstracting DDS API for large packets.
   Regardless of development stage of ROS2, we consider that understanding each DDS characteristics are meaningful for ROS2 users, which we provide in this paper.
-  After reading your comment, we have highlighted that this paper aims to proof of concept and arranged premature points of current ROS2.
+  What this paper provides is not simple comparison between ROS1 and ROS2 but DDS characteristics throughout ROS2.
+  ROS2 is the one of sysytems using DDS.
+  We believe the contributions of this paper are meaningful even when ROS2 is under development.
+  To clarify this contributions, we have highlighted that this paper aims to proof of concept and arranged premature points of current ROS2 for future development.
   \begin{itembox}[|]{Modified sentences about proof of concept in ``1. INTRODUCTION'' section}
     \textbf{Contribution:}
     In this paper, we provide proof of concept for DDS approach to ROS.
@@ -130,12 +133,13 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   In the revised paper, we have conducted additional evaluations from various aspects.
   One is throughput evaluations in ``3.4 Throughput of ROS1 and ROS2'' section.
   We have clarified throughput characteristics depending on DDS vendors.
-  Another additional evaluation is measurements of latency for multiple destinations publisher
+  Another additional evaluation is measurements of latency for a multiple destinations publisher.
   This is described in ``3.3.4 Multiple Destinations Publisher in local cases'' section and will be utilized for fault tolerance and distributed capabilities.
   From this experiment, we can learn fair latency which DDS brings to ROS.
+  In addition, we prepare *-depth policy and have varied QoS setting by configuring depth option in ``3.3.3 Comparison within ROS2'' section.
   The other additional evaluations also expand our performance evaluation.
-  We have conducted thread measurements in ``Thread of ROS1 and ROS2'' and memory consumption in ``Memory consumption of ROS1 and ROS2'' section.
-  These provide us insights for embedded systems and distributed capabilities.
+  We have conducted measurements for the number of thread in ``3.5 Thread of ROS1 and ROS2'' and shared library memory consumption in ``3.6 Memory consumption of ROS1 and ROS2'' section.
+  These experimets provide us insight for embedded systems and distributed capabilities.
   For precise added sentences, please go on reading following our replies and the revised paper.
   
 \item \begin{flushleft}
@@ -149,11 +153,9 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   Thank you for your advice.
   To consider multiple devices, we have conducted evaluations for a multiple destinations publisher.
   Much of the information is often shared in real applications such as robots.
-  In our evaluation, we prepare five subscribes and measure end-to-end latencies.
+  In our evaluation, we prepare five subscribers and measure their end-to-end latencies.
   The result provides insight for distribute capabilities.
   Its precise analysis are described in the following paragraph.
-  However, we could not run a real-time application on ROS1 and ROS2.
-  We have explicitly described this fact as futur work.
   \begin{itembox}[|]{Added sentences in ``3.3.4 Multiple Destinations Publisher in \texttt{local} cases'' section}
     In this section, we prepare five \emph{subscriber-nodes} and measure latency of each \emph{node}.
     Much of information shared in real applications is destinated to multiple destinations.
@@ -191,9 +193,6 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
       \end{minipage}
     \end{tabular}
   \end{figure*}
-  \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
-    In future work, we will evaluate real-time applications such as an autonomous driving vehicle \cite{kato2015open}, \cite{saito2014fusion}, as case studies using ROS2. 
-  \end{itembox}\\
 
 \item \begin{flushleft}
   \textbf{Comment:}
@@ -205,11 +204,13 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you very much for your thoughtful suggestion.
   We have additionally conducted evaluation of a multiple destinations publisher for increased network load in ``3.3.4 Multiple Destinations Publisher local cases'' section.
-  This evaluation provides insight for the overhead of DDS scales as shown in \ref{fig:ospl_multi} and \ref{fig:ospl_multi_128K}.
-  However, we did not conduct further evaluationso for real-time guarantees with constrained or unreliable network because QoS Policies supposed by ROS2 are insufficient for real-time processing.
-  We will conduct these evaluations with configuring QoS variables for real-time systems.
-  We have explicitly described this fact as futur work.
+  This evaluation also provides insight for the overhead of DDS scales as shown in \ref{fig:ospl_multi} and \ref{fig:ospl_multi_128K}.
+  However, we did not conduct further evaluations for real-time guarantees with constrained network because QoS Policies supposed by ROS2 are insufficient for real-time processing.
+  After support of real-time QoS, we will conduct above evaluations with configuring QoS variables for real-time systems.
+  We have explicitly described this fact as future work.
   \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
+    In future work, we will evaluate real-time applications such as an autonomous driving vehicle \cite{kato2015open}, \cite{saito2014fusion}, as case studies using ROS2.
+    ...
     Since ROS2 is under development, we must maximize DDS potential by tuning and abstracting more \emph{QoS Policies} for real-time processing and DDS configurations.
   \end{itembox}\\
   
@@ -223,11 +224,11 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you for your advice.
   At present, ROS2 only supports a few QoS Policies.
-  For example, DEADLINE is only calculated by node's period and is not utilized for scheduling.
+  For example, DEADLINE is only calculated by a node's period and is not utilized for scheduling.
   In this condition, we prepare *-depth policy and have varied history setting by configuring depth option.
   This HISTORY QoS Policy provides applications fault tolerance.
   We have added sentences in ``3.3.3 Comparison within ROS2'' section and described analysis there.
-  \begin{itembox}[|]{Updated sentenceso in ``3.3.3 Comparison within ROS2'' section}
+  \begin{itembox}[|]{Updated sentences in ``3.3.3 Comparison within ROS2'' section}
     In addition, the influence of the \emph{QoS Policy} on end-to-end latencies is evaluated in (2-b) OpenSplice with the \texttt{reliable policy}, \texttt{best-effort policy}\textcolor{red}{, and \texttt{*-depth policy}.
       \texttt{*-depth policy} is prepared for this evaluation and configured by depth as shown in Table \ref{tb:depth_qos}.}
   \end{itembox}\\
@@ -259,7 +260,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{../../figure/BoxPlot_ospl_QoS_depth.eps}
-    \caption{(2-b) Configured \emph{*-depth policy} in ROS2 with OpenSplice}
+    \caption{(2-b) Configured \texttt{*-depth policy} in ROS2 with OpenSplice}
     \label{fig:depth_boxplot}
   \end{figure}
 
@@ -272,9 +273,9 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you for your thoughtful comment. 
-  Following your advice, we additionally conduct a throughout evaluation in Section 3.4.
-  Figure 17 clarifies overhead data for DDS transaction.
-  Figure 18 shows throughput is limited by the 100 Mbps Ethernet network and not by DDS.
+  Following your advice, we have additionally conducted a throughout evaluation in Section 3.4.
+  Figure \ref{fig:throughput_small} clarifies the overhead data for DDS transaction.
+  Figure \ref{fig:throughput_large} shows that throughput is limited by the 100 Mbps Ethernet network and not by DDS.
   \begin{itembox}[|]{Added ``3.4 Throughput of ROS1 and ROS2'' section}
     We also measure each throughput of ROS1 and ROS2 in \texttt{remote} case.
     In our one-way message transport experiment, maximum bandwidth ot the network is 12.5MB/sec because we use 100 Mbps Ethernet (100BASE-TX) and Full-Duplex as shown in Table 2.
@@ -291,7 +292,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     Throughput is limited by the network and not by DDS.
   \end{itembox}\\
   \setcounter{figure}{16}
-  \begin{figure*}[H]
+  \begin{figure*}[h]
     \begin{tabular}{cc}
       \begin{minipage}[t]{0.5\textwidth}
         \includegraphics[width=1.0\linewidth]{../../figure/throughput_remote_small-data.eps}
@@ -320,9 +321,9 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
-  Thank you very much for pointing out our insufficient contribution and suggesting a lot of hint for lessons.
-  To reply this comment and answer following interesting questions, we create ``Lessons Learned'' section.
-  In this section, we show guidelines for ROS users to highlight our contributions from experiments in this paper.
+  Thank you very much for pointing out our insufficient contributions and suggesting a lot of hint for lessons.
+  To reply this comment and answer following interesting questions, we create ``3.7 Lessons Learned'' section.
+  In this section, we show guidelines to highlight our contributions from experiments.
   For precise sentences, please go on reading following our replies and revised paper.
   We hope you will be satisfied with our replies.
 
@@ -335,14 +336,16 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you for suggesting a good question.
-  ROS1 has relatively small latency and overhead throughput and rich packages and tools.
-  ROS2 is under development and does not abstract some DDS APIs and QoS Policies.
-  However, ROS2 some \emph{QoS Policies} and does not need master-node.
+  ROS1 has relatively small latency, small overhead throughput, various packages, and rich tools.
+  In contrast, ROS2 is under development and does not abstract some DDS APIs and QoS Policies.
+  However, ROS2 supports some \emph{QoS Policies} and does not need master-node.
   This is important in terms of fault tolerance.
   Moreover, ROS2 will support RTOS and light DDS implementation for real-time embedded systems.
   We consider these benefits outweigh the cost and recommend the both with ros\_bridge.
-  We have added sentences about this in ``Lessons Learned'' section to answer your comment.
-  \begin{itembox}[|]{Added sentences about benefit of ROS2 in ``Lessons Learned'' section}
+  We have added sentences about this in ``3.7 Lessons Learned'' section to answer your comment.
+  However, we must note that this paper does not simply compare ROS1 and ROS2.
+  This paper conducts proof of content for DDS approach to ROS and clarify DDS potentials.
+  \begin{itembox}[|]{Added sentences about benefit of ROS2 in ``3.7 Lessons Learned'' section}
     Although ROS1 is low end-to-end latency and low throughput for pub/sub transport, ROS2 supports real-time embedded systems.
     To target these systems, it is inevitable that ROS1 users accept another approach.
     We consider ROS2 outweigh its cost for using DDS.
@@ -350,15 +353,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     ROS2 will expand the scope of supported \emph{QoS Policies} for real-time systems.
     In addition, ROS2 is able to run on multiple platforms include RTOS and switch DDS implementation as needed.
   \end{itembox}\\
-  \begin{itembox}[|]{Added sentences about collaboration in ``Lessons Learned'' section}
-    At present, we should collaborate ROS1 and ROS2 with \texttt{ros\_bridge}.
-    ROS2 has above goodness but it is under development.
-    In addition, a lot of existing packages of ROS1 is useful for developers.
-    While we develop a critical part of a application on ROS2, we implement other part on ROS1 with its rich packages and tools.
-    We must be careful to reduce shared \emph{topics} and its data size because \emph{topics} conversion by \texttt{ros\_bridge} takes much time as shown in Figures \ref{fig;local_plot} and \ref{fig;local_small_plot}.
-    When \emph{topic} communication between ROS1 and ROS2 is conducted in \texttt{remote} case, overhead latency is relatively small in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
-  \end{itembox}\\
-
+  
 \item \begin{flushleft}
   \textbf{Comment:}
 \end{flushleft}
@@ -369,12 +364,12 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you for suggesting a good question.
   We recommend each DDS implementation depending on circumstances.
-  In the local case, OpenSplice is superior to others due to its capability and low latency caused by many threads.
-  In remote case, Connext is superior because difference of latency is relatively small and we must consider bandwidth.
-  Connext's throughput is minimum as shown in Figure ?.
+  In the local cases, OpenSplice is superior to others due to its capability and low latency caused by many threads.
+  In the remote cases, Connext is superior because difference of latency is relatively small and we must consider bandwidth.
+  Connext's throughput is minimum as shown in Figure \ref{fig:throughput_small}.
   For embedded systems, regarding memory and thread, we consider that FastRTPS is suitable from Tables \ref{tb:thread} and \ref{tb:memory}.
-  We have added theses guidelines in ``Lessons Learned'' section to answer this question.
-  \begin{itembox}[|]{Added sentences about ROS2 guideline in ``Lessons Learned'' section}
+  We have added theses guidelines in ``3.7 Lessons Learned'' section to answer this question.
+  \begin{itembox}[|]{Added sentences about ROS2 guideline in ``3.7 Lessons Learned'' section}
     We can get insight and guidelines for using ROS2 from these results.
     ROS2 supports \emph{QoS Policy} but there is trade-off of end-to-end latency and throughput.
     In \texttt{local} case, overhead latency of ROS2 is not trivial.
@@ -403,12 +398,12 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   First, ROS2 must expand the scope of supposed QoS Policies for real-time systems.
   It is a very important issue for a real-time guarantee.
   Current QoS Policy is insufficient.
-  Second, ROS2 should abstract alternative API such as an asynchronous publisher and flow controller for large data transport.
-  This improves DDS performance and reduces overhead latency.
+  Second, ROS2 should abstract alternative APIs such as an asynchronous publisher and flow controller for large data transport.
+  This improves DDS performance and reduces overhead latencies.
   Finally, there are numerous DDS and vendor specific configuration options which might affect its performance.
   Tuning these configures for ROS2 is to do in order to improve performance within each DDS implementation.
   We have added some sentences to clarify above things as followed.
-  \begin{itembox}[|]{Added sentences about alternative API in ``Lessons Learned'' section}
+  \begin{itembox}[|]{Added sentences about alternative API in ``3.7 Lessons Learned'' section}
     We also clarify a need of alternative API for large \emph{message} to manga divided packets.
     It is critical to handle lager message.
     Abstraction of this shortens DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
@@ -429,10 +424,10 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   In the submitted paper, we only focused on end-to-end latency affected by DDS.
   In the reviled paper, we show other performance factors by variable aspects.
   One additional factor is throughput in ``3.4 Throughput of ROS1 and ROS2'' section.
-  We discuss throughput affected by DDS in this added section and clarify overhead throughput of each DDS implementations.
-  Another factor is thread in ``'' section.
-  The number of used threads are compared depending on DDS implementations.
-
+  We discuss throughput affected by DDS and clarify overhead throughput of each DDS implementations.
+  Another factor is the number of thread in ``3.6 Memory consumption of ROS1 and ROS2'' section.
+  The number of used thread are compared depending on DDS implementations.
+  
 \end{enumerate}
 
 \subsection{Minor points}
@@ -443,7 +438,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \end{flushleft}
 
   \begin{flushleft}
-    \textbf{Our reply:} Thank you very much for your careful reading. We have exchanged ``2c'' and ``1c''. (page 3)
+    \textbf{Our reply:} Thank you very much for your careful reading. We have exchanged ``2c'' and ``1c''. (in page 5)
   \end{flushleft}
 
 \item \begin{flushleft}
@@ -451,7 +446,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \end{flushleft}
 
   \begin{flushleft}
-    \textbf{Our reply:} Thank you for pointing out our illegible expression. We have removed ``The difference in end-to-end latencies between'' and modified the sentence as you proposed. (in section 3.3.1)
+    \textbf{Our reply:} Thank you for pointing out our illegible expression. We have removed ``The difference in end-to-end latencies between'' and modified the sentence as you proposed. (in Section 3.3.1)
   \end{flushleft}
 
 \item \begin{flushleft}
@@ -467,7 +462,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \end{flushleft}
 
   \begin{flushleft}
-    \textbf{Our reply:} Thank you for your suggestion. We have inverted the legends of Figure 12 and 13 for easy distinguishable difference. (in Section 3.3)
+    \textbf{Our reply:} Thank you for your suggestion. We have inverted the legends of Figure 11 and 12 for easy distinguishable difference. (in page 6)
   \end{flushleft}
 
 \item \begin{flushleft}
@@ -475,7 +470,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \end{flushleft}
 
   \begin{flushleft}
-    \textbf{Our reply:} Thank you for pointing out our wrong part. We have fulfilled Tabel 5 legend as ``Comparison of ROS2 to Related Work''. (in Section 4)
+    \textbf{Our reply:} Thank you for pointing out our wrong part. We have fulfilled Tabel 5 legend as ``Comparison of ROS2 to Related Work''. (in page 9)
   \end{flushleft}
 
 \item \begin{flushleft}
@@ -483,7 +478,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \end{flushleft}
 
   \begin{flushleft}
-    \textbf{Our reply:} I'm sorry to provide unclear figures. We have added explanations for Figures 8, 9, 10, and 11 to clarify what DDS implementation we used. (in Section 3.3)
+    \textbf{Our reply:} I'm sorry to provide unclear figures. We have added explanations for Figures 7, 8, 9, and 10 to clarify what DDS implementation we used. (in page 6)
   \end{flushleft}
 
 \item \begin{flushleft}
@@ -493,7 +488,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:} Thank you for pointing out our unfair evaluations. 
     We tried building ROS2 with Vortex OpenSplice, but we could not succeed. 
-    Currently, ROS2 does not support OpenSplice Professional Edition. For clear discussion, we added sentence ``,but ROS2 does not support this'' (``this'' means Vortex OpenSplice) in a footnote. (page 2)
+    Currently, ROS2 does not support OpenSplice Professional Edition. For clear discussion, we added sentence ``,but ROS2 does not support this'' (``this'' means Vortex OpenSplice) in a footnote. (page 4)
     In addition, after an evaluation of threads, we have changed our view that the performance of Opensplice vortex professional edition is the same as the performance of Connext professional edition. 
     Using OpenSplice, ROS2 has many threads (about 49 threads). 
     Parallelized procession by a lot of threads causes low latency and we assume that Vortex OpenSplice is faster than Connext.
@@ -501,7 +496,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{itembox}[|]{Added footnote in page 5}
     Vortex OpenSplice \cite{ospl_vortex}, i.e., OpenSplice commercial edition, supports shared memory transport \textcolor{red}{, but ROS2 does not supports this}. In this paper, OpenSplice DDS Community Edition is used because it is open-source.
   \end{itembox}\\
-
+  
 \end{itemize}
 
 \newpage
@@ -519,9 +514,9 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you very much for your thoughtful suggestion.
-  To discuss performance in embedded systems with some resource constrains, we have conducted measurements of thread and memory consumption in Section 3.5 and 3.6.
-  In these sections, we analyze the results of experiments and discuss DDS characteristic.
-  These provide us insights for embedded systems and distributed capabilities.
+  To discuss performance in embedded systems with some resource constrains, we have conducted measurements of thread and memory consumption in newly added Section 3.5 and 3.6.
+  In these sections, we analyze the results of measurements and discuss DDS characteristic.
+  These provide us insight for embedded systems and distributed capabilities.
   \begin{itembox}[|]{Newly added ``3.5 Thread of ROS1 and ROS2'' section}
     In this section, we measure the number of thread on each \emph{node}.
     Table \ref{tb:thread} shows the result of measurements.
@@ -589,8 +584,11 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you very much for your good insight. 
   Although these alternatives such as ZMQ + Protobuf should be evaluated, ROS2 firstly accepts DDS approach and only supports several DDS implementations.
-  To highlight this fact, we have added ``Currently ROS2 only supports some DDS implementations.''. (page 1)
+  ROS2 does not support ZMQ + Protobuf.
+  To highlight this fact, we have added ``Currently ROS2 only supports some DDS implementations.''. (in page 1)
   Since ROS2 currently does not support ZMQ+Protobuf, this paper focuses evaluation of DDS approach to ROS and conducts its proof of concept.
+  \begin{itembox}[|]{Added footnote in page 5}
+  \end{itembox}\\
   
 \item \begin{flushleft}
   \textbf{Comment:}
@@ -601,11 +599,10 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you for your thoughtful comment.
-  At present, QoS Policy supported by ROS2 is few.
-  For example, DEADLINE is only calculated by node's period and is not utilized for scheduling.
-  In this condition, we prepare *-depth policy and have varied HISTORY setting by configuring depth option.
-  This HISTORY of QoS Policy provides applications fault tolerance.
-  We consider this additional QoS Policy except for reliable and best-effort policies is beneficial to understand DDS characteristics.
+  At present, ROS2 only supports a few QoS Policies.
+  For example, DEADLINE is only calculated by a node's period and is not utilized for scheduling.
+  In this condition, we prepare *-depth policy and have varied history setting by configuring depth option.
+  This HISTORY QoS Policy provides applications fault tolerance.
   We have added sentences in ``3.3.3 Comparison within ROS2'' section and described analysis there.
   \begin{itembox}[|]{Updated sentenceso in ``3.3.3 Comparison within ROS2'' section}
     In addition, the influence of the \emph{QoS Policy} on end-to-end latencies is evaluated in (2-b) OpenSplice with the \texttt{reliable policy}, \texttt{best-effort policy}\textcolor{red}{, and \texttt{*-depth policy}.
@@ -653,10 +650,10 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you very much for your thoughtful comment.
   We have additionally conducted evaluation of a multiple destinations publisher for increased network load in ``3.3.4 Multiple Destinations Publisher local cases'' section.
-  This evaluation provides insight for the overhead of DDS scales as shown in \ref{fig:ospl_multi} and \ref{fig:ospl_multi_128K}.
-  However, we did not conduct further evaluationso for real-time guarantees with constrained or unreliable network because QoS Policies supposed by ROS2 are insufficient for real-time processing.
-  We will conduct these evaluations with configuring QoS variables for real-time systems.
-  We have explicitly described this fact as futur work.
+  This evaluation also provides insight for the overhead of DDS scales as shown in \ref{fig:ospl_multi} and \ref{fig:ospl_multi_128K}.
+  However, we did not conduct further evaluations for real-time guarantees with constrained network because QoS Policies supposed by ROS2 are insufficient for real-time processing.
+  After support of real-time QoS, we will conduct above evaluations with configuring QoS variables for real-time systems.
+  We have explicitly described this fact as future work.
   \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
     Since ROS2 is under development, we must maximize DDS potential by tuning and abstracting more \emph{QoS Policies} for real-time processing and DDS configurations.
   \end{itembox}\\
@@ -685,7 +682,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 
 \end{enumerate}
 
-\newpage
+\clearpage
 
 \section{Response to 3\rd reviewer}
 \begin{enumerate}
@@ -702,15 +699,22 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you very much for your critical comment.
   To expand the scope of experiments, we have conducted additional evaluations.
-  One is measurement of throughput in ``3.4 Throughput of ROS1 and ROS2'' section.
-  Another is measurements of threads in ``'' section.
-  The other is shared object memory in ``'' section.
+  In the revised paper, we have conducted additional evaluations from various aspects.
+  One is throughput evaluations in ``3.4 Throughput of ROS1 and ROS2'' section.
+  We have clarified throughput characteristics depending on DDS vendors.
+  Another additional evaluation is measurements of latency for a multiple destinations publisher.
+  This is described in ``3.3.4 Multiple Destinations Publisher in local cases'' section and will be utilized for fault tolerance and distributed capabilities.
+  From this experiment, we can learn fair latency which DDS brings to ROS.
+  In addition, we prepare *-depth policy and have varied QoS setting by configuring depth option in ``3.3.3 Comparison within ROS2'' section.
+  The other additional evaluations also expand our performance evaluation.
+  We have conducted measurements for the number of thread in ``3.5 Thread of ROS1 and ROS2'' and shared library memory consumption in ``3.6 Memory consumption of ROS1 and ROS2'' section.
+  These experimets provide us insight for embedded systems and distributed capabilities.
   We consider that these broad evaluations and analysis represent the performance of ROS2 after revision.
-  In addition, we have created new section ``Lessons Learned'' to clarify our contributions and practical considerations.
-  In this section, we explicitly show guidelines for ROS users and highlight our contributions from experiments in this paper.
-  This lessons will variable and should be shared among ROS users.
   
-  For precise description of each section, please check our revised paper.
+  In addition, we have created new section ``3.7 Lessons Learned'' to clarify our contributions and practical considerations.
+  In this section, we explicitly show guidelines to highlight our contributions from experiments in this paper.
+  This lessons will be variable and should be shared among ROS users.
+  For precise added sentences and analysis, please go on reading following our replies and the revised paper.
   
 \item \begin{flushleft}
   \textbf{Comment:}
@@ -721,13 +725,13 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you very much for pointing out a vital issue.
-  This is important for fault tolerance and significant benefit of using ROS2.
+  This is important for fault tolerance and significant benefit of using DDS.
   To highlight this point, we have added several sentences.
   \begin{itembox}[|]{Added sentences in ``2.1 Robot Operating System (ROS)'' section}
     In addition, due to use of DDS, ROS2 does not need a master process.
     \textcolor{red}{This is a import point in terms of fault tolerance.}
   \end{itembox}\\
-  \begin{itembox}[|]{Added sentences in ``Lesson Learned'' section}
+  \begin{itembox}[|]{Added sentences in ``3.7 Lesson Learned'' section}
     We consider ROS2 outweigh its cost for using DDS.
     Fault tolerance of ROS2 is superior because it is able to save past data with \emph{QoS Policy} and does not have a master \emph{node}.
   \end{itembox}\\
@@ -741,7 +745,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you for pointing out our lack of explanation.
-  In remote cases, to avoid time synchronization issues, the experiment adopts simple socket communication that routes through neither ROS1 nor ROS2.
+  In the remote cases, to avoid time synchronization issues, the experiment adopts simple socket communication that routes through neither ROS1 nor ROS2.
   Machine1 transmits data through ROS1 or ROS2, and receives short data through socket communication.
   In the adopted method, evaluation halts when messages do not reach a subscriber-node in the cases with, for example, the  best-effort policy, because a publisher-node must wait until a subscriber-node replies during each publish event.
   We estimate end-to-end latencies by subtracting preliminarily evaluated socket communication time.
@@ -772,11 +776,11 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you for pointing out our lack of explanation.
   In best-effort policy, ``none'' means there is no inital loss when a subscriber-node is launched before a publisher-node begins to send messages.
-  As you explained, a node with best-effort policy does not have backlog and there will be a lot of messag loss for lata-joining nodes.
+  As you explained, a node with best-effort policy does not have backlog and there will be a lot of message loss for lata-joining nodes.
   In Table 3, ``Inital loss'' means whether there is message loss or not for pre-joining nodes.
   ``Inital loss'' in not for late-joining nodes.
-  After receiving your comment, we have modified sentences in the beginning of ``Capabilities of ROS1 and ROS2'' section to make it easy to understand.
-  \begin{itembox}[|]{Added a sentence in ``Capabilities of ROS1 and ROS2'' section}
+  After receiving your comment, we have modified sentences in the beginning of ``3.2 Capabilities of ROS1 and ROS2'' section to make it easy to understand.
+  \begin{itembox}[|]{Added a sentence in ``3.2 Capabilities of ROS1 and ROS2'' section}
     In \texttt{best-effort policy}, a \texttt{subscriber-node} must be launched before a \emph{publisher-node} begins to send \emph{messages} for ``Initial loss'' none.
   \end{itembox}\\
 
@@ -790,18 +794,16 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you very much for your thoughtful suggestion.
   We have additionally conducted evaluation of a multiple destinations publisher for increased network load in ``3.3.4 Multiple Destinations Publisher local cases'' section.
-  This evaluation provides insight for the overhead of DDS scales as shown in \ref{fig:ospl_multi} and \ref{fig:ospl_multi_128K}.
-  However, we did not conduct further evaluationso for real-time guarantees with constrained or unreliable network because QoS Policies supposed by ROS2 are insufficient for real-time processing.
-  We will conduct these evaluations with configuring QoS variables for real-time systems.
-  We have explicitly described this fact as futur work.
+  This evaluation also provides insight for the overhead of DDS scales as shown in \ref{fig:ospl_multi} and \ref{fig:ospl_multi_128K}.
+  However, we did not conduct further evaluations for real-time guarantees with constrained network because QoS Policies supposed by ROS2 are insufficient for real-time processing.
+  After support of real-time QoS, we will conduct above evaluations with configuring QoS variables for real-time systems.
+  We have explicitly described this fact as future work.
   \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
+    In future work, we will evaluate real-time applications such as an autonomous driving vehicle \cite{kato2015open}, \cite{saito2014fusion}, as case studies using ROS2.
+    ...
     Since ROS2 is under development, we must maximize DDS potential by tuning and abstracting more \emph{QoS Policies} for real-time processing and DDS configurations.
   \end{itembox}\\
-  \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
-    In future work, we will evaluate real-time applications such as an autonomous driving vehicle \cite{kato2015open}, \cite{saito2014fusion}, as case studies using ROS2. 
-  \end{itembox}\\
-
-
+  
 \item \begin{flushleft}
   \textbf{Comment:}
 \end{flushleft}
@@ -818,7 +820,9 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   Whether message is divided or not is critical issue in DDS.
   In contrast, ROS1 does not handle packets with QoS.
   ROS1 simply sends packets in order.
-  We heve update sentences in ``'' section to clarify this ...
+  We have created new section ``3.7 Lessons Learned'' and explained this issue.
+  \begin{itembox}[|]{Added sentences in ``3.7 Lessons Learned'' section}
+  \end{itembox}\\
 
 \item \begin{flushleft}
   \textbf{Comment:}
@@ -830,7 +834,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you for pointing out import issue. 
-  We have conducted \texttt{remote} case experiments with Full-Duplex 100BASE-TX 100Mbps Ethernet connection.
+  We have conducted remote case experiments with Full-Duplex 100BASE-TX 100Mbps Ethernet connection.
   Two machines are physically connected by LAN cable with a switcher.
   Thus, message loss occurs by UDP and not by network.
   To clarify this fact, we add network protocol in Table 2: ``Evaluation Environment''.
@@ -874,8 +878,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you for pointing out our lack of explanation.
-  In evert data size, a publisher-node sends 100 messages per experimet with 10 Hz.
-  Each simple string messages is transported in order.
+  In every data size, a publisher-node sends 100 messages per experimet with 10 Hz.
+  Each simple string message is transported in order.
   Using 100 measurements in each data size, we prepare medians and boxplots.
   To clarify this process, we make source code for evaluation open and have added its url to references of our paper.
   \begin{itembox}[|]{Added reference for evaluation process in ``6. REFERENCES'' section}
@@ -893,10 +897,10 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you for your advice.
   In the revised paper, we have conducted evaluations for a multiple destinations publisher.
-  In our evaluation, we prepare five subscribes and measure end-to-end latencies.
+  In our evaluation, we prepare five subscribers and measure end-to-end latencies.
   From this experiment, we can learn fair latency which DDS brings to ROS.
   However, latencies are significantly depending on the number of packets.
-  We consider that his problems will be improved by abstraction of alternative APIs such as asynchronous publisher and flow controller and/or vendor specific configuration options.
+  We consider that this problems will be improved by abstraction of alternative APIs such as an asynchronous publisher and flow controller and/or vendor specific configuration options.
   This is effective for not only multi-destination but also single-distination.
   Challenging above problems is our future work because we did not have enough time to do them.
   \begin{itembox}[|]{Added sentences in ``Multiple Destinations Publisher in \texttt{local} cases'' section}
