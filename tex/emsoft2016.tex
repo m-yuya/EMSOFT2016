@@ -530,7 +530,7 @@ This is important for the analysis of ROS2 performance.
 For example, FastRTPS does not support large data because it is designed as a lightweight implementation for embedded systems. 
 Even a string of 256 B exceeds the maximum length in FastRTPS.
 Many DDS vendors do not support publishing large data with reliable connections and common APIs.
-To send and manage divided packets, such DDS vendors provide an alternate API such as asynchronous publisher and flow controller, which has not been abstracted from ROS2. 
+To send and manage divided packets, such DDS vendors provide an alternate API such as an asynchronous publisher and flow controller, which has not been abstracted from ROS2. 
 In our experiments, Connext with \texttt{reliable policy} yields errors when data are greater than 64 KB.
 Some failures with the \texttt{best-effort policy} are due to frequent \emph{message} losses caused by non-reliable communication. 
 When a \emph{publisher-node} fails to transfer data to a \emph{subscriber-node} frequently, we cannot collect sufficient samples and conduct evaluations.
@@ -690,14 +690,14 @@ As ROS2 is in development, that gaps will be closed.
     \begin{minipage}[t]{0.322\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ros1_1M_multi-pub5.eps}
       \vspace{-7mm}
-      \caption{(1-b) ROS1 multiple destination publisher.}
+      \caption{(1-b) ROS1 multiple destinations publisher.}
       \label{fig:ros1_multi}
     \end{minipage}
     &
     \begin{minipage}[t]{0.322\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_1M_multi-pub5.eps}
       \vspace{-7mm}
-      \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+      \caption{(2-b) ROS2 multiple destinations with OpenSplice \texttt{reliable policy}.}
       \label{fig:ospl_multi}
     \end{minipage}
     \vspace{-3mm}
@@ -735,10 +735,10 @@ With a large fragment size, DDS does not need to split large data into many data
 In terms of end-to-end latency, we should preset the fragment size to 64 KB when using large data.
 
 \vspace{-2mm}
-\subsubsection{Multiple Destination Publisher in \texttt{local} cases}
+\subsubsection{Multiple Destinations Publisher in \texttt{local} cases}
 \label{sec:multiple}
 In this section, we prepare five \emph{subscriber-nodes} and measure latency of each \emph{node}.
-Much of information shared in real applications is destinated to multiple destination.
+Much of information shared in real applications is destinated to multiple destinations.
 Hence, this evaluation is practical for user.
 Figure \ref{fig:ros1_multi} shows latencies of ROS1.
 We can observe significant differences between \emph{subscriber-nodes}.
@@ -794,7 +794,7 @@ Throughput is limited by the network and not by DDS.
     \begin{minipage}[t]{0.32\textwidth}
       \includegraphics[width=1.0\linewidth]{../figure/BoxPlot_ospl_128K_multi-pub5.eps}
       \vspace{-7mm}
-      \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+      \caption{(2-b) ROS2 multiple destinations with OpenSplice \texttt{reliable policy}.}
       \label{fig:ospl_multi_128K}
     \end{minipage}
     &
@@ -821,7 +821,7 @@ Throughput is limited by the network and not by DDS.
 \label{sec:throughput}
 In this section, we measure the number of thread on each \emph{node}.
 Table \ref{tb:thread} shows the result of measurements.
-Note that its number depends on DDS configuration including \emph{QoS Policy}.
+Note that the number described in Table \ref{tb:thread} depends on DDS configuration including \emph{QoS Policy}.
 The number does not be fixed by vendors.
 
 First of all, we can observe that ROS2 \emph{node} with OpenSplice has a lot of threads.
@@ -911,7 +911,8 @@ However, ROS2 is under development and there is room to improve its performance 
 First, current \emph{QoS Policies} supposed by ROS2 provide fault tolerance but they are insufficient for real-time processing.
 ROS2 has to expand the scope of supported \emph{QoS Policies}.
 Second, for small embedded system, ROS2 needs minimum DDS implementation and minimum abstraction layer.
-C library for ROS2 and small DDS implementation are needed and ROS2 support them easily.
+For example, we need C API library for ROS2 and a small DDS implementation.
+ROS2 easily supports them because of its abstraction layer.
 Third, we also clarify a need of alternative API for large \emph{message} to manage divided packets.
 This is critical to handle large message.
 Abstraction of this will shorten DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
@@ -1028,7 +1029,7 @@ We expect that ROS2 will support more \emph{QoS Policies} and DDS APIs and will 
 In future work, we will evaluate real-time applications such as an autonomous driving vehicle \cite{kato2015open}, \cite{saito2014fusion}, as case studies using ROS2. 
 Moreover, we have to breakdown DDS processing time and execute ROS2 on RTOS.
 We also are interested in ROS2 behavior on embedded devices.
-Since ROS2 is under development, we must maximize DDS potential by tuning and abstracting more \emph{QoS Policies} and DDS configurations.
+Since ROS2 is under development, we must maximize DDS potential by tuning and abstracting more \emph{QoS Policies} for real-time processing and DDS configurations.
 
 % \renewcommand{\baselinestretch}{0.85}
 %% \setlength{\baselineskip}{11pt}      % 行間の直接指定

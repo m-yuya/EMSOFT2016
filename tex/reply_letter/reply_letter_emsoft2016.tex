@@ -81,8 +81,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \begin{itemize}
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   ROS2 is currently still being actively developed (Section 3) and as such, an analysis of the performance at this stage seems a pre-mature. Certain capabilities in ROS2 are still not available and/or do not perform up to expectations. In Section 3.2 the author claims that "DDS is not designed to handle large data", however DDS has API's specifically designed for use with large data packets. While DDS has these API’s for assisting with large packet transfer, they are not yet compatible with ROS2 and therefore the performance drops after the size of packets increases beyond 64KB.
 
   \begin{flushleft}
@@ -119,8 +119,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \begin{enumerate}
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   The designed experiment only covers latency rates between the two versions of ROS, but there are still other aspects to communications performance. Further research should be conducted to test the throughput, fault tolerance and distributed capabilities of the two.
   
   \begin{flushleft}
@@ -130,19 +130,19 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   In the revised paper, we have conducted additional evaluations from various aspects.
   One is throughput evaluations in ``3.4 Throughput of ROS1 and ROS2'' section.
   We have clarified throughput characteristics depending on DDS vendors.
-  Another additional evaluation is measurements of latency for multiple destination publisher
-  This is described in ``Multiple Destination Publisher in local cases'' section and will be utilized for fault tolerance and distributed capabilities.
+  Another additional evaluation is measurements of latency for multiple destinations publisher
+  This is described in ``3.3.4 Multiple Destinations Publisher in local cases'' section and will be utilized for fault tolerance and distributed capabilities.
   From this experiment, we can learn fair latency which DDS brings to ROS.
   The other additional evaluations also expand our performance evaluation.
   We have conducted thread measurements in ``Thread of ROS1 and ROS2'' and memory consumption in ``Memory consumption of ROS1 and ROS2'' section.
   These provide us insights for embedded systems and distributed capabilities.
   For precise added sentences, please go on reading following our replies and the revised paper.
- 
+  
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   Interacting with multiple devices or experimentation with a real-time application would provide insight into the fault-tolerance and distributed capabilities that DDS brings to ROS.
-
+  
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
@@ -150,9 +150,13 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   To consider multiple devices, we have conducted evaluations for a multiple destinations publisher.
   Much of the information is often shared in real applications such as robots.
   In our evaluation, we prepare five subscribes and measure end-to-end latencies.
-  \begin{itembox}[|]{Added sentences in ``Multiple Destination Publisher in \texttt{local} cases'' section}
+  The result provides insight for distribute capabilities.
+  Its precise analysis are described in the following paragraph.
+  However, we could not run a real-time application on ROS1 and ROS2.
+  We have explicitly described this fact as futur work.
+  \begin{itembox}[|]{Added sentences in ``3.3.4 Multiple Destinations Publisher in \texttt{local} cases'' section}
     In this section, we prepare five \emph{subscriber-nodes} and measure latency of each \emph{node}.
-    Much of information shared in real applications is destinated to multiple destination.
+    Much of information shared in real applications is destinated to multiple destinations.
     Hence, this evaluation is practical for user.
     Figure \ref{fig:ros1_multi} shows latencies of ROS1.
     We can observe significant differences between \emph{subscriber-nodes}.
@@ -170,37 +174,48 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \begin{tabular}{ccc}
       \begin{minipage}[t]{0.31\textwidth}
         \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ros1_1M_multi-pub5.eps}
-        \caption{(1-b) ROS1 multiple destination publisher.}
+        \caption{(1-b) ROS1 multiple destinations publisher.}
         \label{fig:ros1_multi}
       \end{minipage}
       &
       \begin{minipage}[t]{0.31\textwidth}
         \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_1M_multi-pub5.eps}
-        \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+        \caption{(2-b) ROS2 multiple destinations with OpenSplice \texttt{reliable policy}.}
         \label{fig:ospl_multi}
       \end{minipage}
       &
       \begin{minipage}[t]{0.31\textwidth}
         \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_128K_multi-pub5.eps}
-        \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+        \caption{(2-b) ROS2 multiple destinations with OpenSplice \texttt{reliable policy}.}
         \label{fig:ospl_multi_128K}
       \end{minipage}
     \end{tabular}
   \end{figure*}
+  \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
+    In future work, we will evaluate real-time applications such as an autonomous driving vehicle \cite{kato2015open}, \cite{saito2014fusion}, as case studies using ROS2. 
+  \end{itembox}\\
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   Results from an application would provide insight into how the overhead of DDS scales with increased network load.
 
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
+  Thank you very much for your thoughtful suggestion.
+  We have additionally conducted evaluation of a multiple destinations publisher for increased network load in ``3.3.4 Multiple Destinations Publisher local cases'' section.
+  This evaluation provides insight for the overhead of DDS scales as shown in \ref{fig:ospl_multi} and \ref{fig:ospl_multi_128K}.
+  However, we did not conduct further evaluationso for real-time guarantees with constrained or unreliable network because QoS Policies supposed by ROS2 are insufficient for real-time processing.
+  We will conduct these evaluations with configuring QoS variables for real-time systems.
+  We have explicitly described this fact as futur work.
+  \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
+    Since ROS2 is under development, we must maximize DDS potential by tuning and abstracting more \emph{QoS Policies} for real-time processing and DDS configurations.
+  \end{itembox}\\
   
-
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   Another possible avenue of research is a more detailed analysis of the effects on performance of varying QoS policy variables such as deadline scheduling and history.
 
   \begin{flushleft}
@@ -214,7 +229,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   We have added sentences in ``3.3.3 Comparison within ROS2'' section and described analysis there.
   \begin{itembox}[|]{Updated sentenceso in ``3.3.3 Comparison within ROS2'' section}
     In addition, the influence of the \emph{QoS Policy} on end-to-end latencies is evaluated in (2-b) OpenSplice with the \texttt{reliable policy}, \texttt{best-effort policy}\textcolor{red}{, and \texttt{*-depth policy}.
-    \texttt{*-depth policy} is prepared for this evaluation and configured by depth as shown in Table \ref{tb:depth_qos}.}
+      \texttt{*-depth policy} is prepared for this evaluation and configured by depth as shown in Table \ref{tb:depth_qos}.}
   \end{itembox}\\
   \begin{itembox}[|]{Added sentences about additional QoS in ``3.3.3 Comparison within ROS2'' section}
     Figure \ref{fig:depth_boxplot} shows no differences depending on the depth of \texttt{*-depth policy}.
@@ -250,7 +265,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 
 \item \begin{flushleft}
   \textbf{Comment:}
-  \end{flushleft}
+\end{flushleft}
   The experiment in section 3.1 should be kept as it is a good evaluation of overhead and is reproducible since it was performed on the loopback interface of the device, but experiments measuring latency and throughput in an application environment would strengthen the paper.
 
   \begin{flushleft}
@@ -298,8 +313,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \begin{enumerate}
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   The contributions of the paper are essentially experimental results, but these results themselves are not sufficient. The authors do not provide any guidelines, lessons learned, or insight that they gained from their experiments.  Some examples of interesting questions to be answered from the data collected by the authors include:
 
   \begin{flushleft}
@@ -312,8 +327,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   We hope you will be satisfied with our replies.
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   Should ROS1 ever be used over ROS2, or do the benefits of ROS2 outweigh the costs?
 
   \begin{flushleft}
@@ -345,8 +360,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{itembox}\\
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   What underlying implementation of DDS should people use, and why, or under what circumstances would one be better than the other? 
 
   \begin{flushleft}
@@ -357,7 +372,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   In the local case, OpenSplice is superior to others due to its capability and low latency caused by many threads.
   In remote case, Connext is superior because difference of latency is relatively small and we must consider bandwidth.
   Connext's throughput is minimum as shown in Figure ?.
-  For embedded systems, regarding memory and thread, we consider that FastRTPS is suitable from Tables ? and ?.
+  For embedded systems, regarding memory and thread, we consider that FastRTPS is suitable from Tables \ref{tb:thread} and \ref{tb:memory}.
   We have added theses guidelines in ``Lessons Learned'' section to answer this question.
   \begin{itembox}[|]{Added sentences about ROS2 guideline in ``Lessons Learned'' section}
     We can get insight and guidelines for using ROS2 from these results.
@@ -377,8 +392,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{itembox}\\
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   What can be done to improve the performance of the interface between ROS2 and DDS, or within the DDS implementations themselves?
 
   \begin{flushleft}
@@ -403,8 +418,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{itembox}\\
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   How does the switch to DDS from pure TCP or UDP protocols affect other performance factors in ROS2 systems? 
 
   \begin{flushleft}
@@ -424,56 +439,56 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \begin{itemize}
 
 \item \begin{flushleft}
-    \textbf{Comment:} Table 4 - ROS1 experiment says 2c, should be 1c
-  \end{flushleft}
+  \textbf{Comment:} Table 4 - ROS1 experiment says 2c, should be 1c
+\end{flushleft}
 
   \begin{flushleft}
     \textbf{Our reply:} Thank you very much for your careful reading. We have exchanged ``2c'' and ``1c''. (page 3)
   \end{flushleft}
 
 \item \begin{flushleft}
-    \textbf{Comment:} 3.3.1 ROS1 and ROS2 is much less than the difference between remote and local cases
-  \end{flushleft}
+  \textbf{Comment:} 3.3.1 ROS1 and ROS2 is much less than the difference between remote and local cases
+\end{flushleft}
 
   \begin{flushleft}
     \textbf{Our reply:} Thank you for pointing out our illegible expression. We have removed ``The difference in end-to-end latencies between'' and modified the sentence as you proposed. (in section 3.3.1)
   \end{flushleft}
 
 \item \begin{flushleft}
-    \textbf{Comment:} 3.3.2 with large data, ROS2 has significant overhead depending on the size of data
-  \end{flushleft}
+  \textbf{Comment:} 3.3.2 with large data, ROS2 has significant overhead depending on the size of data
+\end{flushleft}
 
   \begin{flushleft}
     \textbf{Our reply:} Thank you for pointing out our unreadable expression. We have changed ``Compared to ROS1, with'' to ``With''. (in Section 3.3.2)
   \end{flushleft}
 
 \item \begin{flushleft}
-    \textbf{Comment:} Figure 12 and 13, invert legend
-  \end{flushleft}
+  \textbf{Comment:} Figure 12 and 13, invert legend
+\end{flushleft}
 
   \begin{flushleft}
     \textbf{Our reply:} Thank you for your suggestion. We have inverted the legends of Figure 12 and 13 for easy distinguishable difference. (in Section 3.3)
   \end{flushleft}
 
 \item \begin{flushleft}
-    \textbf{Comment:} Table 5 legend missing
-  \end{flushleft}
+  \textbf{Comment:} Table 5 legend missing
+\end{flushleft}
 
   \begin{flushleft}
     \textbf{Our reply:} Thank you for pointing out our wrong part. We have fulfilled Tabel 5 legend as ``Comparison of ROS2 to Related Work''. (in Section 4)
   \end{flushleft}
 
 \item \begin{flushleft}
-    \textbf{Comment:} The authors use several implementations of DDS but it is unclear from their figures, which data is for OpenSplice, Connext or FastRTPS
-  \end{flushleft}
+  \textbf{Comment:} The authors use several implementations of DDS but it is unclear from their figures, which data is for OpenSplice, Connext or FastRTPS
+\end{flushleft}
 
   \begin{flushleft}
     \textbf{Our reply:} I'm sorry to provide unclear figures. We have added explanations for Figures 8, 9, 10, and 11 to clarify what DDS implementation we used. (in Section 3.3)
   \end{flushleft}
 
 \item \begin{flushleft}
-    \textbf{Comment:} Section 3.3.3 analyses performance for the two DDS frameworks with an explicit assumption regarding the performance of Opensplice vortex. The authors assume that the performance of Opensplice vortex professional edition is the same as the performance of Connext professional edition, but conduct their experiments only with the community edition of Opensplice. For a fair analysis, either the professional or community version should be used for both frameworks.
-  \end{flushleft}
+  \textbf{Comment:} Section 3.3.3 analyses performance for the two DDS frameworks with an explicit assumption regarding the performance of Opensplice vortex. The authors assume that the performance of Opensplice vortex professional edition is the same as the performance of Connext professional edition, but conduct their experiments only with the community edition of Opensplice. For a fair analysis, either the professional or community version should be used for both frameworks.
+\end{flushleft}
 
   \begin{flushleft}
     \textbf{Our reply:} Thank you for pointing out our unfair evaluations. 
@@ -495,8 +510,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \begin{enumerate}
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   The experiments provide good data, but unfortunately the data come only from a high-performance, multi-core system. 
   It will be useful to discuss performance in an embedded device used in robotics with some resource constraints.
 
@@ -565,8 +580,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{table}
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   Since the comparison provides evaluations of ROS middleware replacements, considering alternatives (primarily ZMQ + Protobuf) would have made for a compelling case (for or against) the selected DDS approach.
 
   \begin{flushleft}
@@ -578,8 +593,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   Since ROS2 currently does not support ZMQ+Protobuf, this paper focuses evaluation of DDS approach to ROS and conducts its proof of concept.
   
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   Additionally, further evaluations of the QoS policies would have been beneficial, since 100 ms deadline is rather meaningless for the message sizes, processor speeds, and network capacities used in the experimental evaluation.
 
   \begin{flushleft}
@@ -594,7 +609,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   We have added sentences in ``3.3.3 Comparison within ROS2'' section and described analysis there.
   \begin{itembox}[|]{Updated sentenceso in ``3.3.3 Comparison within ROS2'' section}
     In addition, the influence of the \emph{QoS Policy} on end-to-end latencies is evaluated in (2-b) OpenSplice with the \texttt{reliable policy}, \texttt{best-effort policy}\textcolor{red}{, and \texttt{*-depth policy}.
-    \texttt{*-depth policy} is prepared for this evaluation and configured by depth as shown in Table \ref{tb:depth_qos}.}
+      \texttt{*-depth policy} is prepared for this evaluation and configured by depth as shown in Table \ref{tb:depth_qos}.}
   \end{itembox}\\
   \begin{itembox}[|]{Added sentences about additional QoS in ``3.3.3 Comparison within ROS2'' section}
     Figure \ref{fig:depth_boxplot} shows no differences depending on the depth of \texttt{*-depth policy}.
@@ -629,13 +644,44 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{figure}
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   Finally, evaluation of performance of the middleware options under more constrained network resources would have been beneficial as well.
 
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
+  Thank you very much for your thoughtful comment.
+  We have additionally conducted evaluation of a multiple destinations publisher for increased network load in ``3.3.4 Multiple Destinations Publisher local cases'' section.
+  This evaluation provides insight for the overhead of DDS scales as shown in \ref{fig:ospl_multi} and \ref{fig:ospl_multi_128K}.
+  However, we did not conduct further evaluationso for real-time guarantees with constrained or unreliable network because QoS Policies supposed by ROS2 are insufficient for real-time processing.
+  We will conduct these evaluations with configuring QoS variables for real-time systems.
+  We have explicitly described this fact as futur work.
+  \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
+    Since ROS2 is under development, we must maximize DDS potential by tuning and abstracting more \emph{QoS Policies} for real-time processing and DDS configurations.
+  \end{itembox}\\
+  \setcounter{figure}{15}
+  \begin{figure*}[h]
+    \begin{tabular}{ccc}
+      \begin{minipage}[t]{0.31\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ros1_1M_multi-pub5.eps}
+        \caption{(1-b) ROS1 multiple destinations publisher.}
+        \label{fig:ros1_multi}
+      \end{minipage}
+      &
+      \begin{minipage}[t]{0.31\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_1M_multi-pub5.eps}
+        \caption{(2-b) ROS2 multiple destinations with OpenSplice \texttt{reliable policy}.}
+        \label{fig:ospl_multi}
+      \end{minipage}
+      &
+      \begin{minipage}[t]{0.31\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_128K_multi-pub5.eps}
+        \caption{(2-b) ROS2 multiple destinations with OpenSplice \texttt{reliable policy}.}
+        \label{fig:ospl_multi_128K}
+      \end{minipage}
+    \end{tabular}
+  \end{figure*}
 
 \end{enumerate}
 
@@ -645,8 +691,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 \begin{enumerate}
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   Despite this, the title and contributions are not clear, particularly, performance is a broad term and the authors mostly present results on message transmission. 
   The contribution should be stated more explicitly.
   While it is true that other practical considerations are explained, they are not properly highlighted.
@@ -667,8 +713,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   For precise description of each section, please check our revised paper.
   
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   One of the most promising improvements of ROS2 wrt ROS is the lack of a single point of failure (master). This should probably be highlighted!
 
   \begin{flushleft}
@@ -687,8 +733,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{itembox}\\
   
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   How exactly are the end-to-end delays (one way transmission) measured by the same computer? Please explain the process.
 
   \begin{flushleft}
@@ -713,10 +759,12 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{figure}
   \begin{itembox}[|]{Added reference for evaluation process in ``6. REFERENCES'' section}
   \end{itembox}\\
+  \begin{itembox}[|]{Added reference for evaluation process in ``6. REFERENCES'' section}
+  \end{itembox}\\
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   In table 4: Why is there 'none' in the ROS2 best effort policy? Since there is no backlog saved on the nodes, all late joining nodes will suffer from the same problem as ROS nodes.
 
   \begin{flushleft}
@@ -733,17 +781,30 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{itembox}\\
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   A major feature of ROS2, is to give Real Time guarantees on message deliveries, however, this is not compared. Specifically, when message loads are increased, a comparison would be welcomed.
 
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
+  Thank you very much for your thoughtful suggestion.
+  We have additionally conducted evaluation of a multiple destinations publisher for increased network load in ``3.3.4 Multiple Destinations Publisher local cases'' section.
+  This evaluation provides insight for the overhead of DDS scales as shown in \ref{fig:ospl_multi} and \ref{fig:ospl_multi_128K}.
+  However, we did not conduct further evaluationso for real-time guarantees with constrained or unreliable network because QoS Policies supposed by ROS2 are insufficient for real-time processing.
+  We will conduct these evaluations with configuring QoS variables for real-time systems.
+  We have explicitly described this fact as futur work.
+  \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
+    Since ROS2 is under development, we must maximize DDS potential by tuning and abstracting more \emph{QoS Policies} for real-time processing and DDS configurations.
+  \end{itembox}\\
+  \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
+    In future work, we will evaluate real-time applications such as an autonomous driving vehicle \cite{kato2015open}, \cite{saito2014fusion}, as case studies using ROS2. 
+  \end{itembox}\\
+
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   The authors say that Connext and OpenSplice maximum payload size is 64kB, but this is also the maximum payload of both TCP and UDP messages. Why is this an advantage/disadvantages of this?
 
   \begin{flushleft}
@@ -760,8 +821,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   We heve update sentences in ``'' section to clarify this ...
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   There is no mention whatsoever on which type of network is used to comunicate between two different machines. Is it a full-duplex ethernet connection, an unreliable WiFi connection, or some other network?
   This is important, since authors claim "Some failures with the best-effort policy are due to frequent message losses caused by non-reliable communications", which is dependent on the actual protocol.
 
@@ -797,25 +858,34 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
         \multirow{2}{*}{OS} & Distribution & \multicolumn{2}{c}{Ubuntu 14.04} \\ 
         & Kernel & \multicolumn{2}{c}{Linux 3.13.0} \\ \hline
       \end{tabular}
-      \begin{tablenotes}
-      \item[1] RTI Connext DDS Professional \cite{rti_connext}
-      \item[2] OpenSplice DDS Community Edition \cite{ospl_dds_community}
-      \end{tablenotes}
+      %% \begin{tablenotes}
+      %% \item[1] RTI Connext DDS Professional \cite{rti_connext}
+      %% \item[2] OpenSplice DDS Community Edition \cite{ospl_dds_community}
+      %% \end{tablenotes}
     \end{threeparttable}
   \end{table*}
   
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   What was the message set in each experiment? Only one message per experiment? Or was there any combination of messages in each experiment? If so, the scheduling algorithm should have been explained and the interference analysed.
   
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
+  Thank you for pointing out our lack of explanation.
+  In evert data size, a publisher-node sends 100 messages per experimet with 10 Hz.
+  Each simple string messages is transported in order.
+  Using 100 measurements in each data size, we prepare medians and boxplots.
+  To clarify this process, we make source code for evaluation open and have added its url to references of our paper.
+  \begin{itembox}[|]{Added reference for evaluation process in ``6. REFERENCES'' section}
+  \end{itembox}\\
+  \begin{itembox}[|]{Added reference for evaluation process in ``6. REFERENCES'' section}
+  \end{itembox}\\
 
 \item \begin{flushleft}
-    \textbf{Comment:}
-  \end{flushleft}
+  \textbf{Comment:}
+\end{flushleft}
   Missing results: Much of the information shared in robots is destined to multiple destinations. A possible improvement (maybe for future work) would be a comparison wrt multi-destination message distribution.
   
   \begin{flushleft}
@@ -829,9 +899,9 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   We consider that his problems will be improved by abstraction of alternative APIs such as asynchronous publisher and flow controller and/or vendor specific configuration options.
   This is effective for not only multi-destination but also single-distination.
   Challenging above problems is our future work because we did not have enough time to do them.
-  \begin{itembox}[|]{Added sentences in ``Multiple Destination Publisher in \texttt{local} cases'' section}
+  \begin{itembox}[|]{Added sentences in ``Multiple Destinations Publisher in \texttt{local} cases'' section}
     In this section, we prepare five \emph{subscriber-nodes} and measure latency of each \emph{node}.
-    Much of information shared in real applications is destinated to multiple destination.
+    Much of information shared in real applications is destinated to multiple destinations.
     Hence, this evaluation is practical for user.
     Figure \ref{fig:ros1_multi} shows latencies of ROS1.
     We can observe significant differences between \emph{subscriber-nodes}.
@@ -849,19 +919,19 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \begin{tabular}{ccc}
       \begin{minipage}[t]{0.31\textwidth}
         \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ros1_1M_multi-pub5.eps}
-        \caption{(1-b) ROS1 multiple destination publisher.}
+        \caption{(1-b) ROS1 multiple destinations publisher.}
         \label{fig:ros1_multi}
       \end{minipage}
       &
       \begin{minipage}[t]{0.31\textwidth}
         \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_1M_multi-pub5.eps}
-        \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+        \caption{(2-b) ROS2 multiple destinations with OpenSplice \texttt{reliable policy}.}
         \label{fig:ospl_multi}
       \end{minipage}
       &
       \begin{minipage}[t]{0.31\textwidth}
         \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_128K_multi-pub5.eps}
-        \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+        \caption{(2-b) ROS2 multiple destinations with OpenSplice \texttt{reliable policy}.}
         \label{fig:ospl_multi_128K}
       \end{minipage}
     \end{tabular}
@@ -872,9 +942,6 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     Abstraction of this will shorten DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
     Finally, we must tune DDS configurations for ROS2 beacause there are numerous vendor specific configuration options which might affect its performance.
   \end{itembox}\\
-
-
-
 
 \end{enumerate}
 
