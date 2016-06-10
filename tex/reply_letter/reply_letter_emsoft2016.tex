@@ -33,7 +33,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
 
 \begin{flushleft}
   Yours sincerely,\newline
-  authors
+  Authors
   %% Yuya Maruyama\newline
   %% Osaka university\newline
   %% Email address: maruyama@hopf.sys.es.osaka-u.ac.jp\newline
@@ -89,9 +89,9 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you very much for your vital comment.
-  It is true that ROS2 in under heavy development and a very rough draft in this statge.
+  It is true that ROS2 in under heavy development and a very rough draft in this stage.
   However, this paper aims to conduct proof of concept for DDS approach to ROS and clarifies the needs of abstracting DDS API for large packets.
-  Regardless of development stage of ROS2, we consider that understanding each DDS characteristics is meaningful for ROS2 users, which we provide in this paper.
+  Regardless of development stage of ROS2, we consider that understanding each DDS characteristics are meaningful for ROS2 users, which we provide in this paper.
   After reading your comment, we have highlighted that this paper aims to proof of concept and arranged premature points of current ROS2.
   \begin{itembox}[|]{Modified sentences about proof of concept in ``1. INTRODUCTION'' section}
     \textbf{Contribution:}
@@ -130,13 +130,13 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   In the revised paper, we have conducted additional evaluations from various aspects.
   One is throughput evaluations in ``3.4 Throughput of ROS1 and ROS2'' section.
   We have clarified throughput characteristics depending on DDS vendors.
-  Another additional evaluations is measurements of latency for multiple destination publisher
+  Another additional evaluation is measurements of latency for multiple destination publisher
   This is described in ``Multiple Destination Publisher in local cases'' section and will be utilized for fault tolerance and distributed capabilities.
   From this experiment, we can learn fair latency which DDS brings to ROS.
   The other additional evaluations also expand our performance evaluation.
   We have conducted thread measurements in ``Thread of ROS1 and ROS2'' and memory consumption in ``Memory consumption of ROS1 and ROS2'' section.
   These provide us insights for embedded systems and distributed capabilities.
-  For precise added sentences, please go on reading following our replies and revised paper.
+  For precise added sentences, please go on reading following our replies and the revised paper.
  
 \item \begin{flushleft}
     \textbf{Comment:}
@@ -207,7 +207,7 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you for your advice.
-  At present, QoS Policy supported by ROS2 is few.
+  At present, ROS2 only supports a few QoS Policies.
   For example, DEADLINE is only calculated by node's period and is not utilized for scheduling.
   In this condition, we prepare *-depth policy and have varied history setting by configuring depth option.
   This HISTORY QoS Policy provides applications fault tolerance.
@@ -354,10 +354,10 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you for suggesting a good question.
   We recommend each DDS implementation depending on circumstances.
-  In local case, OpenSplice is superior to others due to its capability and low latency caused by many threads.
+  In the local case, OpenSplice is superior to others due to its capability and low latency caused by many threads.
   In remote case, Connext is superior because difference of latency is relatively small and we must consider bandwidth.
   Connext's throughput is minimum as shown in Figure ?.
-  For embedded systems, in terms of memory and thread, we consider that FastRTPS is suitable from Tables ? and ?.
+  For embedded systems, regarding memory and thread, we consider that FastRTPS is suitable from Tables ? and ?.
   We have added theses guidelines in ``Lessons Learned'' section to answer this question.
   \begin{itembox}[|]{Added sentences about ROS2 guideline in ``Lessons Learned'' section}
     We can get insight and guidelines for using ROS2 from these results.
@@ -385,11 +385,11 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you for your thoughtful comment.
-  First, ROS2 must expand the scope of supposed QoS Policies for real-time system.
-  It is a very important issue for real-time guarantee.
+  First, ROS2 must expand the scope of supposed QoS Policies for real-time systems.
+  It is a very important issue for a real-time guarantee.
   Current QoS Policy is insufficient.
-  Second, ROS2 should abstract alternative API such as asynchronous publisher and flow controller for large data transport.
-  This improves DDS performance and reduce overhead latency.
+  Second, ROS2 should abstract alternative API such as an asynchronous publisher and flow controller for large data transport.
+  This improves DDS performance and reduces overhead latency.
   Finally, there are numerous DDS and vendor specific configuration options which might affect its performance.
   Tuning these configures for ROS2 is to do in order to improve performance within each DDS implementation.
   We have added some sentences to clarify above things as followed.
@@ -411,8 +411,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you for your suggestion.
-  Before revision, we only indicate end-to-end latency affected by DDS.
-  After revision, we show other performance factors by variable aspects.
+  In the submitted paper, we only focused on end-to-end latency affected by DDS.
+  In the reviled paper, we show other performance factors by variable aspects.
   One additional factor is throughput in ``3.4 Throughput of ROS1 and ROS2'' section.
   We discuss throughput affected by DDS in this added section and clarify overhead throughput of each DDS implementations.
   Another factor is thread in ``'' section.
@@ -478,8 +478,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:} Thank you for pointing out our unfair evaluations. 
     We tried building ROS2 with Vortex OpenSplice, but we could not succeed. 
-    Currently, ROS2 does not support OpenSplice Professional Edition. For clear discussion, we added sentence ``,but ROS2 does not support this'' (``this'' means Vortex OpenSplice) in a footnote. (page 2) 
-    In addition, after a evaluation of threads, we have changed our view that the performance of Opensplice vortex professional edition is the same as the performance of Connext professional edition. 
+    Currently, ROS2 does not support OpenSplice Professional Edition. For clear discussion, we added sentence ``,but ROS2 does not support this'' (``this'' means Vortex OpenSplice) in a footnote. (page 2)
+    In addition, after an evaluation of threads, we have changed our view that the performance of Opensplice vortex professional edition is the same as the performance of Connext professional edition. 
     Using OpenSplice, ROS2 has many threads (about 49 threads). 
     Parallelized procession by a lot of threads causes low latency and we assume that Vortex OpenSplice is faster than Connext.
   \end{flushleft}
