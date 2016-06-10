@@ -12,6 +12,7 @@
 \usepackage{threeparttable} 
 \usepackage{color}
 \usepackage{float}
+\usepackage{here}
 
 \newcommand\st{\textsuperscript{st}\xspace}
 \newcommand\nd{\textsuperscript{nd}\xspace}
@@ -173,17 +174,17 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
         \label{fig:ros1_multi}
       \end{minipage}
       &
-        \begin{minipage}[t]{0.31\textwidth}
-          \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_1M_multi-pub5.eps}
-          \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
-          \label{fig:ospl_multi}
-        \end{minipage}
+      \begin{minipage}[t]{0.31\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_1M_multi-pub5.eps}
+        \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+        \label{fig:ospl_multi}
+      \end{minipage}
       &
-        \begin{minipage}[t]{0.31\textwidth}
-          \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_128K_multi-pub5.eps}
-          \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
-          \label{fig:ospl_multi_128K}
-        \end{minipage}
+      \begin{minipage}[t]{0.31\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_128K_multi-pub5.eps}
+        \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+        \label{fig:ospl_multi_128K}
+      \end{minipage}
     \end{tabular}
   \end{figure*}
 
@@ -210,13 +211,18 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   For example, DEADLINE is only calculated by node's period and is not utilized for scheduling.
   In this condition, we prepare *-depth policy and have varied history setting by configuring depth option.
   This HISTORY QoS Policy provides applications fault tolerance.
-  We have added evaluation and its analysis in ``Comparison within ROS2'' section.
-  \begin{itembox}[|]{Added sentences in history evaluation in ``Comparison within ROS2'' section}
+  We have added sentences in ``3.3.3 Comparison within ROS2'' section and described analysis there.
+  \begin{itembox}[|]{Updated sentenceso in ``3.3.3 Comparison within ROS2'' section}
+    In addition, the influence of the \emph{QoS Policy} on end-to-end latencies is evaluated in (2-b) OpenSplice with the \texttt{reliable policy}, \texttt{best-effort policy}\textcolor{red}{, and \texttt{*-depth policy}.
+    \texttt{*-depth policy} is prepared for this evaluation and configured by depth as shown in Table \ref{tb:depth_qos}.}
+  \end{itembox}\\
+  \begin{itembox}[|]{Added sentences about additional QoS in ``3.3.3 Comparison within ROS2'' section}
     Figure \ref{fig:depth_boxplot} shows no differences depending on the depth of \texttt{*-depth policy}.
     These \emph{QoS policies} are different in the number \emph{nodes} save \texttt{messages}.
     Although this number influences resources, this does not affect latency because archiving \emph{messages} is conducted in every publication.
   \end{itembox}\\
   \renewcommand{\arraystretch}{1.0}
+  \setcounter{table}{4}
   \begin{table}[H]
     \caption{\label{tb:depth_qos}Depth Configurable QoS Policies}
     \centering
@@ -497,6 +503,66 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
+  Thank you very much for your thoughtful suggestion.
+  To discuss performance in embedded systems with some resource constrains, we have conducted measurements of thread and memory consumption in Section 3.5 and 3.6.
+  In these sections, we analyze the results of experiments and discuss DDS characteristic.
+  These provide us insights for embedded systems and distributed capabilities.
+  \begin{itembox}[|]{Newly added ``3.5 Thread of ROS1 and ROS2'' section}
+    In this section, we measure the number of thread on each \emph{node}.
+    Table \ref{tb:thread} shows the result of measurements.
+    Note that its number depends on DDS configuration including \emph{QoS Policy}.
+    The number does not be fixed by vendors.
+
+    First of all, we can observe that ROS2 \emph{node} with OpenSplice has a lot of threads.
+    This may cause parallelized processing and the fact that OpenSplice is much faster than Connext as shown in Figure \ref{fig:dds_boxplot}.
+    n
+    Another interesting point is FastRTPS threads.
+    ROS2 \emph{node} with FastRTPS realizes discovery and serialization, and pub/sub data transport with same number of ROS1 \emph{node} thread.
+    This result proves improvement of fault tolerance without additional resources because FastRTPS does not need \emph{master-node}.
+  \end{itembox}\\
+  \setcounter{table}{5}
+  \begin{table}[H]
+    \caption{\label{tb:thread}The Number of Thread on ROS1 or ROS2}
+    \centering
+    \tabcolsep = 1.5mm              % side-margin in column
+    \begin{tabular}{c|cccc}
+      \hline
+      & ROS1 & Connext & OpenSplice & FastRTPS \\
+      \hline
+      \hline
+      node & 5 & 8 & 49 & 5 \\
+      master-node & 3 & - & - & - \\
+      \hline
+    \end{tabular}
+  \end{table}
+  \begin{itembox}[|]{Newly added ``3.6 Memory consumption of ROS1 and ROS2'' section}
+    We also measure memory size of shared library object (\texttt{.so}) in ROS1 and ROS2.
+    Shared libraries are libraries that are dynamically loaded by \emph{nodes} when they start.
+    They are not linked to executable files but they will be vital guidelines for estimation of memory size.
+    We arrange the result in Table \ref{tb:memory}.
+    In this table, we add up library data size for pub/sub transport.
+    In ROS2, shared library are classified into DDS library and ROS2 abstraction library.
+    While DDS libraries are provided by each vendor, ROS2 libraries abstract DDS APIs and convert \emph{messages} for DDS.
+    In Table \ref{tb:memory}, DDS and ROS2 libraries vary depending on vendors.
+    These library data size tends to increase because its QoS capability and abstraction.
+    For small embedded systems, we need a minimal DDS implementation and ligh abstraction layer.
+  \end{itembox}\\
+  \begin{table}[H]
+    \caption{Memory of .so Files for ROS1 and ROS} 
+    \centering
+    \renewcommand{\arraystretch}{1.15}
+    \label{tb:memory}
+    \small
+    \tabcolsep = 1.0mm              % side-margin in column
+    \begin{tabular}{c|c||r|r||r}
+      \hline
+      \multicolumn{2}{c||}{} & DDS [KB] & Abstraction [KB] & Total [MB] \\ \hline \hline
+      \multicolumn{2}{c||}{ROS1}  & \multicolumn{2}{c||}{ 2,206 } & 2.26 \\ \hline
+      \multirow{3}{*}{ROS2} & Connext & 11,535 & 9,645 & 21.18 \\ 
+      & OpenSplice & 3,837 & 14,117 & 17.95 \\ 
+      & FastRTPS & 1,324 & 3,953 & 5.28\\ \hline
+    \end{tabular}
+  \end{table}
 
 \item \begin{flushleft}
     \textbf{Comment:}
@@ -507,10 +573,10 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Our reply:}
   \end{flushleft}
   Thank you very much for your good insight. 
-  Although these alternatives such as ZMQ + Protobuf should be evaluated, ROS2 firstly accepts DDS approach and only supports several DDS implementations. 
-  To highlight this fact, we have added ``Currently ROS2 only supports some DDS implementations.''. (page 1) 
+  Although these alternatives such as ZMQ + Protobuf should be evaluated, ROS2 firstly accepts DDS approach and only supports several DDS implementations.
+  To highlight this fact, we have added ``Currently ROS2 only supports some DDS implementations.''. (page 1)
   Since ROS2 currently does not support ZMQ+Protobuf, this paper focuses evaluation of DDS approach to ROS and conducts its proof of concept.
-
+  
 \item \begin{flushleft}
     \textbf{Comment:}
   \end{flushleft}
@@ -519,6 +585,48 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
+  Thank you for your thoughtful comment.
+  At present, QoS Policy supported by ROS2 is few.
+  For example, DEADLINE is only calculated by node's period and is not utilized for scheduling.
+  In this condition, we prepare *-depth policy and have varied HISTORY setting by configuring depth option.
+  This HISTORY of QoS Policy provides applications fault tolerance.
+  We consider this additional QoS Policy except for reliable and best-effort policies is beneficial to understand DDS characteristics.
+  We have added sentences in ``3.3.3 Comparison within ROS2'' section and described analysis there.
+  \begin{itembox}[|]{Updated sentenceso in ``3.3.3 Comparison within ROS2'' section}
+    In addition, the influence of the \emph{QoS Policy} on end-to-end latencies is evaluated in (2-b) OpenSplice with the \texttt{reliable policy}, \texttt{best-effort policy}\textcolor{red}{, and \texttt{*-depth policy}.
+    \texttt{*-depth policy} is prepared for this evaluation and configured by depth as shown in Table \ref{tb:depth_qos}.}
+  \end{itembox}\\
+  \begin{itembox}[|]{Added sentences about additional QoS in ``3.3.3 Comparison within ROS2'' section}
+    Figure \ref{fig:depth_boxplot} shows no differences depending on the depth of \texttt{*-depth policy}.
+    These \emph{QoS policies} are different in the number \emph{nodes} save \texttt{messages}.
+    Although this number influences resources, this does not affect latency because archiving \emph{messages} is conducted in every publication.
+  \end{itembox}\\
+  \renewcommand{\arraystretch}{1.0}
+  \setcounter{table}{4}
+  \begin{table}[H]
+    \caption{\label{tb:depth_qos}Depth Configurable QoS Policies}
+    \centering
+    \tabcolsep = 1.5mm              % side-margin in column
+    \begin{tabular}{c|c}
+      \hline
+      & \textbf{\texttt{*-depth policy} }\\
+      \hline
+      \hline
+      DEADLINE & \texttt{100 ms}\\
+      HISTORY & \texttt{LAST}\\
+      depth & 1, 10, or 100\\
+      RELIABILITY & \texttt{RELIABLE}\\
+      DURABILITY & \texttt{TRANSIENT\_LOCAL}\\
+      \hline
+    \end{tabular}
+  \end{table}
+  \setcounter{figure}{15}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../../figure/BoxPlot_ospl_QoS_depth.eps}
+    \caption{(2-b) Configured \emph{*-depth policy} in ROS2 with OpenSplice}
+    \label{fig:depth_boxplot}
+  \end{figure}
 
 \item \begin{flushleft}
     \textbf{Comment:}
@@ -586,7 +694,26 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
-  
+  Thank you for pointing out our lack of explanation.
+  In remote cases, to avoid time synchronization issues, the experiment adopts simple socket communication that routes through neither ROS1 nor ROS2.
+  Machine1 transmits data through ROS1 or ROS2, and receives short data through socket communication.
+  In the adopted method, evaluation halts when messages do not reach a subscriber-node in the cases with, for example, the  best-effort policy, because a publisher-node must wait until a subscriber-node replies during each publish event.
+  We estimate end-to-end latencies by subtracting preliminarily evaluated socket communication time.
+  Using socket communication, the communication latencies between ROS1 and ROS2 can be evaluated respectively. 
+  However, dividing round-trip latency in half cannot evaluate them and does not be used for this evaluation.
+  The following figure shows the node-graph for evaluation of communication from ROS1 to ROS2 with socket communication and a ros\_bridge in remote cases.
+  For page constraint, we could not have added the above explanation and following figure.
+  Hence, we make source code for evaluation open and have added its url to references of our paper.
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=.6\linewidth]{../../figure/eval_method.eps}
+    \begin{center}
+      \textbf{Evaluation method for remote cases with ros\_bridge.}
+    \end{center}
+  \end{figure}
+  \begin{itembox}[|]{Added reference for evaluation process in ``6. REFERENCES'' section}
+  \end{itembox}\\
+
 \item \begin{flushleft}
     \textbf{Comment:}
   \end{flushleft}
@@ -624,12 +751,13 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   \end{flushleft}
   Thank you very much for indicating our unclear explanation.
   Connext and OpenSplice maximum payload size is officially described as 64KB in [http://www.prismtech.com/vortex/vortex-opensplice/performance] and [http://www.rti.com/products/dds/benchmarks.html].
-  As a reviwer comments, it is also the maximum payload of IP packet.
-  In DDS, message packet is sent following QoS.
-  Hence, when large message is divided into several packets, DDS takes more time to manage these packets.
-  There is some cases alternative API is needed 
-  As shown in Figures 11, DDS highly depends on number of packets.
-  According to these result, in terms of latency, we must be careful ...
+  This is because that 64KB is the maximum payload of IP packet.
+  In DDS, message packets must be sent following QoS.
+  Hence, when large message is divided into several packets, some DDS vendors need users to use alternative APIs and additional processing is needed to manage divided packets with QoS.
+  Whether message is divided or not is critical issue in DDS.
+  In contrast, ROS1 does not handle packets with QoS.
+  ROS1 simply sends packets in order.
+  We heve update sentences in ``'' section to clarify this ...
 
 \item \begin{flushleft}
     \textbf{Comment:}
@@ -646,8 +774,8 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
   Thus, message loss occurs by UDP and not by network.
   To clarify this fact, we add network protocol in Table 2: ``Evaluation Environment''.
   \setcounter{table}{1}
-  \begin{table*}[H]
-    \caption{Evaluation Environment} 
+  \begin{table*}[h]
+    \caption{Evaluation Environment}
     \centering
     \begin{threeparttable}
       \renewcommand{\arraystretch}{1.0}
@@ -680,20 +808,73 @@ We highly appreciate the insightful suggestions and detailed valuable comments o
     \textbf{Comment:}
   \end{flushleft}
   What was the message set in each experiment? Only one message per experiment? Or was there any combination of messages in each experiment? If so, the scheduling algorithm should have been explained and the interference analysed.
-
+  
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
-
 
 \item \begin{flushleft}
     \textbf{Comment:}
   \end{flushleft}
   Missing results: Much of the information shared in robots is destined to multiple destinations. A possible improvement (maybe for future work) would be a comparison wrt multi-destination message distribution.
-
+  
   \begin{flushleft}
     \textbf{Our reply:}
   \end{flushleft}
+  Thank you for your advice.
+  In the revised paper, we have conducted evaluations for a multiple destinations publisher.
+  In our evaluation, we prepare five subscribes and measure end-to-end latencies.
+  From this experiment, we can learn fair latency which DDS brings to ROS.
+  However, latencies are significantly depending on the number of packets.
+  We consider that his problems will be improved by abstraction of alternative APIs such as asynchronous publisher and flow controller and/or vendor specific configuration options.
+  This is effective for not only multi-destination but also single-distination.
+  Challenging above problems is our future work because we did not have enough time to do them.
+  \begin{itembox}[|]{Added sentences in ``Multiple Destination Publisher in \texttt{local} cases'' section}
+    In this section, we prepare five \emph{subscriber-nodes} and measure latency of each \emph{node}.
+    Much of information shared in real applications is destinated to multiple destination.
+    Hence, this evaluation is practical for user.
+    Figure \ref{fig:ros1_multi} shows latencies of ROS1.
+    We can observe significant differences between \emph{subscriber-nodes}.
+    This means ROS1 schedules \emph{message} publication in order and is not suitable for real-time systems.
+    For example, in 1 MB, subscriber 5 is about twice as mach as subscriber 1.
+    In contrast, ROS2 has samll differences as shown in Figure \ref{fig:ospl_multi}.
+    All subscribers' behavior is fair in ROS2.
+    However, ROS2 latencies significantly depends on the number of packets.
+    This is same characteristic we learned from Figure \ref{fig:remote_local_plot}.
+    Figure \ref{fig:ospl_multi_128K} indicates fair latencies and dependency of packets.
+    Although we can not say that latency variance of ROS1 is larger than one of ROS2 due to the difference of the scale, Figures \ref{fig:ros1_multi}, \ref{fig:ospl_multi}, and \ref{fig:ospl_multi_128K} prove ROS2 \emph{message} publication is more fair to multiple subscribes than ROS1 one.
+  \end{itembox}\\
+  \setcounter{figure}{15}
+  \begin{figure*}[h]
+    \begin{tabular}{ccc}
+      \begin{minipage}[t]{0.31\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ros1_1M_multi-pub5.eps}
+        \caption{(1-b) ROS1 multiple destination publisher.}
+        \label{fig:ros1_multi}
+      \end{minipage}
+      &
+      \begin{minipage}[t]{0.31\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_1M_multi-pub5.eps}
+        \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+        \label{fig:ospl_multi}
+      \end{minipage}
+      &
+      \begin{minipage}[t]{0.31\textwidth}
+        \includegraphics[width=1.0\linewidth]{../../figure/BoxPlot_ospl_128K_multi-pub5.eps}
+        \caption{(2-b) ROS2 multiple destination with OpenSplice \texttt{reliable policy}.}
+        \label{fig:ospl_multi_128K}
+      \end{minipage}
+    \end{tabular}
+  \end{figure*}
+  \begin{itembox}[|]{Updated sentences about future work in ``5. CONCLUSION'' section}
+    we also clarify a need of alternative API for large \emph{message} to manage divided packets.
+    This is critical to handle large message.
+    Abstraction of this will shorten DDS end-to-end latency and fulfill deficiency of Table \ref{tb:capabilities}.
+    Finally, we must tune DDS configurations for ROS2 beacause there are numerous vendor specific configuration options which might affect its performance.
+  \end{itembox}\\
+
+
+
 
 \end{enumerate}
 
