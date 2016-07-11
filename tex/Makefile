@@ -5,7 +5,7 @@
 # Target file name
 TARGET = emsoft2016
 # BIB file
-REFDIR = ./
+REFDIR = ../../bib/
 # REFDIR = ../../bib/
 REF = $(REFDIR)/reference.bib
 
