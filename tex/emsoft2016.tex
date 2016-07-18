@@ -85,7 +85,7 @@
 \begin{abstract}
   Middleware for robotics development must meet demanding requirements in real-time distributed embedded systems. 
   The Robot Operating System (ROS), open-source middleware, has been widely used for robotics applications.
-  However, ROS is not suitable for real-time embedded systems because it does not satisfy real-time requirements and only runs on a few OSs.
+  However, the ROS is not suitable for real-time embedded systems because it does not satisfy real-time requirements and only runs on a few OSs.
   To address this problem, ROS1 will undergo a significant upgrade to ROS2 by utilizing the Data Distribution Service (DDS).
   DDS is suitable for real-time distributed embedded systems due to its various transport configurations (e.g., deadline and fault-tolerance) and scalability.
   ROS2 must convert data for DDS and abstract DDS from its users; however, this incurs additional overhead, which is examined in this study.
@@ -104,7 +104,7 @@ We conduct proof of concept for DDS approach to ROS and arrange DDS characterist
 In recent years, real-time distributed embedded systems, such as autonomous driving vehicles, have become increasingly complicated and diverse.
 Autonomous driving has attracted attention since the November 3, 2007 DARPA Urban Challenge \cite{urmson2008autonomous}.
 The Robot Operating System (ROS) \cite{quigley2009ros} is open-source middleware that has undergone rapid development \cite{cousins2011exponential} and has been widely used for robotics applications (e.g., autonomous driving systems).
-The ROS is built almost entirely from scratch and have been maintained by Willow Garage \cite{willowgarage} and Open Source Robotics Foundation (OSRF) \cite{osrf} since 2007. 
+The ROS is built almost entirely from scratch and has been maintained by Willow Garage \cite{willowgarage} and Open Source Robotics Foundation (OSRF) \cite{osrf} since 2007. 
 The ROS enhances productivity \cite{cousins2010sharing}, providing publish/subscribe transport, multiple libraries (e.g., OpenCV and the Point Cloud Library (PCL) \cite{pcl}), and tools to help software developers create robotics applications.
 
 However, the ROS does not satisfy real-time run requirements and only runs on a few OSs. 
@@ -130,7 +130,7 @@ These evaluations indicate that DDS is both reliable and flexible.
 \textbf{Contribution:}
 In this paper, we provide proof of concept for DDS approach to ROS.
 We clarify the performance of the data transport for ROS1 and ROS2 in various situations.
-Performance means latencies characteristics, throughput and distributed capability.
+Performance means latency characteristics, throughput and distributed capability.
 Focusing on the DDS capabilities, depending on DDS vendors and configurations, we explore and evaluate the potential and constraints from various aspects: latencies, throughput, the number of threads, and memory consumption.
 From experimental results, we arrange guidelines and what we can do to solve current constrains.
 To the best of our knowledge, this is the first study to explore ROS2 performance.
@@ -196,7 +196,7 @@ In ROS1, the above communication system is implemented as middleware based on TC
 When \emph{subscriber-nodes} and \emph{publisher-nodes} are launched, they interact with a \emph{master-node} that collects information and manages \emph{topics}, similar to a server. 
 After an XML/Remote Procedure Call (RPC) transaction with the \emph{master-node}, \emph{subscriber-nodes} request a connection to \emph{publisher-nodes}, using an agreed upon connection protocol. 
 Actual data (i.e., a \emph{message}) is transported directly between \emph{nodes}. 
-Data does not route through the master. 
+This data does not route through the master. 
 ROS1 realizes a peer-to-peer data transport between \emph{nodes}. 
 
 Optionally, ROS1 provides \emph{nodelets}, which provide efficient \emph{node} composition for optimized data transport without TCPROS and UDPROS. 
@@ -205,7 +205,7 @@ ROS2 inherits this option as \emph{intra-process communication}, which addresses
 
 ROS2 adopts DDS as its communication system. However, as an exception, \emph{intra-process communication} is executed without DDS.
 DDS is provided by many vendors and has several implementation types.
-Developers can select appropriate DDS implementations from a variety of DDS vendors.
+Developers can select an appropriate DDS implementation from a variety of DDS vendors.
 
 \vspace{-1mm}
 \subsection{Data Distribution Service (DDS)}
@@ -316,10 +316,10 @@ Thus, users can focus solely on their purpose and determine ways to satisfy real
 \section{Evaluations}
 \label{sec:orgheadline2}
 
-This section clarifies the capabilities and latencies characteristics of ROS1 and ROS2. 
+This section clarifies the capabilities and latency characteristics of ROS1 and ROS2. 
 At present, ROS2 has been released as an alpha version whose major features are a C++ client library, a build-system and abstraction to a part of the DDS middleware from several vendors. 
 Note that ROS2 is a very rough draft and is currently under heavy development. 
-Therefore, this evaluation attempts to clarify the currently achievable capabilities and latencies characteristics of ROS2.
+Therefore, this evaluation attempts to clarify the currently achievable capabilities and latency characteristics of ROS2.
 
 The following experiments were conducted to evaluate end-to-end latencies for publish/subscribe messaging. 
 The latencies are measured from a publish function on a single \emph{node} until the callback function of another \emph{node} using the hardware and software environment listed in Table \ref{tb:environment}. 
@@ -529,7 +529,7 @@ Another interesting observation from Table \ref{tb:capabilities} is that ROS2 ha
 Many experiments fail in various situations with ROS2; however, we can observe differences in performance between Connext and OpenSplice.
 These constraints on large data originate from the fact that the maximum payload of Connext and OpenSplice is 64 KB.
 This is the maximum packet size of IP protocol.
-Is is hard to maintain divided packets with \emph{QoS Policy} by default API.
+It is hard to maintain divided packets with \emph{QoS Policy} by default API.
 Therefore, we consider that DDS is not designed to handle large data.
 This is important for the analysis of ROS2 performance.
 For example, FastRTPS does not support large data because it is designed as a lightweight implementation for embedded systems.
@@ -615,7 +615,7 @@ Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot} show t
 Since the conversion influences from ROS1 to ROS2 and from ROS2 to ROS1 are similar, Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot} contain one-way data.
 In Figure \ref{fig:remote_local_small_plot}, the behavior of all latencies is constant up to 4 KB.
 In contrast, the latencies in the \texttt{remote} cases grow sharply from 16 KB, as shown in Figures \ref{fig:remote_local_small_plot} and \ref{fig:remote_local_plot}.
-This is because ROS1 and ROS2 divide a message into 15 KB packets to transmit data through Ethernet.
+This is because ROS1 and ROS2 divide a \emph{message} into 15 KB packets to transmit data through Ethernet.
 This difference between the \texttt{remote} and \texttt{local} cases corresponds to the data transmission time between \texttt{Machine1} and \texttt{Machine2}, which was measured in a preliminary experiment. The preliminary experiment measured transmission time for each data size using ftp or http.
 This correspondence indicates that the RTPS protocol and data about the \emph{QoS Policy} have little influence on data transmission time in the network.
 In addition, all latencies are predictable by measuring the data transmission time.
@@ -625,7 +625,7 @@ In addition, all latencies are predictable by measuring the data transmission ti
 \vspace{-3mm}
 \subsubsection{Comparison among \texttt{local}, nodelet, and intra-process cases}
 \label{sec:local}
-The latencies characteristics differ in the cases of small and large data.
+The latenciy characteristics differ in the cases of small and large data.
 For discussion, we divide the graph into Figures \ref{fig:local_small_plot} and \ref{fig:local_plot}, which show the medians of the end-to-end latencies for local loopback and shared memory transport.
 This is because whether a \emph{message} is divided into several packets or not is an import issue to consider end-to-end latencies.
 
@@ -748,13 +748,13 @@ Hence, this evaluation is practical for users.
 Figure \ref{fig:ros1_multi} shows latencies of ROS1.
 We can observe significant differences between \emph{subscriber-nodes}.
 This means ROS1 schedules \emph{message} publication in order and is not suitable for real-time systems.
-For example, in 1 MB, subscriber 5 is about twice as mach as subscriber 1.
+For example, in 1 MB, subscriber 5 is about twice as much as subscriber 1.
 In contrast, ROS2 has small differences as shown in Figure \ref{fig:ospl_multi}.
 All \emph{subscribers}' behavior is fair in ROS2.
-However, ROS2 latencies significantly depends on the number of packets.
+However, ROS2 latencies significantly depend on the number of packets.
 This is same characteristic we learned from Figure \ref{fig:local_plot}.
 Figure \ref{fig:ospl_multi_128K} also indicates fair latencies and dependency of packets.
-Although we cannot say that latencies variance of ROS1 is larger than one of ROS2 due to the difference of the scale, Figures \ref{fig:ros1_multi}, \ref{fig:ospl_multi}, and \ref{fig:ospl_multi_128K} prove ROS2 \emph{message} publication is more fair to multiple \emph{subscriber-nodes} than ROS1 one.
+Although we cannot say that latency variance of ROS1 is larger than one of ROS2 due to the difference of the scale, Figures \ref{fig:ros1_multi}, \ref{fig:ospl_multi}, and \ref{fig:ospl_multi_128K} prove ROS2 \emph{message} publication is more fair to multiple \emph{subscriber-nodes} than ROS1 one.
 
 \vspace{-2mm}
 \subsection{Throughput of ROS1 and ROS2}
@@ -894,14 +894,14 @@ They will be meaningful for DDS and ROS users.
 
 DDS supports \emph{QoS Policy} but there is trade-off between end-to-end latencies and throughput.
 In the \texttt{local} case, overhead latencies of ROS2 are not trivial.
-From Section \ref{sec:latency}, the latencies is caused by two data conversions for DDS and DDS transaction.
-DDS end-to-end latencies is constant until \emph{message} data size is lower than maximum packet size (64 KB) as shown in Figure \ref{fig:local_small_plot}.
-On the other hand, as one large \emph{message} is divided into several packets, the latencies sharply increases as show in Figures \ref{fig:local_plot} and \ref{fig:ospl_multi}.
+From Section \ref{sec:latency}, the latencies are caused by two data conversions for DDS and DDS transaction.
+DDS end-to-end latencies are constant until \emph{message} data size is lower than maximum packet size (64 KB) as shown in Figure \ref{fig:local_small_plot}.
+On the other hand, as one large \emph{message} is divided into several packets, the latencies sharply increase as show in Figures \ref{fig:local_plot} and \ref{fig:ospl_multi}.
 Whether \emph{message} data size is over 64 KB or not is important issue especially in DDS because management of divided packets with \emph{QoS Policy} needs significant processing time and alternative APIs provided by some vendors.
 We should understand influence of divided packets and keep in mind this issue when using DDS.
 While DDS and ROS2 abstraction have overhead latencies, OpenSplice utilizes a lot of threads and processes faster than Connext as shown in Figure \ref{fig:dds_boxplot}.
 This is a reason why we currently should use OpenSplice in the underlying implementation of DDS in the \texttt{local} case.
-In the \texttt{remote} case, although overhead latencies is trivial, we must consider throughput for bandwidth.
+In the \texttt{remote} case, although overhead latencies are trivial, we must consider throughput for bandwidth.
 As shown in Figure \ref{fig:throughput_small}, Connext is superior to OpenSplice in terms of throughput.
 This constant overhead throughput is predictable and exists no matter how small \emph{message} data size is.
 It influences especially when many kinds of topic are used with high Hz.
