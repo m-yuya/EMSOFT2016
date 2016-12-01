@@ -433,6 +433,10 @@
 \newfont{\confname}{ptmri8t at 8pt}
 \newfont{\crnotice}{ptmr8t at 8pt}
 \newfont{\ninept}{ptmr8t at 9pt}
+\newfont{\tempbf}{ptmb8t at 9pt}  % bold font
+\newfont{\tempit}{ptmri8t at 9pt}  % italic font
+\renewcommand{\textbf}[1]{{\tempbf #1}}  % teplace textbf for windows
+\renewcommand{\emph}[1]{{\tempit #1}}  % replace empha for windows
 \fi
 \ifnum\ACM@basesize=10\relax
 \newfont{\secfnt}{ptmb8t at 13pt}
