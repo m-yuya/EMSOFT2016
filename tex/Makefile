@@ -8,6 +8,8 @@ TARGET = emsoft2016
 REFDIR = ./
 # REFDIR = ../../bib/
 REF = $(REFDIR)/reference.bib
+# CLASS File
+CLS = sig-alternate-05-2015.cls
 
 # platex
 PLATEX = platex
@@ -17,7 +19,7 @@ DVIPDFMX = dvipdfmx
 PBIBTEX = pbibtex
 
 # Objects
-OBJS := $(TARGET).aux $(TARGET).log $(TARGET).dvi 
+OBJS := $(TARGET).aux $(TARGET).log $(TARGET).dvi
 PDFOBJ := $(TARGET).pdf
 BIBOBJS := $(TARGET).bbl $(TARGET).blg
 
@@ -43,7 +45,11 @@ $(BIBOBJS): $(REF)
 	$(PLATEX) $(TARGET).tex
 	$(PLATEX) $(TARGET).tex
 
-$(OBJS): $(TARGET).tex 
+$(OBJS): $(TARGET).tex $(CLS)
+	$(PLATEX) $(TARGET).tex
+	$(PLATEX) $(TARGET).tex
+
+$(CLS):
 	$(PLATEX) $(TARGET).tex
 	$(PLATEX) $(TARGET).tex
 
