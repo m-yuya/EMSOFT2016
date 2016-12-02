@@ -62,7 +62,7 @@ $(PDFOBJ): $(TARGET).dvi
 
 .PHONY: diff
 diff:
-	./latexdiff2pdf.bash
+	sh latexdiff2pdf.bash $(TARGET)
 
 .PHONY: clean
 clean:
